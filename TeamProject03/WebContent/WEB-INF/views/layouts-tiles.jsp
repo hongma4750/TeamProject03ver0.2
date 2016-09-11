@@ -34,7 +34,7 @@
 	<br>
 	<!-- 중간 위 스팟 내용들 바뀌는 부분 -->
 	
-	<div id="spot" style="background-color:yellow;">
+	<div id="spot" style="background-color:#fff;border: 5px solid #666;">
 		<tiles:insertAttribute name="spot"/>
 	</div>
 	

@@ -14,19 +14,37 @@
 
 <!-- 이곳은 열린이웃 탭_내용 -->
 
-<!-- <div style="width:800px;"> -->
+
 <button type = "button" onclick="movegroup()">그룹이동</button>
 <button type = "button" onclick="receiveNew()">새글소식 받기</button>
 <button type = "button" onclick="del()">삭제</button>
 
 <!-- 그룹이동 div -->
-<div id="movegroup" style="position:absolute; top:300px; left:400px; z-index:2; 
+<div id="movegroup" style="position:absolute; top:380px; left:137px; z-index:2; 
      background-color: #fff; border:1px solid #000; 
-     width:300px; height:100px; display: none;">
-  <h5>서로이웃 신청을 받을 수 있습니다.<button type="button" id="btnClose" onclick="btnClose();" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>&nbsp;&nbsp;</button></h5>
+     width:150px; height:200px; display: none;">
+  <button type="button" onclick="btnClose();" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>&nbsp;&nbsp;</button>
   <br>
-  <div align="center"><input type="submit" value="확인" onclick="location.href='setfriendGroup.do'"></div>
+  <div style="height:100px;">그룹리스트</div>
+  <div align="center" style="vertical-align: bottom">
+    <input type="submit" style="vertical-align: bottom" value="새그룹만들기" onclick="makegroup()">
+  </div>
 </div>
+  
+<!-- 새그룹만들기 영역 -->
+<div id="makegroup" style="position:absolute; top:578px; left:137px; z-index:2; 
+     background-color: #fff; border:1px solid #000; 
+     width:150px; height:100px; display: none; padding: 5px;">
+     <input type="checkbox" name="chkopen" checked="checked">공개
+     <input type="checkbox" name="chkopen">비공개
+     <br>
+     <input type="text" placeholder="그룹명을 써주세요" value="" style="width:140px;margin-top: 5px;margin-bottom: 5px;">
+     <div align="center">
+       <input type="submit" value="확인" onclick="makegroupOk();">
+       <input type="submit" value="취소" onclick="makegroupCancle();">
+     </div>
+</div>
+<!-- 새그룹만들기 영역 -->
 <!-- 그룹이동 div -->
 
 <!-- 새글소식 받기 div -->
@@ -51,8 +69,8 @@
   <br>
      선택한 이웃을 삭제하시겠습니까?
      선택한 이웃에 서로이웃이 포함되어 있을경우,<br>
-  <input type="radio" name="delfriend" checked="checked">이웃과 서로이웃을 모두 삭제합니다.</input><br>
-  <input type="radio" name="delfriend">서로이웃은 이웃으로 관계만 변경합니다.</input><br><br>
+  <input type="radio" name="delfriend" checked="checked">이웃과 서로이웃을 모두 삭제합니다.<br>
+  <input type="radio" name="delfriend">서로이웃은 이웃으로 관계만 변경합니다.<br><br>
   <div align="center"><input type="submit" value="확인" onclick="location.href='setfriendGroup.do'">
   <input type="submit" value="취소" onclick="location.href='setfriendGroup.do'"></div>
 </div>
@@ -113,6 +131,25 @@ function movegroup(){
 function receiveNew(){
 	document.all.receiveNew.style.display = "block";
 }
+
+//새그룹만들기
+function makegroup(){
+	document.all.makegroup.style.display = "block";
+}
+
+//새그룹만들기 확인
+function makegroupOk(){
+	document.all.makegroup.style.display = "none";
+}
+
+//새그룹만들기 취소
+function makegroupCancle(){
+	document.all.makegroup.style.display = "none";
+}
+
+/* $("#del").click(function(){
+	document.all.del.style.display = "block";
+}); */
 
 //삭제
 function del(){
