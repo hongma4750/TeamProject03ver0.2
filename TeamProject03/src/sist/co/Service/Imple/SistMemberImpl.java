@@ -30,21 +30,16 @@ public class SistMemberImpl implements SistMemberService{
 		
 		return sistMemberDAO.insertMember(membervo);
 	}
-	
-
-
-	@Override
-	@Transactional(readOnly=true)
-	public int getID(SistMemberVO vo) {
-		
-		return sistMemberDAO.getID(vo);
-	}
-
-
 	@Override
 	public void createTable(HashMap map) {
 		sistMemberDAO.createTable(map);
 		
+	}
+
+	@Override
+	public int getId(SistMemberVO vo) throws Exception{
+		// TODO Auto-generated method stub
+		return sistMemberDAO.getId(vo);
 	}
 
 

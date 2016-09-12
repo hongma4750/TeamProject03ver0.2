@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import sist.co.Model.SistMemberVO;
+import sist.co.Model.YesMember;
 import sist.co.Service.SistMemberService;
 
 
@@ -174,6 +175,30 @@ public class SistMemberController {
 	
 	public String two(String msg){
 		return msg.length()>2? msg:"0"+msg;
+	}
+	
+	
+	
+	
+	@RequestMapping(value="getId.do", method=RequestMethod.POST)
+	@ResponseBody
+	public YesMember getID(SistMemberVO vo , Model model) throws Exception{
+		logger.info("getID.do 이동중");
+		
+		System.out.println("m_id = "+vo.getM_id());
+		
+		int count = sistMemberService.getId(vo);
+		
+		YesMember yes = new YesMember();
+		
+		if(count > 0 ){
+			yes.setMessage("Suc");
+		}else {
+			yes.setMessage("Fai");
+		}
+		
+		return yes;
+		
 	}
 	
 	

@@ -17,6 +17,7 @@ create table member(
 	m_auth number
 );
 
+insert into member values('aaaaaa','aaaaaaa','aaaaa','m','20190705','aa','10010101','0','0',sysdate,sysdate,3)
 select * from member;
 
 SELECT M_ID,M_NAME, M_GENDER, M_BIRTHDAY, M_EMAIL, M_PHONE, M_ACTION, M_LOGCHK, M_LOGDATE, M_FAILDATE, M_AUTH

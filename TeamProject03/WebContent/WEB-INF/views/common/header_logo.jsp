@@ -121,7 +121,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div id="sign_in" style="position:absolute; top:69px; z-index:2; right:0px; 
+<div id="mymyInfo" style="position:absolute; top:69px; z-index:2; right:0px; 
      background-color: #fff; border:1px solid #000; padding:0; margin:0; 
      width: 316px; height: 172px; display: none;" >
   
@@ -266,7 +266,7 @@ $('#userInfo').click(function(){
  /* 팝업 사라지는 자바 스크립트*/
  $(document).ready(function(){
 	 $(document).mousedown(function(e){
-	 $('#sign_in , #myNotice').each(function(){
+	 $('#mymyInfo , #myNotice').each(function(){
 	         if( $(this).css('display') == 'block' )
 	         {
 	             var l_position = $(this).offset();

@@ -12,7 +12,7 @@ public interface SistMemberService {
 	//회원가입
 	boolean insertMember(SistMemberVO membervo) throws Exception;
 	
-	int getID(SistMemberVO vo);
+	int getId(SistMemberVO vo) throws Exception;
 	
 	void createTable(HashMap map);
 }

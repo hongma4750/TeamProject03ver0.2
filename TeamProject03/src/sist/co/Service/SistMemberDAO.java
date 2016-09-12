@@ -27,8 +27,8 @@ public class SistMemberDAO {
 		
 	}
 	
-	public int getID(SistMemberVO vo){
-		return (int)sqlSession.selectOne(ns+"getID", vo);
+	public int getId(SistMemberVO vo) throws Exception {
+		return (int)sqlSession.selectOne(ns+"getId", vo);
 	}
 	
 	public void createTable(HashMap map){

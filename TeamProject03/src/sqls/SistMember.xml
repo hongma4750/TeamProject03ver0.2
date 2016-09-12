@@ -16,8 +16,8 @@
   		INSERT INTO MEMBER VALUES (#{m_id},#{m_pw},#{m_name},#{m_gender},#{m_birthday},#{m_email},#{m_phone},0,0,sysdate,sysdate,3)
   	</insert>
   	
-  	<select id="getID" parameterType="sist.co.Model.SistMemberVO" 	resultType="java.lang.Integer">
-  		SELECT NVL(COUNT(*), 0) FROM SISTMEMBER WHERE ID = #{id}
+  	<select id="getId" parameterType="sist.co.Model.SistMemberVO" 	resultType="java.lang.Integer">
+  		SELECT NVL(COUNT(*), 0) FROM MEMBER WHERE M_ID = #{m_id}
   	</select>
   	
   	
