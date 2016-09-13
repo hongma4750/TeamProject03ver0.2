@@ -121,6 +121,9 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+
+
+<!-- 정보 -->
 <div id="mymyInfo" style="position:absolute; top:69px; z-index:2; right:0px; 
      background-color: #fff; border:1px solid #000; padding:0; margin:0; 
      width: 316px; height: 172px; display: none;" >
@@ -132,7 +135,7 @@
      	<div style="height:100%; width:30%; float:left; display:inline-block; border-color:#4C4C4C; ">
      		
      		<div class="panel panel-success" style="width:100%;height:100%;">
-            <div class="panel-body"">
+            <div class="panel-body">
             	<img src="image/12.jpg" style="width:70px; height:80px;" class="img-circle">
             </div>
             
@@ -142,6 +145,7 @@
             </div>
      	
      	</div>
+     	
      	
      	<div style="height:100%; width:70%; float:left; display:inline-block;">
 			<div class="row" style="padding:auto; margin:auto; width:100%; height:25px;">
@@ -170,7 +174,7 @@
      		<button class="form-control btn btn-primary" style="width:100%; height:100%">내블로그</button>
      	</div>
      </div>
-     
+     <!-- 정보 -->
      
 </div>
 </div>
@@ -178,7 +182,7 @@
 
 <div id="myNotice" style="position:absolute; top:69px; z-index:2; right:0px; 
      background-color: #fff; border:1px solid #000; padding:0; margin:0; 
-     width:297px;; height: 172px; display: none;">
+     width:297px; height: 172px; display: none;">
 	
 	
 	<div style="width:100%; height:80%; overflow-y:scroll;">
@@ -255,7 +259,7 @@
 <script>
 $('#userInfo').click(function(){
     //비로그인시 로그인 안내 div태그
-    document.all.sign_in.style.display = "inherit";
+    document.all.mymyInfo.style.display = "inherit";
  });
  
  $("#notice").click(function(){

@@ -18,8 +18,17 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/regi.js"></script>
 <!-- 부트스트랩 링크 -->
+<script src="js/regi.js"></script>
+
+<!-- 암호화 -->
+<script type="text/javascript" src="js/rsa/jsbn.js"></script>
+<script type="text/javascript" src="js/rsa/rsa.js"></script>
+<script type="text/javascript" src="js/rsa/prng4.js"></script>
+<script type="text/javascript" src="js/rsa/rng.js"></script>
+
+<!-- 암호화 -->
+
 
 <style>
     body {
@@ -73,6 +82,9 @@
         </div>
         
        <form id="login-form" action="regiAF.do" method="post">
+       <input type="hidden" id="rsaPublicKeyModulus" value="${publicKeyModulus}" />
+       <input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent }" />
+       <input type="hidden" id="rsaChangePw" name="m_pw">
             
         <div class="panel panel-success">
         
@@ -85,7 +97,7 @@
                     </div>
                    
                     <div>
-                        <input type="password" class="form-control" name="m_pw" placeholder="비밀번호" id="m_pw">
+                        <input type="password" class="form-control" placeholder="비밀번호" id="m_pw">
                         <div id="checkPw" style="display:none;"></div>
                     </div>
                     
@@ -108,11 +120,11 @@
 
                         <div class="btn-group" data-toggle="buttons" style="width:100%;">
 
-						  <label class="btn btn-primary" id="genderChk" style="width:50%;">
+						  <label class="btn btn-primary" id="genderChk01" style="width:50%;">
 						    <input type="radio" name="m_gender" id="option1"  value="m"> 남자
 						  </label>
 
-						  <label class="btn btn-primary" id="genderChk" style="width:50%; ">
+						  <label class="btn btn-primary" id="genderChk02" style="width:50%; ">
 						    <input type="radio" name="m_gender" id="option2"  value="w"> 여자
 						  </label>
  							 
@@ -180,7 +192,8 @@
         </div><!-- class="panel panel-success" -->
 
     		<div>
-                <button type="submit" class="form-control btn btn-primary" id="regiBtn" style="height:50px;">가입하기</button>
+                <button type="submit" class="form-control btn btn-primary" 
+                id="regiBtn" style="height:50px;" onclick="return go_submit()">가입하기</button>
             </div>
             
            </form>

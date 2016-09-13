@@ -20,6 +20,17 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- 부트스트랩 링크 -->
 
+<script src="js/login.js"></script>
+
+<!-- 암호화 -->
+<script type="text/javascript" src="js/rsa/jsbn.js"></script>
+<script type="text/javascript" src="js/rsa/rsa.js"></script>
+<script type="text/javascript" src="js/rsa/prng4.js"></script>
+<script type="text/javascript" src="js/rsa/rng.js"></script>
+
+<!-- 암호화 -->
+
+
 <style>
     body {
         background: #f8f8f8;
@@ -56,16 +67,22 @@
         
             <div class="panel-body">
                 <form id="login-form" action="loginAF.do" method="post">
+                
+                <input type="hidden" id="rsaPublicKeyModulus" value="${publicKeyModulus}" />
+      			 <input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent }" />
+                <input type="hidden" id="rsaChangePw" name="m_pw">
                     <div>
-                        <input type="text" class="form-control" name="m_id" placeholder="아이디" autofocus>
+                        <input type="text" class="form-control" name="m_id" 
+                        placeholder="아이디" autofocus id="m_id">
                     </div>
                     
                     <div>
-                        <input type="password" class="form-control" name="m_pw" placeholder="비밀번호">
+                        <input type="password" class="form-control"  placeholder="비밀번호" id="m_pw">
                     </div>
                     
                      <div>
-                        <button type="submit" class="form-control btn btn-primary" id="loginBtn" style="height:50px;">로그인</button>
+                        <button type="submit" class="form-control btn btn-primary" 
+                        id="loginBtn" style="height:50px;" onclick="return go_submit()">로그인</button>
                     </div>
                 </form>
                 
@@ -77,13 +94,11 @@
                 	|
                 	<small><a href="regi.do" style="text-decoration: none;color:#999999;">회원가입</a></small>
                 </div>
-            </div>
-            
-            
                 
-                    
-            
-            
+                <c:if test="${no_login ne null }">
+                	<div style="color:red; text-align:center">${no_login }</div>
+                </c:if>
+            </div>
         </div>
     </div>
 </div>

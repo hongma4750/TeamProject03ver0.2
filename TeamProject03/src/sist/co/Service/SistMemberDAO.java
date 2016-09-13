@@ -35,4 +35,8 @@ public class SistMemberDAO {
 		sqlSession.update(ns+"createTable",map);
 	}
 	
+	public void updateActionMember(String m_id){
+		sqlSession.update(ns+"updateActionMember",m_id);
+	}
+	
 }

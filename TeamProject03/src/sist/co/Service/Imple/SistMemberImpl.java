@@ -42,6 +42,12 @@ public class SistMemberImpl implements SistMemberService{
 		return sistMemberDAO.getId(vo);
 	}
 
+	@Override
+	public void updateActionMember(String m_id) {
+		// TODO Auto-generated method stub
+		sistMemberDAO.updateActionMember(m_id);
+	}
+
 
 	
 	

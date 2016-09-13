@@ -2,7 +2,7 @@
  * 
  */
 
-var submitCheck = new Array(false,false,false,false,false,false,false,false,false,false);
+var submitCheck = new Array(false,false,false,false,false,false,false);
 
 $(document).ready(function(){
 	 $(document).mousedown(function(e){
@@ -27,9 +27,7 @@ $(document).ready(function(){
 		     });
 		 }); 
 	 
-	 $("#option1").click(function(){
-		 alert("ㅋㅋ");
-	 });
+	
 	 
 	 $("#m_pw").click(function(){
 		 $(document).mousedown(function(e){
@@ -178,7 +176,9 @@ $(document).ready(function(){
 	 
 	 
 	 
-	 
+	 $("#genderChk01,#genderChk02").click(function(){
+		 submitCheck[7] = true;
+	 });
 	 
 	 
 	 
@@ -286,9 +286,15 @@ function BaseCheckedPw(a){
 
 function BaseCheckName(a){
 	var m_name = $("#m_name").val();
+	var regExp02 = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+	var regExp01 = /\s/g;
 	
 	if($("#m_name").val().length==0){
 		putYourName(0);
+	}else if(regExp01.test(m_name)){
+		putYourName(2);
+	}else if(regExp02.test(m_name)){
+		putYourName(2);
 	}else{
 		putYourName(1);
 	}
@@ -332,6 +338,7 @@ function putYourPwed(a){
 }
 
 function putYourName(a){
+	
 	if(a=="0"){
 		$("#checkName").show();
 		$("#checkName").html("필수 항목 입니다.");
@@ -339,6 +346,10 @@ function putYourName(a){
 	}else if(a=="1"){
 		$("#checkName").hide();
 		submitCheck[3]=true;
+	}else if(a=="2"){
+		$("#checkName").show();
+		$("#checkName").html("이름에는 한글, 영문 대소문자를 이용해 주세요.");
+		$("#checkName").css("color","#FF0000");
 	}
 }
 
@@ -415,11 +426,11 @@ function putYourEmail(a){
 
 function BaseCheckPhone(){
 	var m_phone = $("#m_phone").val();
-	var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+	
 	
 	if(m_phone.length==0){
 		putYourPhone(0);
-	}else if(m_phone.length==13){
+	}else if(m_phone.length==11){
 		putYourPhone(1);
 	  }
 }
@@ -437,8 +448,39 @@ function putYourPhone(a){
 
 
 function go_submit(){
+	for(var i =0;i<submitCheck.length;i++){
+		if(!submitCheck[i]){
+			alert("모든 항목을 입력해주세요!"+i);
+			return false;
+		}
+	}
+	
+	var password = $("#m_pw").val();
+	try{
+		var rsaPublicKeyModulus = document.getElementById("rsaPublicKeyModulus").value;
+        var rsaPublicKeyExponent = document.getElementById("rsaPublicKeyExponent").value;
+        submitEncryptedForm(password, rsaPublicKeyModulus, rsaPublicKeyExponent);
+	}catch(err){
+		alert(err);
+	}
+	return true;
 	
 }
+
+
+function submitEncryptedForm(password, rsaPublicKeyModulus, rsaPpublicKeyExponent) {
+    var rsa = new RSAKey();
+    rsa.setPublic(rsaPublicKeyModulus, rsaPpublicKeyExponent);
+
+    // 사용자ID와 비밀번호를 RSA로 암호화한다.
+    var securedPassword = rsa.encrypt(password);
+
+    // POST 로그인 폼에 값을 설정하고 발행(submit) 한다.
+    var securedLoginForm = document.getElementById("login-form");
+    securedLoginForm.rsaChangePw.value = securedPassword;
+    
+}
+    
 
 
 

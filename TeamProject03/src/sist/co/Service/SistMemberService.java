@@ -15,4 +15,6 @@ public interface SistMemberService {
 	int getId(SistMemberVO vo) throws Exception;
 	
 	void createTable(HashMap map);
+	
+	void updateActionMember(String m_id);
 }
