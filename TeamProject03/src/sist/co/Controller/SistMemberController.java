@@ -97,16 +97,25 @@ public class SistMemberController {
 		        
 
 		SistMemberVO memvo = sistMemberService.login(vo);
+		int count = sistMemberService.getId(vo);
+		
 		String no_login="회원의 아이디가 비활성화 상태이거나 등록되지 않은 아이디 입니다.";
 		
-		if(memvo == null){
+		if(count>0){
+			if(memvo == null){
+				request.getSession().setAttribute("no_login", no_login);
+				return "redirect:login.do";
+			}else{
+				request.getSession().setAttribute("login", memvo);
+				return "index.tiles";
+			}
+		}else{
+			no_login="등록되지 않은 아이디 입니다.";
 			request.getSession().setAttribute("no_login", no_login);
 			return "redirect:login.do";
-		}else{
-			request.getSession().setAttribute("login", memvo);
-			
 		}
-		return "index.tiles";
+		
+		
 	}
 	
 	@RequestMapping(value="regi.do",method=RequestMethod.GET)
@@ -269,9 +278,68 @@ public class SistMemberController {
 	}
 	
 	
+	@RequestMapping(value="idUsePhone.do",method=RequestMethod.GET)
+	@ResponseBody
+	public YesMember idUsePhone(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
+		logger.info("idUsePhone.do 실행중");
+
+		SistMemberVO vos = sistMemberService.idUsePhone(vo);
+		
+		YesMember yes = new YesMember();
+		
+		if(vos != null){
+			yes.setMessage("Suc");
+			request.getSession().setAttribute("find_user_id",vos);
+		}else {
+			yes.setMessage("Fai");
+		}
+		
+		return yes;
+	}
+	
+	@RequestMapping(value="idUseEmail.do",method=RequestMethod.GET)
+	@ResponseBody
+	public YesMember idUseEmail(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
+		logger.info("idUseEmail 실행중");
+		
+		SistMemberVO vos = sistMemberService.idUseEmail(vo);
+		
+		YesMember yes = new YesMember();
+		
+		if(vos != null){
+			yes.setMessage("Suc");
+
+			String my_confirmNum = request.getParameter("my_confirmNum");
+			System.out.println("my_confirmNum = "+my_confirmNum);
+			
+			request.getSession().setAttribute("find_user_id",vos);
+			request.getSession().setAttribute("confirmNum",my_confirmNum);
+			
+			//이메일 전송
+			
+			SendEmail send = new SendEmail(my_confirmNum, vo.getM_email(),0);
+			
+			
+		}else {
+			yes.setMessage("Fai");
+		}
+		
+		return yes;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public String two(String msg){
 		return msg.length()>2? msg:"0"+msg;
 	}
+	
 	
 	
 	

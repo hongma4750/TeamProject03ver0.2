@@ -48,6 +48,18 @@ public class SistMemberImpl implements SistMemberService{
 		sistMemberDAO.updateActionMember(m_id);
 	}
 
+	@Override
+	public SistMemberVO idUsePhone(SistMemberVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return sistMemberDAO.idUsePhone(vo);
+	}
+
+	@Override
+	public SistMemberVO idUseEmail(SistMemberVO vo) throws Exception {
+
+		return sistMemberDAO.idUseEmail(vo);
+	}
+
 
 	
 	

@@ -29,5 +29,13 @@
   		UPDATE MEMBER SET M_ACTION = 1 WHERE M_ID = #{m_id}
   	</update>
   	
+  	<select id="idUsePhone" parameterType="sist.co.Model.SistMemberVO" resultType="sist.co.Model.SistMemberVO">
+  		SELECT M_ID FROM MEMBER WHERE M_NAME = #{m_name} AND M_PHONE = #{m_phone}
+  	</select>
+  	
+  	<select id="idUseEmail" parameterType="sist.co.Model.SistMemberVO" resultType="sist.co.Model.SistMemberVO">
+  		SELECT M_ID FROM MEMBER WHERE M_NAME = #{m_name} AND M_EMAIL = #{m_email}
+  	</select>
+  	
   </mapper>
 

@@ -17,4 +17,8 @@ public interface SistMemberService {
 	void createTable(HashMap map);
 	
 	void updateActionMember(String m_id);
+	
+	SistMemberVO idUsePhone(SistMemberVO vo)throws Exception;
+	
+	SistMemberVO idUseEmail(SistMemberVO vo) throws Exception;
 }

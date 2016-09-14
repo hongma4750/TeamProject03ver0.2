@@ -97,6 +97,7 @@
                 
                 <c:if test="${no_login ne null }">
                 	<div style="color:red; text-align:center">${no_login }</div>
+                	<c:remove var="no_login" scope="session" />
                 </c:if>
             </div>
         </div>

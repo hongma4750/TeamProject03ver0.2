@@ -20,7 +20,7 @@ public class SistMemberDAO {
 	public SistMemberVO login(SistMemberVO member) throws Exception{
 		return (SistMemberVO) sqlSession.selectOne(ns+"login", member);
 	}
-	
+
 	public boolean insertMember(SistMemberVO membervo) throws Exception{
 		sqlSession.insert(ns+"insertMember", membervo);
 		return true;
@@ -37,6 +37,14 @@ public class SistMemberDAO {
 	
 	public void updateActionMember(String m_id){
 		sqlSession.update(ns+"updateActionMember",m_id);
+	}
+	
+	public SistMemberVO idUsePhone(SistMemberVO vo) throws Exception{
+		return (SistMemberVO) sqlSession.selectOne(ns+"idUsePhone",vo);
+	}
+	
+	public SistMemberVO idUseEmail(SistMemberVO vo) throws Exception{
+		return (SistMemberVO) sqlSession.selectOne(ns+"idUseEmail",vo);
 	}
 	
 }
