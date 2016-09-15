@@ -47,4 +47,32 @@ public class SistMemberDAO {
 		return (SistMemberVO) sqlSession.selectOne(ns+"idUseEmail",vo);
 	}
 	
+	public SistMemberVO pwUsePhone(SistMemberVO vo) throws Exception{
+		return (SistMemberVO) sqlSession.selectOne(ns+"pwUsePhone",vo);
+	}
+	
+	public SistMemberVO pwUseEmail(SistMemberVO vo) throws Exception{
+		return (SistMemberVO) sqlSession.selectOne(ns+"pwUseEmail",vo);
+	}
+	
+	public void changeName(SistMemberVO vo) throws Exception{
+		sqlSession.update(ns+"changeName",vo);
+	}
+	
+	public SistMemberVO selectId(SistMemberVO vo) throws Exception{
+		return (SistMemberVO) sqlSession.selectOne(ns+"selectId",vo);
+	}
+	
+	public void changeEmail(SistMemberVO vo) throws Exception {
+		sqlSession.update(ns+"changeEmail",vo);
+	}
+	
+	public void changePhone(SistMemberVO vo) throws Exception {
+		sqlSession.update(ns+"changePhone",vo);
+	}
+	
+	public void myProfile(SistMemberVO vo) throws Exception {
+		sqlSession.update(ns+"myProfile",vo);
+	}
+	
 }

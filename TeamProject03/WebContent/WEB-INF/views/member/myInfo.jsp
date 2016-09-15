@@ -12,6 +12,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<script src="js/myInfo.js"></script>
+    
 <!-- 부트스트랩 링크 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,9 +29,9 @@
     
 
 <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
+<!--     <script src="js/plugins/morris/raphael.min.js"></script>
     <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+    <script src="js/plugins/morris/morris-data.js"></script> -->
     
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -37,6 +39,7 @@
     <!-- Morris Charts CSS -->
     <link href="css/plugins/morris.css" rel="stylesheet">
     
+
     
 <style type="text/css">
 html {
@@ -327,7 +330,7 @@ li.message-preview>a {
 		<div id="content">
 			<div class="column">
 				<div class="sh_group">
-				
+				<input type=hidden value="${login.m_id }" id="m_id">
 				
 					<div style="height:100%;">
 						<h2><bold>정보 수정</bold></h2>
@@ -340,16 +343,21 @@ li.message-preview>a {
 						  	<td style="">이름</td>
 						  	<td style=" text-align:left;">
 						  		<div style="position:relative; width:90%; height:100%; ">
-						  			<h4>김홍민</h4>
+						  			<h4>${login.m_name }</h4>
 						  			<br>
 						  			<div>
 						  				<input type="button" value="이름 변경" id="nameChangeBtn">
 						  			</div>
 						  			<br><br>
 						  			<div style=" display:none;" id="nameBox">
-						  				<input type="text" class="form-control" name="m_name" placeholder="이름">
-						  				<button type="submit" class="form-control btn btn-primary" id="nameChangeBtn" style="height:50px; width:100px;" disabled>변경</button>
-						  				<button type="submit" class="form-control btn btn-primary" id="nameCancelBtn" style="height:50px; width:100px;">취소</button>
+						  				<input type="text" class="form-control" name="m_name" placeholder="이름" id="m_name">
+						  				<div id="checkName"></div>
+						  				<br>
+						  				<button type="button" class="form-control btn btn-primary" 
+						  				id="nameChangeBtns" style="height:50px; width:100px;" disabled onclick="changeName()">변경</button>
+						  				
+						  				<button type="button" class="form-control btn btn-primary" 
+						  				id="nameCancelBtn" style="height:50px; width:100px;">취소</button>
 						  			</div>
 						  		</div>
 						  	</td>
@@ -359,16 +367,18 @@ li.message-preview>a {
 						  	<td style="">이메일</td>
 						  	<td style=" text-align:left;">
 						  		<div style="position:relative; width:90%; height:100%; ">
-						  			<h4>lovely4750@na**r.com</h4>
+						  			<h4>${login.m_email }</h4>
 						  			<br>
 						  			<div>
 						  				<input type="button" value="이메일 변경" id="emailChangeBtn">
 						  			</div>
 						  			<br><br>
 						  			<div style=" display:none;" id="emailCheckBox">
-						  				<input type="text" class="form-control" name="m_email" placeholder="이메일" id="nameinput">
-						  				<button type="submit" class="form-control btn btn-primary" id="emailCheckBtn" style="height:50px; width:100px;" disabled>변경</button>
-						  				<button type="submit" class="form-control btn btn-primary" id="emailCancelBtn" style="height:50px; width:100px;">취소</button>
+						  				<input type="email" class="form-control" name="m_email" placeholder="이메일" id="m_email">
+						  				<div id="checkEmail"></div>
+						  				<button type="button" class="form-control btn btn-primary" 
+						  				id="emailChangeBtns" style="height:50px; width:100px;" disabled onclick="changeEmail()">변경</button>
+						  				<button type="button" class="form-control btn btn-primary" id="emailCancelBtn" style="height:50px; width:100px;">취소</button>
 						  			</div>
 						  		</div>
 						  	</td>
@@ -378,15 +388,17 @@ li.message-preview>a {
 						  	<td style="">휴대전화</td>
 						  	<td style=" text-align:left;">
 						  		<div style="position:relative; width:90%; height:100%; ">
-						  			<h4>010-4750-8078</h4>
+						  			<h4>${login.m_phone }</h4>
 						  			<br>
 						  			<div>
 						  				<input type="button" value="휴대전화 변경" id="phoneChangeBtn">
 						  			</div>
 						  			<br><br>
 						  			<div style=" display:none;" id="phoneCheckBox">
-						  				<input type="text" class="form-control" name="m_phone" placeholder="휴대전화" id="phoneinput">
-						  				<button type="submit" class="form-control btn btn-primary" id="phoneCheckBtn" style="height:50px; width:100px;" disabled>변경</button>
+						  				<input type="text" class="form-control" name="m_phone" 
+						  				placeholder="휴대전화" id="m_phone" maxlength="11" onkeydown="return showKeyCode(event)">
+						  				<button type="button" class="form-control btn btn-primary" 
+						  				id="phoneChangeBtns" style="height:50px; width:100px;" disabled onclick="changePhone()">변경</button>
 						  				<button type="button" class="form-control btn btn-primary" id="phoneCancelBtn" style="height:50px; width:100px;">취소</button>
 						  			</div>
 						  		</div>
@@ -395,7 +407,7 @@ li.message-preview>a {
 						  
 						  <tr>
 						  	<td colspan="2">
-						  		<button type="submit" class="form-control btn btn-primary" id="loginBtn" style="height:50px; width:100px;" disabled>변경</button>
+						  		
 						  		<button type="button" class="form-control-1 btn btn-primary" id="cancelBtn" style="height:50px; width:100px;" onclick="location.href='myPage.do'">취소</button>
 						  	</td>
 						  </tr>
@@ -421,6 +433,229 @@ li.message-preview>a {
 		
 	</div>
 </div>
+
+
+
+
+
+<script>
+
+$(document).ready(function(){
+	
+	$("#m_name").click(function(){
+		 $(document).mousedown(function(e){
+			 $('#m_name').each(function(){
+			         if( $(this).css('display') == 'block' )
+			         {
+			        	 var l_position = $(this).offset();
+			             l_position.right = parseInt(l_position.left) + ($(this).width());
+			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
+			             
+			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
+				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
+				             {
+				                 //alert( 'popup in click' );
+				             }
+				             else
+				             {
+				                 //alert( 'popup out click' );
+				                 BaseCheckName();
+				             }   
+			         }
+			     });
+			 });
+	 	});
+	
+	
+		$("#m_email").click(function(){
+			 $(document).mousedown(function(e){
+				 $('#m_email').each(function(){
+				         if( $(this).css('display') == 'block' )
+				         {
+				        	 var l_position = $(this).offset();
+				             l_position.right = parseInt(l_position.left) + ($(this).width());
+				             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
+				             
+				             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
+					                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
+					             {
+					                 //alert( 'popup in click' );
+					             }
+					             else
+					             {
+					                 //alert( 'popup out click' );
+					                 BaseCheckEmail();
+					             }   
+				         }
+				     });
+				 });
+		 	});
+		
+		$("#m_phone").click(function(){
+			 $(document).mousedown(function(e){
+				 $('#m_phone').each(function(){
+				         if( $(this).css('display') == 'block' )
+				         {
+				        	 var l_position = $(this).offset();
+				             l_position.right = parseInt(l_position.left) + ($(this).width());
+				             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
+				             
+				             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
+					                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
+					             {
+					                 //alert( 'popup in click' );
+					             }
+					             else
+					             {
+					                 //alert( 'popup out click' );
+					                 BaseCheckPhone();
+					             }   
+				         }
+				     });
+				 });
+		 	});
+		
+	
+	
+
+});
+
+
+//이름 변경~
+function BaseCheckName(){
+	
+	var m_name = $("#m_name").val();
+	var regExp02 = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+	var regExp01 = /\s/g;
+	var regExp03 = /^[0-9]*$/;
+	
+	if($("#m_name").val().length==0){
+		putYourName(0);
+	}else if(regExp01.test(m_name)){
+		putYourName(2);
+	}else if(regExp02.test(m_name)){
+		putYourName(2);
+	}else if(regExp03.test(m_name)){
+		putYourName(2);
+	}else{
+		putYourName(1);
+	}
+}
+
+
+function putYourName(a){
+	
+	if(a=="0"){
+		$("#checkName").show();
+		$("#checkName").html("필수 항목 입니다.");
+		$("#checkName").css("color","#FF0000");
+		$("#nameChangeBtns").attr("disabled",true);
+	}else if(a=="1"){
+		$("#checkName").hide();
+		$("#nameChangeBtns").attr('disabled',false);
+	}else if(a=="2"){
+		$("#checkName").show();
+		$("#checkName").html("이름에는 한글, 영문 대소문자를 이용해 주세요.");
+		$("#checkName").css("color","#FF0000");
+		$("#nameChangeBtns").attr("disabled",true);
+	}
+}
+
+function changeName(){
+	var m_name = $("#m_name").val();
+	var m_id = $("#m_id").val();
+	location.href="changeName.do?m_name="+m_name+"&m_id="+m_id;
+}
+//이름 변경~
+
+
+//이메일변경~
+function BaseCheckEmail(){
+	var m_email = $("#m_email").val();
+	
+	if(m_email.length==0){
+		putYourEmail(0);
+	}else if(m_email.length>0){
+		putYourEmail(1);
+	}
+}
+
+function putYourEmail(a){
+	if(a == "0"){
+		$("#checkEmail").show();
+		$("#checkEmail").html("필수 정보입니다.");
+		$("#checkEmail").css("color","#FF0000");
+		$("#emailChangeBtns").attr('disabled',true);
+	}else if(a=="1"){
+		$("#checkEmail").hide();
+		$("#emailChangeBtns").attr('disabled',false);
+	}
+}
+
+function changeEmail(){
+	var m_email = $("#m_email").val();
+	var m_id = $("#m_id").val();
+	location.href="changeEmail.do?m_email="+m_email+"&m_id="+m_id;
+}
+
+//이메일변경~
+
+
+//휴대전화변경~~
+
+function BaseCheckPhone(){
+	var m_phone = $("#m_phone").val();
+
+	if(m_phone.length==0){
+		putYourPhone(0);
+	}else if(m_phone.length==11){
+		putYourPhone(1);
+	  }
+}
+
+function putYourPhone(a){
+	if(a=="0"){
+		$("#checkPhone").show();
+		$("#checkPhone").html("필수 정보입니다.");
+		$("#checkPhone").css("color","#FF0000");
+		$("#phoneChangeBtns").attr('disabled',true);
+	}else if(a=="1"){
+		$("#checkPhone").hide();
+		$("#phoneChangeBtns").attr('disabled',false);
+		
+	}
+}
+
+function changePhone(){
+	var m_phone = $("#m_phone").val();
+	var m_id = $("#m_id").val();
+	location.href="changePhone.do?m_phone="+m_phone+"&m_id="+m_id;
+}
+
+//휴대전화변경~~
+function showKeyCode(event) {
+	event = event || window.event;
+	var keyID = (event.which) ? event.which : event.keyCode;
+	if( ( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+	{
+		return;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+
+</script>
+
+
+
+
+
+
+
 
 <script type="text/javascript">
 $("#nameChangeBtn").click(function(){
@@ -452,5 +687,6 @@ $("#phoneCancelBtn").click(function(){
 	$("#phoneCheckBox").hide();
 	$("#phoneChangeBtn").show();
 })
+
 
 </script>

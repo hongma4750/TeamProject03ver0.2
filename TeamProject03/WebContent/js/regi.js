@@ -288,12 +288,15 @@ function BaseCheckName(a){
 	var m_name = $("#m_name").val();
 	var regExp02 = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 	var regExp01 = /\s/g;
+	var regExp03 = /^[0-9]*$/;
 	
 	if($("#m_name").val().length==0){
 		putYourName(0);
 	}else if(regExp01.test(m_name)){
 		putYourName(2);
 	}else if(regExp02.test(m_name)){
+		putYourName(2);
+	}else if(regExp03.test(m_name)){
 		putYourName(2);
 	}else{
 		putYourName(1);

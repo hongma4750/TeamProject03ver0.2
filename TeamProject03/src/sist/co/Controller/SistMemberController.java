@@ -1,20 +1,22 @@
 package sist.co.Controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 
 import javax.crypto.Cipher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import nl.captcha.Captcha;
+import nl.captcha.backgrounds.GradiatedBackgroundProducer;
+import nl.captcha.gimpy.DropShadowGimpyRenderer;
+import nl.captcha.servlet.CaptchaServletUtil;
+import nl.captcha.text.producer.DefaultTextProducer;
+import sist.co.Model.FUpUtil;
 import sist.co.Model.SendEmail;
 import sist.co.Model.SistMemberVO;
 import sist.co.Model.YesMember;
 import sist.co.Service.SistMemberService;
+
 
 
 @Controller
@@ -224,20 +235,27 @@ public class SistMemberController {
 	}
 	
 	@RequestMapping(value="find_pw_se.do", method=RequestMethod.GET)
-	public String find_pw_se(HttpServletRequest request, Model model){
+	public String find_pw_se(HttpServletRequest request, Model model) throws Exception{
 		logger.info("find_pw_se.do 실행중");
 		
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
+		
+		
+	
+	
 		return "find_pw_se.tiles";
 	}
 	
 	@RequestMapping(value="find_pw_ok.do", method=RequestMethod.GET)
-	public String find_pw_ok(HttpServletRequest request, Model model){
+	public String find_pw_ok(HttpServletRequest request,HttpServletResponse response, Model model) throws Exception{
 		logger.info("find_pw_ok.do 실행중");
 		
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
+		
+		
+
 		return "find_pw_ok.tiles";
 	}
 	
@@ -313,7 +331,7 @@ public class SistMemberController {
 			System.out.println("my_confirmNum = "+my_confirmNum);
 			
 			request.getSession().setAttribute("find_user_id",vos);
-			request.getSession().setAttribute("confirmNum",my_confirmNum);
+			
 			
 			//이메일 전송
 			
@@ -328,6 +346,137 @@ public class SistMemberController {
 		
 		
 	}
+	
+	@RequestMapping(value="pwUsePhone.do",method=RequestMethod.GET)
+	@ResponseBody
+	public YesMember pwUsePhone(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
+		logger.info("pwUsePhone.do 실행");
+		
+		SistMemberVO vos = sistMemberService.pwUsePhone(vo);
+		
+		YesMember yes = new YesMember();
+		
+		if(vos != null){
+			yes.setMessage("Suc");
+			request.getSession().setAttribute("find_user_pw",vos);	
+		}else {
+			yes.setMessage("Fai");
+		}
+		
+		return yes;
+		
+	}
+	
+	@RequestMapping(value="pwUseEmail.do",method=RequestMethod.GET)
+	@ResponseBody
+	public YesMember pwUseEmail(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
+		logger.info("pwUseEmail 실행중");
+		
+		SistMemberVO vos = sistMemberService.pwUseEmail(vo);
+		
+		YesMember yes = new YesMember();
+		
+		if(vos != null){
+			yes.setMessage("Suc");
+
+			String my_confirmNum = request.getParameter("my_confirmNum");
+			System.out.println("my_confirmNum = "+my_confirmNum);
+			
+			request.getSession().setAttribute("find_user_pw",vos);
+			
+			//이메일 전송
+			
+			SendEmail send = new SendEmail(my_confirmNum, vo.getM_email(),1);
+
+		}else {
+			yes.setMessage("Fai");
+		}
+		
+		return yes;
+		
+	}
+	
+	
+	
+	@RequestMapping(value="changeName.do",method=RequestMethod.GET)
+	public String changeName(SistMemberVO vo , HttpServletRequest request, Model model) throws Exception{
+		logger.info("changeName실행");
+		
+		
+		sistMemberService.changeName(vo);
+		SistMemberVO vos = sistMemberService.selectId(vo);
+		
+		request.getSession().setAttribute("login", vos);
+		
+		return "myInfo.tiles";
+
+	}
+	
+	@RequestMapping(value="changeEmail.do",method=RequestMethod.GET)
+	public String changeEmail(SistMemberVO vo, HttpServletRequest request, Model model) throws Exception{
+		logger.info("changeEmail실행");
+		
+		
+		sistMemberService.changeEmail(vo);
+		SistMemberVO vos = sistMemberService.selectId(vo);
+		
+		request.getSession().setAttribute("login", vos);
+		
+		return "myInfo.tiles";
+	}
+	
+	@RequestMapping(value="changePhone.do",method=RequestMethod.GET)
+	public String changePhone(SistMemberVO vo, HttpServletRequest request, Model model) throws Exception{
+		logger.info("changePhone실행");
+		
+		
+		sistMemberService.changePhone(vo);
+		SistMemberVO vos = sistMemberService.selectId(vo);
+		
+		request.getSession().setAttribute("login", vos);
+		
+		return "myInfo.tiles";
+		
+	}
+	
+	
+	@RequestMapping(value="myProfile.do",method=RequestMethod.POST)
+	public String myProfile(SistMemberVO vo, HttpServletRequest request,
+			@RequestParam(value="fileload", required=false)
+			MultipartFile fileload, Model model) throws Exception {
+		logger.info("myProfile 실행중");
+		
+		
+		vo.setM_photo(fileload.getOriginalFilename());
+		
+		String fupload = request.getServletContext().getRealPath("/upload");
+		logger.info("fupload : " + fupload);
+		
+		String f = vo.getM_photo();
+		
+			
+		String newFile = FUpUtil.getNewFile(f);
+		logger.info(fupload+ "/" + newFile);
+		
+		vo.setM_photo(newFile);
+		
+		try{		
+			File file = new File(fupload+ "/" + newFile);		
+			FileUtils.writeByteArrayToFile(file, fileload.getBytes());
+
+			sistMemberService.myProfile(vo);
+			logger.info("pdsupload success");
+			
+		}catch(IOException e){
+			logger.info("pdsupload fail!");
+		}
+		
+		SistMemberVO vos = sistMemberService.selectId(vo);
+		request.getSession().setAttribute("login", vos);
+		
+		return "myPage.tiles";
+	}
+
 	
 	
 	

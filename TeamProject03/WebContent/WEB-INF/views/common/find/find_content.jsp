@@ -142,12 +142,19 @@
 	$("#optionsRadios1").click(function(){
 		$("#usePhone").show();
 		$("#useEmail").hide();
+		
+		$("#p_m_name").val("");
+		$("#p_m_email").val("");
 	})
 	
 	$("#optionsRadios2").click(function(){
 		
 		$("#usePhone").hide();
 		$("#useEmail").show();
+		
+		$("#e_m_name").val("");
+		$("#e_m_phone").val("");
+		
 	})
 	
 	function find_id(){
@@ -170,7 +177,7 @@
 			//인증번호 확인
 
 			if($("#e_m_emailChk").val() == my_confirmNum){
-				location.href="find_id_ok.do";
+				location.href="find_id_ok.do?menu=id";
 			}else{
 				alert("인증번호를 다시 확인해 주세요");
 			}
@@ -249,7 +256,7 @@
 	function outputList(msg){
 		
 		if(msg.message == "Suc"){
-			location.href="find_id_ok.do";
+			location.href="find_id_ok.do?menu=id";
 		}else{
 			alert("일치하는 회원이 없습니다.");
 			$("#e_m_name").val("");

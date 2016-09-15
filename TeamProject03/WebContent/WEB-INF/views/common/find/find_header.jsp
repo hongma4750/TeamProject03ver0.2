@@ -31,7 +31,8 @@
        	<small><a href="index.do" style="text-decoration: none;color:#5DBB1D; font-size:20px;">꽃밭에 홍미니</a></small>
        	<small><a href="#"style="text-decoration: none;color:white; font-size:20px;">내블로그</a></small>
        	 <div style="float:right;">
-	    	<button class="form-control btn btn-primary" style="height:100%; background-color:#525763; border-color:#525763;">로그인</button>
+	    	<button class="form-control btn btn-primary" style="height:100%; background-color:#525763; border-color:#525763;"
+	    	onclick="location.href='login.do'">로그인</button>
 	    </div>
     </div>
     

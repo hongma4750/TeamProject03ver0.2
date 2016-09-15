@@ -346,6 +346,7 @@ li.message-preview>a {
 				
 				<h2><bold>프로필 수정</bold></h2>
 				
+				<form action="myProfile.do" method="post" enctype="multipart/form-data">
 					<div style="height:100%; width:100%; ">
 						<table class="table" style="text-align:center;">
 							<col style="width:30%;"/>
@@ -354,33 +355,29 @@ li.message-preview>a {
 						  	<td style="height:300px;">프로필 사진</td>
 						  	<td style="height:300px; text-align:left;">
 						  		<div style=" height:90%; ">
-						  			<img src="image/12.jpg" alt="이미지 없음" class="img-rounded" style="width:200px; height:250px;">
-						  			
+						  			<img src="${login.m_photo }" alt="이미지 없음" class="img-rounded" style="width:200px; height:250px;">	
 						  		</div>
 						  		
 						  		<div style="height:10%;">
-						  			<input type="button" value="사진 변경">
-						  			<input type="button" value="취소">
+						  			<input type="hidden" value="${login.m_id }" name="m_id">
+						  			<input type="file" id="exampleInputFile" name="fileload">
+						  			<input type="button" value="삭제">
 						  		</div>
 						  	</td>
 						  </tr>
 						  
-						  <tr>
-						  	<td>별명</td>
-						  	<td>
-						  		<input type="text" class="form-control" name="m_nickname" placeholder="별명">
-						  	</td>
-						  </tr>
-						  
+ 
 						  <tr>
 						  	<td colspan="2">
-						  		<button type="submit" class="form-control btn btn-primary" id="loginBtn" style="height:50px; width:100px;" disabled>변경</button>
-						  		<button type="button" class="form-control-1 btn btn-primary" id="cancelBtn" style="height:50px; width:100px;" onclick="location.href='myPage.do'">취소</button>
+						  		<button type="submit" class="form-control btn btn-primary" id="loginBtn" style="height:50px; width:100px;" >변경</button>
+						  		<button type="button" class="form-control-1 btn btn-primary" 
+						  		id="cancelBtn" style="height:50px; width:100px;" onclick="location.href='myPage.do'">취소</button>
 						  	</td>
 						  </tr>
 						</table>
 	
 					</div>
+					</form>
 					
 					
 				</div>

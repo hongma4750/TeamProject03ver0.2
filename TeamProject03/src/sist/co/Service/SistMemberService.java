@@ -21,4 +21,18 @@ public interface SistMemberService {
 	SistMemberVO idUsePhone(SistMemberVO vo)throws Exception;
 	
 	SistMemberVO idUseEmail(SistMemberVO vo) throws Exception;
+	
+	SistMemberVO pwUsePhone(SistMemberVO vo) throws Exception;
+	
+	SistMemberVO pwUseEmail(SistMemberVO vo) throws Exception;
+	
+	void changeName(SistMemberVO vo) throws Exception;
+	
+	SistMemberVO selectId(SistMemberVO vo) throws Exception;
+	
+	void changeEmail(SistMemberVO vo) throws Exception;
+	
+	void changePhone(SistMemberVO vo) throws Exception;
+	
+	void myProfile(SistMemberVO vo) throws Exception;
 }

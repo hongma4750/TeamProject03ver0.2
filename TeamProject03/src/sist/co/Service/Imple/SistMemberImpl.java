@@ -60,6 +60,41 @@ public class SistMemberImpl implements SistMemberService{
 		return sistMemberDAO.idUseEmail(vo);
 	}
 
+	@Override
+	public SistMemberVO pwUsePhone(SistMemberVO vo) throws Exception {
+		return sistMemberDAO.pwUsePhone(vo);
+	}
+
+	@Override
+	public SistMemberVO pwUseEmail(SistMemberVO vo) throws Exception {
+		return sistMemberDAO.pwUseEmail(vo);
+	}
+
+	@Override
+	public void changeName(SistMemberVO vo) throws Exception {
+		sistMemberDAO.changeName(vo);
+	}
+
+	@Override
+	public SistMemberVO selectId(SistMemberVO vo) throws Exception {
+		return sistMemberDAO.selectId(vo);
+	}
+
+	@Override
+	public void changeEmail(SistMemberVO vo) throws Exception {
+		sistMemberDAO.changeEmail(vo);
+	}
+
+	@Override
+	public void changePhone(SistMemberVO vo) throws Exception {
+		sistMemberDAO.changePhone(vo);
+	}
+
+	@Override
+	public void myProfile(SistMemberVO vo) throws Exception {
+		sistMemberDAO.myProfile(vo);
+	}
+
 
 	
 	

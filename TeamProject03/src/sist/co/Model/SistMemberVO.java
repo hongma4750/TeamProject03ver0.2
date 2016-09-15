@@ -25,6 +25,25 @@ create table member(
 */
 
 
+/*create table member(
+	m_id varchar2(50),			-- 아이디
+	m_pw varchar2(2000),			-- 비밀번호
+	m_name varchar2(50),
+	m_gender varchar2(2),
+	m_birthday varchar2(12),
+	m_email varchar2(50),		-- 이메일
+	m_phone varchar2(50),		-- 전화번호
+	M_PHOTO VARCHAR2(1000),
+  
+	m_action number default 0,		-- 인증
+  
+	--m_logchk number default 0, 		-- 로그인 실패 카운트
+	--m_logdate date,			-- 로그인 한 날
+	--m_faildate date,			-- 로그인 실패했을 때, 시간 입력
+	m_auth number
+);*/
+
+
 public class SistMemberVO {
 	
 	private String m_id;
@@ -34,11 +53,10 @@ public class SistMemberVO {
 	private String m_birthday;
 	private String m_email;
 	private String m_phone;
+	private String m_photo;
 	
 	private int action;
-	private int m_logchk;
-	private Timestamp m_logdate;
-	private Timestamp m_faildate;
+	
 	private int auth;
 	
 	public SistMemberVO() {
@@ -101,36 +119,20 @@ public class SistMemberVO {
 		this.m_phone = m_phone;
 	}
 
+	public String getM_photo() {
+		return m_photo;
+	}
+
+	public void setM_photo(String m_photo) {
+		this.m_photo = m_photo;
+	}
+
 	public int getAction() {
 		return action;
 	}
 
 	public void setAction(int action) {
 		this.action = action;
-	}
-
-	public int getM_logchk() {
-		return m_logchk;
-	}
-
-	public void setM_logchk(int m_logchk) {
-		this.m_logchk = m_logchk;
-	}
-
-	public Timestamp getM_logdate() {
-		return m_logdate;
-	}
-
-	public void setM_logdate(Timestamp m_logdate) {
-		this.m_logdate = m_logdate;
-	}
-
-	public Timestamp getM_faildate() {
-		return m_faildate;
-	}
-
-	public void setM_faildate(Timestamp m_faildate) {
-		this.m_faildate = m_faildate;
 	}
 
 	public int getAuth() {
@@ -144,11 +146,11 @@ public class SistMemberVO {
 	@Override
 	public String toString() {
 		return "SistMemberVO [m_id=" + m_id + ", m_pw=" + m_pw + ", m_name=" + m_name + ", m_gender=" + m_gender
-				+ ", m_birthday=" + m_birthday + ", m_email=" + m_email + ", m_phone=" + m_phone + ", action=" + action
-				+ ", m_logchk=" + m_logchk + ", m_logdate=" + m_logdate + ", m_faildate=" + m_faildate + ", auth="
-				+ auth + "]";
+				+ ", m_birthday=" + m_birthday + ", m_email=" + m_email + ", m_phone=" + m_phone + ", m_photo="
+				+ m_photo + ", action=" + action + ", auth=" + auth + "]";
 	}
 
+	
 	
 	
 	

@@ -335,17 +335,18 @@ li.message-preview>a {
 						<div class="row">
 						  <div class="col-xs-6 col-md-3" style="text-align:center">
 						    <a href="myProfile.do" class="thumbnail">
-						      <img src="image/12.jpg" alt="이미지없음" style="width:200px; height:250px;">
+						      <img src="<%=request.getServletContext().getRealPath("/upload")+'/'%>${login.m_photo}" alt="이미지없음" style="width:200px; height:250px;">
+						      <%=request.getServletContext().getRealPath("/upload")+'/'%>
+						      ${login.m_photo }
+						      
 						    </a>
-						  
+						 	 
+						 	 
 						    <input type="button" onclick="location.href='myProfile.do'" value="수정">
 						   
 						  </div>
 						 	
-						 	<div style="height:100%; vertical-align:middle;">
-						 		<h3>별명 : 홍마 </h3>
-						 	</div>
-						 	
+
 						</div>
 						
 						
@@ -362,8 +363,8 @@ li.message-preview>a {
 					<div style="height:100%;">
 						<h2><bold>회원 연락처</bold></h2>
 						
-						<h3><bold>이메일 : </bold> lovely4750@naver.com</h3>
-						<h3><bold>휴대전화 : </bold> 010-4750-8078</h3>
+						<h3><bold>이메일 : </bold> ${login.m_email}</h3>
+						<h3><bold>휴대전화 : </bold> ${login.m_phone }</h3>
 						
 						<div style="margin-left: 60px;">
 						<input type="button" onclick="location.href='myInfo.do'" value="수정">

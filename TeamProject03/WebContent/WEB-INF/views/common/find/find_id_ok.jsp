@@ -71,6 +71,7 @@
 <div style="height:100%; ">
     
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">     
+    <br><br>
     		<div>
                 아이디 찾기
        		 </div>
