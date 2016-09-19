@@ -24,12 +24,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    
 
-<!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+    <script src="js/myProfile.js"></script>
     
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -204,6 +200,8 @@ li.message-preview>a {
 
 </style>
 
+
+
     
 
 
@@ -354,14 +352,15 @@ li.message-preview>a {
 						  <tr>
 						  	<td style="height:300px;">프로필 사진</td>
 						  	<td style="height:300px; text-align:left;">
-						  		<div style=" height:90%; ">
-						  			<img src="${login.m_photo }" alt="이미지 없음" class="img-rounded" style="width:200px; height:250px;">	
+						  		<div style=" height:85%; ">
+						  			<img src="" alt="이미지 없음" class="img-rounded" style="width:200px; height:250px;" id="myImg">	
 						  		</div>
 						  		
-						  		<div style="height:10%;">
+						  		<div style="height:15%;">
 						  			<input type="hidden" value="${login.m_id }" name="m_id">
-						  			<input type="file" id="exampleInputFile" name="fileload">
-						  			<input type="button" value="삭제">
+						  			<input type="hidden" value="${login.m_photo }" name="m_photo" id="m_photo">
+						  			<input type="file" id="exampleInputFile" name="fileload" onchange="UploadImg(this)">
+						  			<input type="button" value="삭제" onclick="deleteImg()">
 						  		</div>
 						  	</td>
 						  </tr>

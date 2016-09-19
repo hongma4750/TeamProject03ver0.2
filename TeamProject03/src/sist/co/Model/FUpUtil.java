@@ -15,7 +15,7 @@ public class FUpUtil {
 			//fre=f.substring(0,f.indexOf('.'));
 			filename=new Date().getTime()+fpost;
 		}else{
-			filename=new Date().getTime()+".back";
+			filename="no_image.gif";
 		}
 		return filename;
 	} 

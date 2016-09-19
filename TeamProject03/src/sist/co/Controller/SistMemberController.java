@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import nl.captcha.Captcha;
+/*import nl.captcha.Captcha;
 import nl.captcha.backgrounds.GradiatedBackgroundProducer;
 import nl.captcha.gimpy.DropShadowGimpyRenderer;
 import nl.captcha.servlet.CaptchaServletUtil;
-import nl.captcha.text.producer.DefaultTextProducer;
+import nl.captcha.text.producer.DefaultTextProducer;*/
 import sist.co.Model.FUpUtil;
 import sist.co.Model.SendEmail;
 import sist.co.Model.SistMemberVO;
@@ -447,34 +447,38 @@ public class SistMemberController {
 		logger.info("myProfile 실행중");
 		
 		
-		vo.setM_photo(fileload.getOriginalFilename());
-		
-		String fupload = request.getServletContext().getRealPath("/upload");
-		logger.info("fupload : " + fupload);
-		
-		String f = vo.getM_photo();
-		
+			vo.setM_photo(fileload.getOriginalFilename());
 			
-		String newFile = FUpUtil.getNewFile(f);
-		logger.info(fupload+ "/" + newFile);
-		
-		vo.setM_photo(newFile);
-		
-		try{		
-			File file = new File(fupload+ "/" + newFile);		
-			FileUtils.writeByteArrayToFile(file, fileload.getBytes());
-
-			sistMemberService.myProfile(vo);
-			logger.info("pdsupload success");
+			String fupload = request.getServletContext().getRealPath("/upload");
+			logger.info("fupload : " + fupload);
 			
-		}catch(IOException e){
-			logger.info("pdsupload fail!");
-		}
-		
-		SistMemberVO vos = sistMemberService.selectId(vo);
-		request.getSession().setAttribute("login", vos);
-		
-		return "myPage.tiles";
+			String f = vo.getM_photo();
+			
+				
+			String newFile = FUpUtil.getNewFile(f);
+			
+			String savePath = fupload+"/"+newFile;
+			String[] ex = savePath.split("wtpwebapps");
+			
+			logger.info(fupload+ "/" + newFile);
+			
+			vo.setM_photo(ex[1]);
+			
+			try{		
+				File file = new File(fupload+ "/" + newFile);		
+				FileUtils.writeByteArrayToFile(file, fileload.getBytes());
+	
+				sistMemberService.myProfile(vo);
+				logger.info("pdsupload success");
+				
+			}catch(IOException e){
+				logger.info("pdsupload fail!");
+			}
+			
+			SistMemberVO vos = sistMemberService.selectId(vo);
+			request.getSession().setAttribute("login", vos);
+			
+			return "myPage.tiles";
 	}
 
 	

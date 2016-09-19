@@ -95,7 +95,7 @@
 	        
       			<li>
                   	<a href="#" id="userInfo" >
-                  		<img src="image/12.jpg" alt="..." class="img-circle" style="width:30px; height:30px;">
+                  		<img src="${login.m_photo }" alt="..." class="img-circle" style="width:30px; height:30px;">
                   		<span>김홍민 님</span>
                   	</a>
                   </li>
@@ -136,7 +136,7 @@
      		
      		<div class="panel panel-success" style="width:100%;height:100%;">
             <div class="panel-body">
-            	<img src="image/12.jpg" style="width:70px; height:80px;" class="img-circle">
+            	<c:if test="${login.m_id ne null }"><img src="${login.m_photo }" style="width:70px; height:80px;" class="img-circle"></c:if>
             </div>
             
             <div class="row" style="height:10%; width:100%; text-align:center; z-index:10; top:85px; right:140px;position:absolute;" >

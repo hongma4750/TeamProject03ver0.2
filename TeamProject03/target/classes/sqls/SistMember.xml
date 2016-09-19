@@ -13,7 +13,8 @@
   	</select>
   	
   	<insert id="insertMember" parameterType="sist.co.Model.SistMemberVO">
-  		INSERT INTO MEMBER VALUES (#{m_id},#{m_pw},#{m_name},#{m_gender},#{m_birthday},#{m_email},#{m_phone},'ho',0,3)
+  		INSERT INTO MEMBER VALUES (#{m_id},#{m_pw},#{m_name},#{m_gender},#{m_birthday},#{m_email},#{m_phone},
+  		'\TeamProject03\upload/no_image.gif',0,3)
   	</insert>
   	
   	<select id="getId" parameterType="sist.co.Model.SistMemberVO" 	resultType="java.lang.Integer">

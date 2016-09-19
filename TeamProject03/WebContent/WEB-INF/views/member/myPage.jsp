@@ -335,10 +335,7 @@ li.message-preview>a {
 						<div class="row">
 						  <div class="col-xs-6 col-md-3" style="text-align:center">
 						    <a href="myProfile.do" class="thumbnail">
-						      <img src="<%=request.getServletContext().getRealPath("/upload")+'/'%>${login.m_photo}" alt="이미지없음" style="width:200px; height:250px;">
-						      <%=request.getServletContext().getRealPath("/upload")+'/'%>
-						      ${login.m_photo }
-						      
+						      <img src='${login.m_photo }' alt="이미지없음" style="width:200px; height:250px;"> 
 						    </a>
 						 	 
 						 	 

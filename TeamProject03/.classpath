@@ -22,8 +22,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/hongma/Desktop/메일jar/jaf-1_1_1/jaf-1.1.1/activation.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hongma/Desktop/메일jar/javamail1_4_5/javamail-1.4.5/mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hongma/Desktop/자동기입방지jar/매/simplecaptcha-1.2.1.jar"/>
+	<classpathentry kind="lib" path="J:/쌍용교육센터 프로젝트/jar모음집/메일jar/jaf-1_1_1/jaf-1.1.1/activation.jar"/>
+	<classpathentry kind="lib" path="J:/쌍용교육센터 프로젝트/jar모음집/메일jar/javamail1_4_5/javamail-1.4.5/mail.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
