@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<!DOCTYPE html>
+
 <!-- tag들 필요하면 Ctrl+c  /   Ctrl+v -->    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -14,6 +16,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- 부트스트랩 링크 -->
+
 
 
 <!-- 이웃, 그룹 관리 창 -->
@@ -52,30 +55,25 @@
 
 
 
-<form style="background-color: #fff;">
+
 <div id="con">
 <div role="tabpanel">
 <ul class="nav nav-tabs" role="tablist" id="myTab">
 
-  <li rel="defaulttab" role="presentation" class="active" >
-    <a href="#" id="tab1" aria-controls="home" role="tab" data-toggle="tab">열린이웃</a>
-  </li>
-  <li rel="grouptab" role="presentation">
-    <a href="#" id="tab2" aria-controls="presentation" role="tab" data-toggle="tab">이웃그룹</a>
-  </li>
-  <li rel="seqtab" role="presentation">
-    <a href="#" id="tab3" aria-controls="presentation" role="tab" data-toggle="tab">이웃순서</a>
-  </li>
+  <li rel="defaulttab" role="presentation" class="active" ><a href="#" id="tab1" aria-controls="home" role="tab" data-toggle="tab">열린이웃</a></li>
+  <li rel="grouptab" role="presentation"><a href="#" id="tab2" aria-controls="presentation" role="tab" data-toggle="tab">이웃그룹</a></li>
+  <li rel="seqtab" role="presentation"><a href="#" id="tab3" aria-controls="presentation" role="tab" data-toggle="tab">이웃순서</a></li>
   
 		<div align="right" style="float: reft;">
 			<input type="text" id="searchbar" value="" placeholder="별명,블로그명,ID" />&nbsp;&nbsp;
 			<input type="submit" id="btnSearch" value="검색" />
 	    </div>
 	    
-	    <div id="others">
+	    
+	    
+	   <%-- <div id="others">
 			<div role="tab_con" class="tab_con" id="defaulttab">
-				<!-- 열린이웃 탭 클릭시_include -->
-				<jsp:include page="openfriend.do" flush="true" />
+				<!-- 열린이웃 탭 클릭시_include -->			
 			</div>
 			<div role="tab_con" class="tab_con" id="grouptab">
 				<!-- 이웃그룹 탭 클릭시_include -->
@@ -84,16 +82,18 @@
 			<div role="tab_con" class="tab_con" id="seqtab">
 				<!-- 이웃순서 탭 클릭시_include -->
 				<jsp:include page="friendseq.do" flush="true" />
-			</div>
+			</div> --%>
 		</div>
 		
-	</ul>
+		
+		
+</ul>
 	
 </div>
 </div>
 
 
-</form>
+
 
 <script type="text/javascript">
 //탭클릭에 따른 내용 변경
@@ -112,7 +112,7 @@ $(function (){
 
 $(function () {
     $('#myTab a:first').tab('show')
-})
+});
   
 
 //라디오 버튼 선택에 따라
@@ -131,7 +131,7 @@ $("#btndblfollowOk").click(function(){
 function btnClose(){
 	document.all.dblfollow_on.style.display = "none";
 	document.all.dblfollow_off.style.display ="none";
-}
+};
 
 //검색 버튼 클릭시
 $("#btnSearch").click(function(){

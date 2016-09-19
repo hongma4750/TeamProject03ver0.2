@@ -43,9 +43,8 @@
 		<!-- 중간-왼쪽  <블로그 추천 부분> -->
 		
 		<!-- 이웃설정 -->
-		<div id="main" style="background-color:#fff;" >
-			<tiles:insertAttribute name="main"/>
-			
+		<div id="content" style="background-color:#fff;" >
+			<tiles:insertAttribute name="content"/>
 		</div>
 		<!-- 이웃설정 -->
 		

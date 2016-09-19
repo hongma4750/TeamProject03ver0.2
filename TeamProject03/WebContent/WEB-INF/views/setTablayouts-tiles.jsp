@@ -36,16 +36,16 @@
 		
 	<!-- 중간 제일 중요한 부분 -->
 	<div id="container" >
-		<!-- 중간-왼쪽  <블로그 추천 부분> -->
-		<div id="blogArea" style="background-color:#fff; height:500px;">
-			<tiles:insertAttribute name="blogArea"/>
-		</div>
-		<!-- 중간-왼쪽  <블로그 추천 부분> -->
-		
+
+
 		<!-- 이웃설정 -->
-		<div id="main" style="background-color:#fff;" >
-			<tiles:insertAttribute name="main"/>
-			
+		<div id="content" style="background-color: #fff;">
+			<tiles:insertAttribute name="content" />
+			<!-- 탭내용 -->
+			<div id="main" style="background-color: #fff;">
+				<tiles:insertAttribute name="main" />
+			</div>
+			<!-- 탭내용 -->
 		</div>
 		<!-- 이웃설정 -->
 		

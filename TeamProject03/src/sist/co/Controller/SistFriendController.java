@@ -1,11 +1,14 @@
 package sist.co.Controller;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -209,25 +212,33 @@ public class SistFriendController {
 			logger.info("환영합니다. settingmain.do 실행중");
 			return "settingmain.tiles";
 		}
-		
-		//이웃관리메뉴
+		//이웃관리_메인
 		@RequestMapping(value="settinghome.do",method={RequestMethod.GET,RequestMethod.POST})
 		public String settinghome(Model model){
 			logger.info("환영합니다. settinghome.do 실행중");
 			return "settinghome.tiles";
 		}
 		
+		//이웃관리와탭
+		@RequestMapping(value="setTabCon.do",method={RequestMethod.GET,RequestMethod.POST})
+		public String setTabCon(Model model){
+			logger.info("환영합니다. setTabCon.do 실행중");
+			return "setTabCon.tiles";
+		}
+		
+		
 		//메뉴1_이웃,그룹 관리
-		@RequestMapping(value="setfriendGroup.do",method={RequestMethod.GET,RequestMethod.POST})
+		/*@RequestMapping(value="setfriendGroup.do",method={RequestMethod.GET,RequestMethod.POST})
 		public String setfriendGroup(HttpServletRequest request, Model model) throws Exception{
 			logger.info("환영합니다. setfriendGroup.do 실행중");
 			return "setfriendGroup.tiles";
-		}
+		}*/
 		
 		//탭1_열린이웃(메뉴1)
 		@RequestMapping(value="openfriend.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String openfriend(HttpServletRequest request,String myid, Model model) throws Exception{
+		public String openfriend(HttpServletRequest request, String myid, Model model) throws Exception{
 			logger.info("환영합니다. openfriend.do 실행중");
+
 			
 			//'로그인 한 사람' 정보 취득
 			String id = ((SistMemberVO)request.getSession().getAttribute("login")).getM_id();
@@ -260,12 +271,12 @@ public class SistFriendController {
 			logger.info("환영합니다. setfollower.do 실행중");
 			return "setfollower.tiles";
 		}
-		//메뉴3_서로이웃맺기	
+		/*//메뉴3_서로이웃맺기	
 		@RequestMapping(value="setdblfollow.do",method={RequestMethod.GET,RequestMethod.POST})
 		public String setdblfollow(Model model){
 			logger.info("환영합니다. setdblfollow.do 실행중");
 			return "setdblfollow.tiles";
-		}
+		}*/
 		//탭1_받은신청(메뉴3)
 		@RequestMapping(value="f_receive.do",method={RequestMethod.GET,RequestMethod.POST})
 		public String f_receive(Model model){
@@ -281,13 +292,6 @@ public class SistFriendController {
 		//탭3_안내메시지(메뉴3)
 		
 		
-		
-		//로그인박스_내블로그가기
-		@RequestMapping(value="blog2.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String blog(Model model){
-			logger.info("환영합니다. blog2.do 실행중");
-			return "blog2.tiles";
-		}
 		
 		//관리기능_서로이웃받기 여부
 		@RequestMapping (value="dblfollowchk.do",method={RequestMethod.GET,RequestMethod.POST})
