@@ -14,11 +14,6 @@
 
 <!-- 이곳은 열린이웃 탭_내용 -->
 
-
-<button type = "button" onclick="movegroup()">그룹이동</button>
-<button type = "button" onclick="receiveNew()">새글소식 받기</button>
-<button type = "button" onclick="del()">삭제</button>
-
 <!-- 그룹이동 div -->
 <div id="movegroup" style="position:absolute; top:380px; left:137px; z-index:2; 
      background-color: #fff; border:1px solid #000; 
@@ -76,6 +71,11 @@
 </div>
 <!-- 삭제 div -->
 
+
+<button type = "button" onclick="movegroup()">그룹이동</button>
+<button type = "button" onclick="receiveNew()">새글소식 받기</button>
+<button type = "button" onclick="del()">삭제</button>
+
 정렬된 이웃 명 
 <select>
   <option selected="selected">이웃추가순</option>
@@ -103,8 +103,25 @@
 </tr>
 
 <tr>
+<c:if test="${empty flist }">
+  <td colspan="6"><br><br><h5 align="center"><strong>관리중인 이웃이 없습니다.</strong></h5><br><br></td>
+</c:if>
+
+<c:forEach items="${flist }" var="fl">
+<jsp:useBean id="fvo" class="sist.co.Model.SistFriendVO">
+
+  <td><input type="checkbox"></td>
+  <td><jsp:getProperty property="fnd_fndid" name="fvo" /></td>
+  <td><jsp:getProperty property="fnd_groupname" name="fvo" /></td>
+  <td></td>
+  <td></td>
+  <td></td>
+
+</jsp:useBean>
+</c:forEach>
 
 </tr>
+
 </table>
 
 <div>

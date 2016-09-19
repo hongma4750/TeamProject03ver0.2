@@ -45,12 +45,11 @@
 		<!-- 이웃설정 -->
 		<div id="main" style="background-color:#fff;" >
 			<tiles:insertAttribute name="main"/>
-		    
+			
 		</div>
 		<!-- 이웃설정 -->
 		
 	</div>
-	
 	
 	<br><br><br><br>
 	

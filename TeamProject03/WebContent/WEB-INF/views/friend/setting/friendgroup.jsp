@@ -63,6 +63,10 @@
 </div>
 
 <script>
+$(function () {
+    $('#myTab li:eq(1) a').tab('show')
+});
+
 //div에 X닫기 버튼 클릭시
 function btnClose(){
 	  document.all.del.style.display = "none";

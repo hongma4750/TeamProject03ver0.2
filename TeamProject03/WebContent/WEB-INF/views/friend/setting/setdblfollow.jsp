@@ -26,9 +26,9 @@
 		</jsp:include> --%>
 		
 		<!-- 받은신청 탭_내용 include -->
-		<jsp:include page="f_send.jsp" flush="false">
+		<%-- <jsp:include page="f_send.jsp" flush="false">
 			<jsp:param name="param" value="value1" />
-		</jsp:include>
+		</jsp:include> --%>
 		
 		
 	</ul>
@@ -59,3 +59,15 @@
 </nav>
 </div>
 <!-- 페이징 -->
+
+<script>
+$("#friendtab").click(function(){
+	location.href="f_receive.do";
+});
+$("#grouptab").click(function(){
+	location.href="f_send.do";
+});
+$("#seqtab").click(function(){
+	location.href="#";
+});
+</script>

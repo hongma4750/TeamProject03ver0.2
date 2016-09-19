@@ -19,6 +19,7 @@
 <div id="topic_menu" style="position:relative; z-index:1;">
   <a href ="topiclist.do">전체</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">문화·책</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">영화</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">요리·레시피</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">스포츠</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">세계여행</a>
 </div>
+<hr>
 
 <!-- 주제별글보기 리스트 -->
 <table style="width:500px;">
@@ -51,8 +52,15 @@
 <!-- 내용 -->
 우도 카페 대니스 검멀레해안 앞 넓은 카페 이번에 우도를 가보니 수많은 카페들이 생겨났더랍니다. 이번 우도여행에선 예전에 가봤던 헬로우도가 아닌 검멀레해안 앞 커다란 통유리가 인상적이던 대니스 카페를 가봤어요. 이유는 별 다른 건 ...</td>
 <td>
-<img src="" alt="이미지없음" width="70px" height="70px"/>
+<img src="./image/나의영화.jpg" alt="이미지없음" width="70px" height="70px" />
 </td>
 </tr>
 </table>
 <!-- 주제별글보기 리스트 -->
+
+
+<script>
+$(function () {
+    $('#myTab a:last').tab('show')
+});
+</script>

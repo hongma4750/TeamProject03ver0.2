@@ -31,7 +31,7 @@
   <li role="presentation" class="active" data-target="#layerpop" data-toggle="modal"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">내 블로그 소식</a></li>
   <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">내가 남긴 글</a></li>
 </ul>
-<a href="#">오늘 방문수</a>&nbsp;&nbsp;&nbsp;<a href="#">서로이웃 신청</a> 
+<a href="blog.do">오늘 방문수 n</a>&nbsp;&nbsp;&nbsp;<a href="setdblfollow.do">서로이웃 신청 n</a> 
 <br><br>
 홍마님이 서로이웃 신청을 했습니다. X
 어제
@@ -47,8 +47,14 @@ by홍마 어제
   <li role="presentation" class="active" ><a href="blog.do" >이웃B</a></li>
 </ul>
 
+<!-- 이웃블로그 버튼 클릭_이웃리스트 div -->
+<div id="friendlist" style="position:absolute; top:40px; z-index:3; 
+     background-color: #fff; border:1px solid #000;width:300px; display: none;">
+  <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>&nbsp;&nbsp;</button></h5>
+  <select><option selected="selected">그룹전체</option></select>
+</div>
+
 		</c:when>
-		
 		<c:otherwise>
 			<div class="row" style="text-align:left; margin:auto; padding:auto;">
 		<small>내 블로그에 글을 남기려면</small>

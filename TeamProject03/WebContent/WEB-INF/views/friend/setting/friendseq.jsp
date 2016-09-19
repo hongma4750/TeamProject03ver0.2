@@ -14,6 +14,10 @@
 
 <!-- 이곳은 이웃순서 탭_내용 -->
 
+<c:if test="${empty flist }">
+이웃읎음
+</c:if>
+<c:forEach items="${flist }" var="fl">
 <table>
   <tr>
     <th>이웃그룹</th>
@@ -32,3 +36,10 @@
     <td><button style="color:gray;" class="glyphicon glyphicon-heart"></button>민블로|민음사 블로그</td>
   </tr>
 </table>
+</c:forEach>
+
+<script>
+$(function () {
+    $('#myTab a:last').tab('show')
+});
+</script>
