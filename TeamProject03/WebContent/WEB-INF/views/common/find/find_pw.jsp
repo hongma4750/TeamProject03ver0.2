@@ -116,7 +116,7 @@ function findId(msg){
 	
 	if(msg.message == "Suc"){
 		//아이디가 있을경우
-		location.href='find_pw_se.do?menu=pw';
+		location.href='find_pw_se.do?menu=pw&m_id='+$("#m_id").val();
 	}else{
 		//아이디가 없을 경우
 		alert("일치하는 아이디가 없습니다.");

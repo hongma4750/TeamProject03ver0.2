@@ -68,6 +68,14 @@
   		UPDATE MEMBER SET M_PHOTO=#{m_photo} where M_ID=#{m_id}
   	</update>
   	
+  	<update id="changePW" parameterType="sist.co.Model.SistMemberVO">
+  		UPDATE MEMBER SET M_PW=#{m_pw} where M_ID=#{m_id}
+  	</update>
+  	
+  	<select id="checkPw" parameterType="sist.co.Model.SistMemberVO" 	resultType="java.lang.Integer">
+  		SELECT NVL(COUNT(*), 0) FROM MEMBER WHERE M_ID = #{m_id} AND M_PW=#{m_pw}
+  	</select>
+  	
   	
   	
   	

@@ -75,4 +75,12 @@ public class SistMemberDAO {
 		sqlSession.update(ns+"myProfile",vo);
 	}
 	
+	public void changePW(SistMemberVO vo) throws Exception{
+		sqlSession.update(ns+"changePW",vo);
+	}
+	
+	public int checkPw(SistMemberVO vo) throws Exception{
+		return (int) sqlSession.selectOne(ns+"checkPw",vo);
+	}
+	
 }

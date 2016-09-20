@@ -95,6 +95,17 @@ public class SistMemberImpl implements SistMemberService{
 		sistMemberDAO.myProfile(vo);
 	}
 
+	@Override
+	public void changePW(SistMemberVO vo) throws Exception {
+		sistMemberDAO.changePW(vo);
+	}
+
+	@Override
+	public int checkPw(SistMemberVO vo) throws Exception {
+		
+		return (int) sistMemberDAO.checkPw(vo);
+	}
+
 
 	
 	

@@ -35,4 +35,8 @@ public interface SistMemberService {
 	void changePhone(SistMemberVO vo) throws Exception;
 	
 	void myProfile(SistMemberVO vo) throws Exception;
+	
+	void changePW(SistMemberVO vo) throws Exception;
+	
+	int checkPw(SistMemberVO vo) throws Exception;
 }

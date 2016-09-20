@@ -25,11 +25,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
+<!-- 암호화 -->
+<script type="text/javascript" src="js/rsa/jsbn.js"></script>
+<script type="text/javascript" src="js/rsa/rsa.js"></script>
+<script type="text/javascript" src="js/rsa/prng4.js"></script>
+<script type="text/javascript" src="js/rsa/rng.js"></script>
 
-<!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+<!-- 암호화 -->
     
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -188,8 +190,6 @@ li.message-preview>a {
 
 </style>
 
-    
-
 
 <div id="wrap">
 	<div id="header">
@@ -322,71 +322,65 @@ li.message-preview>a {
 	</div>
 	
 	<!-- 회원 정보 -->
+	<form id="changeMyForm" method="POST" action="finalChange.do">
+	
 	
 	<div id="container">
 		<div id="content">
-			<div class="column">
-				<div class="sh_group">
-				
-				
-					<div style="height:100%;">
-						<h2><bold>회원 프로필</bold></h2>
-						
-						<div class="row">
-						  <div class="col-xs-6 col-md-3" style="text-align:center">
-						    <a href="myProfile.do" class="thumbnail">
-						      <img src='${login.m_photo }' alt="이미지없음" style="width:200px; height:250px;"> 
-						    </a>
-						 	 
-						 	 
-						    <input type="button" onclick="location.href='myProfile.do'" value="수정">
-						   
-						  </div>
-						 	
 
-						</div>
-						
-						
-					</div>
-					
-					
-				</div>
-			</div>
-			
-			
-			
-			<div class="column">
-				<div class="sh_group">
-					<div style="height:100%;">
-						<h2><bold>회원 연락처</bold></h2>
-						
-						<h3><bold>이메일 : </bold> ${login.m_email}</h3>
-						<h3><bold>휴대전화 : </bold> ${login.m_phone }</h3>
-						
-						<div style="margin-left: 60px;">
-						<input type="button" onclick="location.href='myInfo.do'" value="수정">
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="column">
-				<div class="sh_group">
-					<div style="height:100%;">
-						<h2><bold>비밀번호</bold></h2>
+			<div class="panel panel-success">
+            <div class="panel-body">
 
-						<div style="margin-left: 60px;">
-						<input type="button" onclick="location.href='myPw.do'" value="수정">
-						</div>
-					</div>
+				  <label>
+				    회원 아이디 : <span>${login.m_id }</span>
+				    <input type="hidden" value="${login.m_id }" name="m_id" id="m_id">
+				    <c:remove var="find_user_pw" scope="session" />
+				  </label>
+				  
+				  <div id="newPw">
+				  <input type="hidden" id="rsaPublicKeyModulus" value="${publicKeyModulus}" />
+			       <input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent }" />
+			       <input type="hidden" id="rsaChangePw" name="m_pw">
+       
+       				<input type="password" class="form-control"  placeholder="현재 비밀번호" style="width:30%;" id="now_pw">
+				  	<div id="nowPw" style="display:none"></div>
+				  	
+				  	<hr>
+				  
+				  	<input type="password" class="form-control"  placeholder="새로운 비밀번호" style="width:30%;" id="m_pw">
+				  	<div id="checkPw" style="display:none"></div>
+				  	
+				  	<input type="password" class="form-control" name="pwChk" placeholder="새로운 비밀번호 확인" 
+				  	style="width:30%;" id="m_pwChk">
+				  	<div id="checkPwed" style="display:none"></div>
+				  	
+				  </div>
+				
+
+				
+				<div >
+				  <div id="checkNoauto">
+
+				  </div>
+				  
 				</div>
-			</div>
+                
+            </div>
+            
+            
+ 			
+ 			
+        </div>
+        
+        <div style="text-align:center;">
+			<input type="submit" value="확인" onclick="return go_submti()">
+		</div>
 			
 			
 			
 		</div>
 	</div>
-	
+	</form>
 	
 	<!-- 회원 정보 -->
 	
@@ -398,5 +392,239 @@ li.message-preview>a {
 		
 	</div>
 </div>
+
+
+<script>
+var submitCheck = new Array(false,false,false);
+
+
+$(document).ready(function(){
+	
+	$("#now_pw").blur(function(){
+		BaseCheckNow();
+	});
+	$("#m_pw").blur(function(){
+		BaseCheckPw();
+	});
+	
+	$("#m_pwChk").blur(function(){
+		BaseCheckedPw();
+	});
+	
+
+});
+
+//비밀번호
+
+function BaseCheckNow(){
+	var now_pw = $("#now_pw").val();
+	
+	if(now_pw.length==0){
+		//비밀번호 입력 x
+		putYourNow(0);
+	}else {
+		var pwCheck01 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,16}$/;
+		var pwCheck02 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+-=/,.<>]).{6,16}$/;
+		var pwCheck03 = /^(?=.*[0-9])(?=.*[!@#$%^&*()_+-=/,.<>]).{6,16}$/;
+		
+		if(pwCheck01.test(now_pw) || pwCheck02.test(now_pw) || pwCheck03.test(now_pw)){
+			findPw();
+		}else{
+			putYourNow(1);
+		}
+
+	}
+}
+
+
+function putYourNow(a){
+	
+	if(a == "0"){
+		$("#nowPw").show();
+		$("#nowPw").html("필수 항목 입니다.");
+		$("#nowPw").css("color","#FF0000");
+	}else if(a == "1" ){
+		$("#nowPw").show();
+		$("#nowPw").html("6~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+		$("#nowPw").css("color","#FF0000");
+	}else if(a == "2"){
+		$("#nowPw").show();
+		$("#nowPw").html("일치합니다.");
+		$("#nowPw").css("color","#1DDB16");
+		submitCheck[0] = true;
+
+	}
+}
+
+
+function findPw(){
+	
+	var m_id = $("#m_id").val();
+	
+	var password = $("#now_pw").val();
+	
+	try{
+		var rsaPublicKeyModulus = document.getElementById("rsaPublicKeyModulus").value;
+        var rsaPublicKeyExponent = document.getElementById("rsaPublicKeyExponent").value;
+        submitEncryptedForm(password, rsaPublicKeyModulus, rsaPublicKeyExponent);
+	}catch(err){
+		alert(err);
+	}
+
+	$.ajax({
+		type:"POST",
+		url:"checkPw.do",
+		data:"m_id="+m_id+"&m_pw="+$("#rsaChangePw").val(),
+		success:function(msg){
+			printCheckPw(msg);
+		}
+		
+	});
+}
+
+
+function printCheckPw(msg){
+	if(msg.message  == "Suc"){
+		putYourNow(2);
+		
+	}else{
+		$("#nowPw").show();
+		$("#nowPw").html("비밀번호가 일치하지 않습니다.");
+		$("#nowPw").css("color","#FF0000");
+
+	}
+}
+
+
+
+
+function BaseCheckPw(){
+	var m_pw = $("#m_pw").val();
+	
+	if($("#m_pw").val().length==0){
+		//비밀번호 입력 x
+		putYourPw(0);
+	}else {
+		var pwCheck01 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,16}$/;
+		var pwCheck02 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+-=/,.<>]).{6,16}$/;
+		var pwCheck03 = /^(?=.*[0-9])(?=.*[!@#$%^&*()_+-=/,.<>]).{6,16}$/;
+		
+		if(pwCheck01.test(m_pw) || pwCheck02.test(m_pw) || pwCheck03.test(m_pw)){
+			putYourPw(2);
+			
+		}else{
+			putYourPw(1);
+		}
+
+	}
+}
+
+
+
+
+
+
+function putYourPw(a){
+	
+	if(a == "0"){
+		$("#checkPw").show();
+		$("#checkPw").html("필수 항목 입니다.");
+		$("#checkPw").css("color","#FF0000");
+		
+		$("#checkPwed").show();
+		$("#checkPwed").html("필수 항목 입니다.");
+		$("#checkPwed").css("color","#FF0000");
+		
+	}else if(a == "1" ){
+		$("#checkPw").show();
+		$("#checkPw").html("6~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+		$("#checkPw").css("color","#FF0000");
+	}else if(a == "2"){
+		$("#checkPw").hide();
+		submitCheck[1] = true;
+		
+		
+	}
+}
+
+//비밀번호 확인
+function BaseCheckedPw(){
+	var m_pwChk = $("#m_pwChk").val();
+	
+	if(m_pwChk.length==0){
+		//아이디를 아무것도 입력 x
+		putYourPwed(0);
+	}else if($("#m_pw").val() != m_pwChk){
+		putYourPwed(1);
+	}else if($("#m_pw").val() == m_pwChk){
+		putYourPwed(2);
+	}
+}
+
+function putYourPwed(a){
+	if(a=="0"){
+		$("#checkPwed").show();
+		$("#checkPwed").html("필수 항목 입니다.");
+		$("#checkPwed").css("color","#FF0000");
+	}else if(a=="1"){
+		$("#checkPwed").show();
+		$("#checkPwed").html("비밀번호가 일치하지 않습니다.");
+		$("#checkPwed").css("color","#FF0000");
+	}else if(a=="2"){
+		$("#checkPwed").hide();
+		submitCheck[2] = true;
+		
+	}
+}
+function go_submti(){
+	if($("#m_pw").val().length==0){
+		alert("비밀번호를 입력해주세요");
+		return false;
+	}else if($("#m_pwChk").val() != $("#m_pw").val()){
+		alert("비밀번호가 일치 하지 않습니다.")
+		return false;
+	}
+	
+	var password = $("#m_pw").val();
+	
+	for(var j=0; j<submitCheck.length;j++){
+		if(!submitCheck[j]){
+			alert("확인"+j)
+			return false;
+		}
+	}
+	
+	try{
+		var rsaPublicKeyModulus = document.getElementById("rsaPublicKeyModulus").value;
+        var rsaPublicKeyExponent = document.getElementById("rsaPublicKeyExponent").value;
+        submitEncryptedForm(password, rsaPublicKeyModulus, rsaPublicKeyExponent);
+	}catch(err){
+		alert(err);
+	}
+	return true;
+	
+}
+
+
+
+
+
+function submitEncryptedForm(password, rsaPublicKeyModulus, rsaPpublicKeyExponent) {
+    var rsa = new RSAKey();
+    rsa.setPublic(rsaPublicKeyModulus, rsaPpublicKeyExponent);
+
+    // 사용자ID와 비밀번호를 RSA로 암호화한다.
+    var securedPassword = rsa.encrypt(password);
+
+    // POST 로그인 폼에 값을 설정하고 발행(submit) 한다.
+    var securedLoginForm = document.getElementById("changeMyForm");
+    securedLoginForm.rsaChangePw.value = securedPassword;
+    
+}
+
+	 
+</script>
+
+
 
 

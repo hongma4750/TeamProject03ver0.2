@@ -230,7 +230,10 @@ public class SistMemberController {
 		logger.info("pwfind.do 실행중");
 		
 		String menu = request.getParameter("menu");
+		
+		
 		model.addAttribute("menu",menu);
+		
 		return "pwfind.tiles";
 	}
 	
@@ -239,9 +242,10 @@ public class SistMemberController {
 		logger.info("find_pw_se.do 실행중");
 		
 		String menu = request.getParameter("menu");
+		String m_id = request.getParameter("m_id");
+		
 		model.addAttribute("menu",menu);
-		
-		
+		model.addAttribute("m_id",m_id);
 	
 	
 		return "find_pw_se.tiles";
@@ -254,9 +258,62 @@ public class SistMemberController {
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
 		
-		
+		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+		generator.initialize(512);
+
+		KeyPair keyPair = generator.genKeyPair();
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
+		PublicKey publicKey = keyPair.getPublic();
+		PrivateKey privateKey = keyPair.getPrivate();
+
+		HttpSession session = request.getSession();
+		// 세션에 공개키의 문자열을 키로하여 개인키를 저장한다.
+		session.setAttribute("__rsaPrivateKey__", privateKey);
+
+		// 공개키를 문자열로 변환하여 JavaScript RSA 라이브러리 넘겨준다.
+		RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
+
+		String publicKeyModulus = publicSpec.getModulus().toString(16);
+		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+
+		request.setAttribute("publicKeyModulus", publicKeyModulus);
+		request.setAttribute("publicKeyExponent", publicKeyExponent);
+
 
 		return "find_pw_ok.tiles";
+	}
+	
+	@RequestMapping(value="changePW.do", method=RequestMethod.POST)
+	public String changePW(HttpServletRequest request, Model model, SistMemberVO vo) throws Exception{
+		logger.info("changePW 실행중");
+		
+		
+		
+		//비밀번호 복호화
+				HttpSession session = request.getSession();
+				PrivateKey privateKey = (PrivateKey) session.getAttribute("__rsaPrivateKey__");
+				session.removeAttribute("__rsaPrivateKey__");
+				
+				if (privateKey == null) {
+		            throw new RuntimeException("암호화 비밀키 정보를 찾을 수 없습니다.");
+		        }
+		        try {
+		        	String password = decryptRsa(privateKey, vo.getM_pw());
+		            
+		        	System.out.println("pw : "+password);
+		        	vo.setM_pw(getMD5(password));
+		        } catch (Exception ex) {
+		            throw new ServletException(ex.getMessage(), ex);
+		        }
+		        
+		        
+		 //비밀번호 변경
+		        System.out.println("id = "+vo.getM_id()+" , pw = "+vo.getM_pw());
+		        sistMemberService.changePW(vo);       
+		        
+		 return "index.tiles";
+		
 	}
 	
 
@@ -479,6 +536,100 @@ public class SistMemberController {
 			request.getSession().setAttribute("login", vos);
 			
 			return "myPage.tiles";
+	}
+	
+	@RequestMapping(value="myPw.do",method=RequestMethod.GET)
+	public String myPw(HttpServletRequest request, Model model) throws Exception{
+		logger.info("myPw 실행중");
+		
+		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+		generator.initialize(512);
+
+		KeyPair keyPair = generator.genKeyPair();
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
+		PublicKey publicKey = keyPair.getPublic();
+		PrivateKey privateKey = keyPair.getPrivate();
+
+		HttpSession session = request.getSession();
+		// 세션에 공개키의 문자열을 키로하여 개인키를 저장한다.
+		session.setAttribute("__rsaPrivateKey__", privateKey);
+
+		// 공개키를 문자열로 변환하여 JavaScript RSA 라이브러리 넘겨준다.
+		RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
+
+		String publicKeyModulus = publicSpec.getModulus().toString(16);
+		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+
+		request.setAttribute("publicKeyModulus", publicKeyModulus);
+		request.setAttribute("publicKeyExponent", publicKeyExponent);
+
+		return "myPw.tiles";
+	}
+	
+	@RequestMapping(value="checkPw.do",method=RequestMethod.POST)
+	@ResponseBody
+	public YesMember checkPw(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
+		logger.info("checkPW.do 실행중");
+		
+		
+		//비밀번호 복호화
+				HttpSession session = request.getSession();
+				PrivateKey privateKey = (PrivateKey) session.getAttribute("__rsaPrivateKey__");
+				
+				
+				if (privateKey == null) {
+		            throw new RuntimeException("암호화 비밀키 정보를 찾을 수 없습니다.");
+		        }
+		        try {
+		        	String password = decryptRsa(privateKey, vo.getM_pw());
+		            
+		        	System.out.println("pw : "+password);
+		        	vo.setM_pw(getMD5(password));
+		        } catch (Exception ex) {
+		            throw new ServletException(ex.getMessage(), ex);
+		        }
+		        
+		        System.out.println("id = "+vo.getM_id()+" , pw = "+vo.getM_pw());
+		        int count = sistMemberService.checkPw(vo);
+				
+				YesMember yes = new YesMember();
+				
+				if(count > 0 ){
+					yes.setMessage("Suc");
+				}else {
+					yes.setMessage("Fai");
+				}
+				
+				return yes;
+       
+	}
+	
+	@RequestMapping(value="finalChange.do",method=RequestMethod.POST)
+	public String finalChange(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
+		logger.info("finalChange.do 실행중");
+		
+		//비밀번호 복호화
+		HttpSession session = request.getSession();
+		PrivateKey privateKey = (PrivateKey) session.getAttribute("__rsaPrivateKey__");
+		
+		
+		if (privateKey == null) {
+            throw new RuntimeException("암호화 비밀키 정보를 찾을 수 없습니다.");
+        }
+        try {
+        	String password = decryptRsa(privateKey, vo.getM_pw());
+            
+        	System.out.println("pw : "+password);
+        	vo.setM_pw(getMD5(password));
+        } catch (Exception ex) {
+            throw new ServletException(ex.getMessage(), ex);
+        }
+        
+        sistMemberService.changePW(vo);
+        
+        return "index.tiles";
+		
 	}
 
 	

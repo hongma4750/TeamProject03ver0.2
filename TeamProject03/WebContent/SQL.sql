@@ -23,6 +23,8 @@ insert into member values('a','a','aaaaa','m','20190705','aa','10010101','no_ima
 insert into member values('b','b','aaaaa','m','20190705','aa','10010101','no_image','1',3);
 select * from member;
 
+update member set m_action = 1 where m_id = 'aa1212';
+
 SELECT M_ID,M_NAME, M_GENDER, M_BIRTHDAY, M_EMAIL, M_PHONE, M_ACTION, M_LOGCHK, M_LOGDATE, M_FAILDATE, M_AUTH
 	 	FROM MEMBER 
 	 	WHERE M_ID = 'a' AND M_PW = 'a'

@@ -5,175 +5,34 @@
 var submitCheck = new Array(false,false,false,false,false,false,false);
 
 $(document).ready(function(){
-	 $(document).mousedown(function(e){
-		 $('#m_id').each(function(){
-		         if( $(this).css('display') == 'block' )
-		         {
-		        	 var l_position = $(this).offset();
-		             l_position.right = parseInt(l_position.left) + ($(this).width());
-		             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-		             
-		             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-			                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-			             {
-			                 //alert( 'popup in click' );
-			             }
-			             else
-			             {
-			                 //alert( 'popup out click' );
-			                 BaseIdCheck();
-			             }   
-		         }
-		     });
-		 }); 
-	 
 	
-	 
-	 $("#m_pw").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#m_pw').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckPw();
-				             }   
-			         }
-			     });
-			 });
+	 $("#m_id").blur(function(){
+		 BaseIdCheck();
+	 });
+
+	 $("#m_pw").blur(function(){
+		 BaseCheckPw();
+	 });
+
+	 $("#m_pwChecked").blur(function(){
+		 BaseCheckedPw();
 	 });
 	 
-	 $("#m_pwChecked").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#m_pwChecked').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckedPw();
-				             }   
-			         }
-			     });
-			 });
-	 	});
+	 $("#m_name").blur(function(){
+		 BaseCheckName()
+	 });
 	 
-	 $("#m_name").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#m_name').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckName();
-				             }   
-			         }
-			     });
-			 });
-	 	});
+	 $("#b_year, #b_month, #b_day").blur(function(){
+		 BaseCheckBirth();
+	 });
 	 
-	 $("#b_year, #b_month, #b_day").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#b_year').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckBirth();
-				             }   
-			         }
-			     });
-			 });
-	 	});
-	 
-	 
-	 $("#m_email").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#m_email').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckEmail();
-				             }   
-			         }
-			     });
-			 });
-	 	});
-	 
-	 $("#m_phone").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#m_phone').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckPhone();
-				             }   
-			         }
-			     });
-			 });
-	 	});
-	 
+	 $("#m_email").blur(function(){
+		 BaseCheckEmail();
+	 });
+	
+	 $("#m_phone").blur(function(){
+		 BaseCheckPhone();
+	 });
 	 
 	 
 	 $("#genderChk01,#genderChk02").click(function(){

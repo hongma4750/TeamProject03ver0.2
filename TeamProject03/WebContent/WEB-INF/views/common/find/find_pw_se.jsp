@@ -84,7 +84,8 @@
 				  </label>
 				  
 				  <div id="usePhone">
-				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" style="width:30%;" id="p_m_id">
+				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" 
+				  	style="width:30%;" id="p_m_id" value="${m_id }" readonly>
 				  	<input type="text" class="form-control" name="m_phone" 
 				  	placeholder="휴대전화" style="width:30%;" id="p_m_phone" onkeydown="return showKeyCode(event)">
 				  </div>
@@ -98,7 +99,8 @@
 				  </label>
 				  
 				  <div id="useEmail" style="display:none;">
-				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" style="width:30%;" id="e_m_id">
+				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" 
+				  	style="width:30%;" id="e_m_id" value="${m_id }" readonly>
 				  	<div id="row">
 				  	<input type="text" class="form-control" name="m_email" placeholder="이메일" 
 				  	style="width:30%; float:left; display:inline-block;" id="e_m_email">
@@ -133,7 +135,7 @@
 		$("#usePhone").show();
 		$("#useEmail").hide();
 		
-		$("#e_m_id").val("");
+		
 		$("#e_m_email").val("");
 	})
 	
@@ -142,7 +144,7 @@
 		$("#usePhone").hide();
 		$("#useEmail").show();
 		
-		$("#p_m_id").val("");
+		
 		$("#p_m_phone").val("");
 		
 	})

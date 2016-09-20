@@ -64,6 +64,9 @@
   	<definition name="myInfo.tiles" template="/WEB-INF/views/member/myInfo.jsp">
   	</definition>
   	
+  	<definition name="myPw.tiles" template="/WEB-INF/views/member/myPw.jsp">
+  	</definition>
+  	
   	<definition name="userInfo.tiles" template="/WEB-INF/views/member/userInfo.jsp"></definition>
   	<definition name="blogInfo.tiles" template="WEB-INF/views/member/blogInfo.jsp"></definition>
 

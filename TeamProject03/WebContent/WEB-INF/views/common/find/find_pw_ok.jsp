@@ -21,6 +21,16 @@
 
 
 <!-- 부트스트랩 링크 -->
+
+<!-- 암호화 -->
+<script type="text/javascript" src="js/rsa/jsbn.js"></script>
+<script type="text/javascript" src="js/rsa/rsa.js"></script>
+<script type="text/javascript" src="js/rsa/prng4.js"></script>
+<script type="text/javascript" src="js/rsa/rng.js"></script>
+
+<!-- 암호화 -->
+
+
 <style type="text/css">
 /* 	 a{
 		height:70px;
@@ -62,7 +72,7 @@
 
 </style>
 
-
+<form action="changePW.do" id="changePW" method="POST">
 <div style="height:100%; ">
     
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">     
@@ -73,6 +83,9 @@
        		 
        		 <hr>
        		 
+       		 
+       		 
+       		 
         <div class="panel panel-success">
         
         	
@@ -82,12 +95,17 @@
                 
 				  <label>
 				    회원 아이디 : <span>${find_user_pw.m_id }</span>
+				    <input type="hidden" value="${find_user_pw.m_id }" name="m_id">
 				    <c:remove var="find_user_pw" scope="session" />
 				  </label>
 				  
 				  <div id="newPw">
+				  <input type="hidden" id="rsaPublicKeyModulus" value="${publicKeyModulus}" />
+			       <input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent }" />
+			       <input type="hidden" id="rsaChangePw" name="m_pw">
+       
 				  
-				  	<input type="password" class="form-control" name="m_pw" placeholder="새로운 비밀번호" style="width:30%;" id="m_pw">
+				  	<input type="password" class="form-control"  placeholder="새로운 비밀번호" style="width:30%;" id="m_pw">
 				  	<div id="checkPw" style="display:none"></div>
 				  	
 				  	<input type="password" class="form-control" name="pwChk" placeholder="새로운 비밀번호 확인" 
@@ -106,73 +124,35 @@
 				</div>
                 
             </div>
+            
+            
  			
  			
         </div>
         
         <div style="text-align:center;">
-			<input type="button" value="확인" onclick="location.href='index.do'">
+			<input type="submit" value="확인" onclick="return go_submti()">
 		</div>
+		
 		
     </div>
     
 </div>
-
+</form>
 
 
 <script>
 $(document).ready(function(){
-	 $(document).mousedown(function(e){
+	
+	$("#m_pw").blur(function(){
+		BaseCheckPw();
+	});
+	
+	$("#m_pwChk").blur(function(){
+		BaseCheckedPw();
+	});
+	
 
-	 $("#m_pw").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#m_pw').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckPw();
-				             }   
-			         }
-			     });
-			 });
-	 });
-	 
-	 $("#m_pwChk").click(function(){
-		 $(document).mousedown(function(e){
-			 $('#m_pwChk').each(function(){
-			         if( $(this).css('display') == 'block' )
-			         {
-			        	 var l_position = $(this).offset();
-			             l_position.right = parseInt(l_position.left) + ($(this).width());
-			             l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
-			             
-			             if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-				                 && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-				             {
-				                 //alert( 'popup in click' );
-				             }
-				             else
-				             {
-				                 //alert( 'popup out click' );
-				                 BaseCheckedPw();
-				             }   
-			         }
-			     });
-			 });
-	 	});
-	 
-	 });
 });
 
 //비밀번호
@@ -247,6 +227,41 @@ function putYourPwed(a){
 		$("#checkPwed").hide();
 		
 	}
+}
+function go_submti(){
+	if($("#m_pw").val().length==0){
+		alert("비밀번호를 입력해주세요");
+		return false;
+	}else if($("m_pwChk").val() != $("m_pw").val()){
+		alert("비밀번호가 일치 하지 않습니다.")
+		return false;
+	}
+	
+	var password = $("#m_pw").val();
+	
+	try{
+		var rsaPublicKeyModulus = document.getElementById("rsaPublicKeyModulus").value;
+        var rsaPublicKeyExponent = document.getElementById("rsaPublicKeyExponent").value;
+        submitEncryptedForm(password, rsaPublicKeyModulus, rsaPublicKeyExponent);
+	}catch(err){
+		alert(err);
+	}
+	return true;
+	
+}
+
+
+function submitEncryptedForm(password, rsaPublicKeyModulus, rsaPpublicKeyExponent) {
+    var rsa = new RSAKey();
+    rsa.setPublic(rsaPublicKeyModulus, rsaPpublicKeyExponent);
+
+    // 사용자ID와 비밀번호를 RSA로 암호화한다.
+    var securedPassword = rsa.encrypt(password);
+
+    // POST 로그인 폼에 값을 설정하고 발행(submit) 한다.
+    var securedLoginForm = document.getElementById("changePW");
+    securedLoginForm.rsaChangePw.value = securedPassword;
+    
 }
 
 	 
