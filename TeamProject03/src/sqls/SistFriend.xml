@@ -39,7 +39,7 @@
     </insert>
     
     <insert id="addFriend" parameterType="sist.co.Model.SistFriendVO">
-    INSERT INTO FRIEND VALUES (SEQ_FRIEND.NEXTVAL, #{fnd_myid}, #{fnd_fndid}, #{fnd_groupname}, #{fnd_chk},SYSDATE)
+    INSERT INTO FRIEND VALUES (SEQ_FRIEND.NEXTVAL, #{fnd_myid}, #{fnd_fndid}, #{fnd_groupname}, #{fnd_chk},SYSDATE,0)
     </insert>
     
     <insert id="addDblFollowing" parameterType="sist.co.Model.SistDblFollowingVO">

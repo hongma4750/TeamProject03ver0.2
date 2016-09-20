@@ -223,8 +223,8 @@
   	<!-- 관리홈_메인 -->
   	
   	
-  	<!-- 이웃관리메뉴와 탭 -->
-  	<definition name="setTabCon.tiles" template="/WEB-INF/views/setTablayouts-tiles.jsp">
+  	<!-- 이웃관리메뉴(1,3)와 탭 -->
+  	<definition name="setTabCon.tiles" template="/WEB-INF/views/setConlayouts-tiles.jsp">
 	    <put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
 	    <put-attribute name="header_logo" value="/WEB-INF/views/common/header_logo.jsp"/>
 	    <put-attribute name="header_nav" value="/WEB-INF/views/common/header_nav.jsp"/>
@@ -252,17 +252,11 @@
   	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfriendGroup.jsp"/>
   	      <put-attribute name="main" value="/WEB-INF/views/friend/setting/friendseq.jsp"/>
   	  </definition>
-  	
-  	
-  	<!-- 메뉴2_나를추가한 이웃 -->
-  	<definition name="setfollower.tiles" extends="setTabCon.tiles">
-  	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfollower.jsp"/>
-  	</definition>
-  	
-  	<!-- 메뉴3_서로이웃 맺기-->
-  	<!-- <definition name="setdblfollow.tiles" extends="setTabCon.tiles">
-  	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setdblfollow.jsp"/>
-  	</definition> -->
+  	  
+  	  <!-- 메뉴3_서로이웃 맺기-->
+  	  <!-- <definition name="setdblfollow.tiles" extends="setTabCon.tiles">
+  	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setdblfollow.jsp"/>
+  	  </definition> -->
   	
       <!-- _탭1_받은신청 -->
   	  <definition name="f_receive.tiles" extends="setTabCon.tiles">
@@ -275,7 +269,21 @@
   	      <put-attribute name="main" value="/WEB-INF/views/friend/setting/f_send.jsp"/>
   	  </definition>
   	  <!-- _탭3_안내메시지 -->
-  	  
+  	
+  	
+  	<!-- 이웃관리메뉴(2)와 탭 -->
+  	<definition name="setTab.tiles" template="/WEB-INF/views/setTablayouts-tiles.jsp">
+	    <put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
+	    <put-attribute name="header_logo" value="/WEB-INF/views/common/header_logo.jsp"/>
+	    <put-attribute name="header_nav" value="/WEB-INF/views/common/header_nav.jsp"/>
+	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfollower.jsp"/>
+	    <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
+  	</definition>
+  	<!-- 메뉴2_나를추가한 이웃 -->
+  	<definition name="setfollower.tiles" extends="setTab.tiles">
+  	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfollower.jsp"/>
+  	</definition>
+  
   	<!-- 이웃관리메뉴와 탭 -->
 <!-- 이웃 -->
 

@@ -41,7 +41,11 @@
 		<!-- 이웃설정 -->
 		<div id="content" style="width:750px;background-color: #fff;">
 			<tiles:insertAttribute name="content" />
-			
+			<!-- 탭내용 -->
+			<div id="main" style="background-color: #fff;">
+				<tiles:insertAttribute name="main" />
+			</div>
+			<!-- 탭내용 -->
 		</div>
 		<!-- 이웃설정 -->
 		

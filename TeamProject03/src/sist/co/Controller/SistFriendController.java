@@ -243,10 +243,16 @@ public class SistFriendController {
 			//'로그인 한 사람' 정보 취득
 			String id = ((SistMemberVO)request.getSession().getAttribute("login")).getM_id();
 			logger.info(id + "?? ");
-
+			
+			//id의 친구목록
 			List<SistFriendVO> flist = sistFriendService.getFriends(id);
 			System.out.println(flist.toString());
 			model.addAttribute("flist", flist);
+			
+			//그룹조회
+			List<SistFgroupVO> glist = new ArrayList<SistFgroupVO>();
+			glist = sistFriendService.getGroups(id);
+			model.addAttribute("glist", glist);
 			
 			return "openfriend.tiles";
 		}
@@ -260,8 +266,23 @@ public class SistFriendController {
 		
 		//탭3_이웃순서(메뉴1)
 		@RequestMapping(value="friendseq.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String friendseq(Model model){
+		public String friendseq(HttpServletRequest request, Model model)throws Exception{
 			logger.info("환영합니다. friendseq.do 실행중");
+			
+			//'로그인 한 사람' 정보 취득
+			String id = ((SistMemberVO)request.getSession().getAttribute("login")).getM_id();
+			logger.info(id + "?? ");
+			
+			//id의 친구목록
+			List<SistFriendVO> flist = sistFriendService.getFriends(id);
+			System.out.println(flist.toString());
+			model.addAttribute("flist", flist);
+			
+			//그룹조회
+			List<SistFgroupVO> glist = new ArrayList<SistFgroupVO>();
+			glist = sistFriendService.getGroups(id);
+			model.addAttribute("glist", glist);
+			
 			return "friendseq.tiles";
 		}
 

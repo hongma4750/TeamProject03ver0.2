@@ -41,3 +41,36 @@
 			<input type="checkbox">&nbsp;전체선택&nbsp;
 			<button type="button">신청취소</button>
 		</div>
+<br><br>		
+		
+		
+<!-- 페이징 -->
+<div align="center">
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
+<!-- 페이징 -->
+
+<script>
+//두번째탭보여주기
+$(function () {
+    $('#myTab li:eq(1) a').tab('show')
+});
+</script>

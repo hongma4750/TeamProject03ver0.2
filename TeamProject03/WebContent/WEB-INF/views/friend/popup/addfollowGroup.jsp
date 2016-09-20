@@ -41,17 +41,17 @@
   
   <div style="float: left;">그룹선택&nbsp;</div>
 
-			<select name="fnd_groupname" class="form-control input-sm" style="width: 200px; float: left;">
+			<select id="_selgroup" name="fnd_groupname" class="form-control input-sm" style="width: 200px; float: left;">
 			  <c:forEach items="${glist }" var="gl">
 				<option value="${gl.fg_groupname }">${gl.fg_groupname }</option>
 				
 			  </c:forEach>
 			</select> 
-		&nbsp;<a class="btn btn-default btn-xs" onclick="newgroup();">그룹추가</a>
+		&nbsp;<a id="_addG" class="btn btn-default btn-xs" onclick="newgroup();">그룹추가</a>
 		<br><br>
   
   <div id="newgroup" style="display:none">
-  &nbsp;&nbsp;<input id="_chkg" name="chkg" type="checkbox" checked=""/> <input type="text" id="_gname" name="" data-msg="그룹명을" value="새 그룹"/>
+  &nbsp;&nbsp;<input id="_chkg" name="chkg" type="checkbox"/> <input type="text" id="_gname" name="" data-msg="그룹명을" value="새 그룹"/>
   
   <select name="fg_openchk"><option selected="selected" value="0">공개</option><option value="1">비공개</option></select>
   </div>
@@ -68,13 +68,14 @@
 
 
 <script>
+//탭클릭하면 밸류값을...?적다말음
 $(function(){
 	$("li").click(function(value){
 		$("li").value(this)
 	});
-	
 });
 
+//서로이웃받기여부 확인버튼
 $("#_btnOk").click(function name(){
 	if($("#_gname").val()==""){
 		alert($("#_gname").attr("data-msg") + " 입력하세요");
@@ -85,6 +86,7 @@ $("#_btnOk").click(function name(){
 	
 });
 
+//팝업창닫기
 function popupClose(){
 	window.close();
 }
@@ -93,13 +95,53 @@ function popupClose(){
 function newgroup(){
 	if(document.all.newgroup.style.display=="none"){
 		document.all.newgroup.style.display="block";
-		document.all.newgroup.chkg.checked="checked";
+		
 		$("#_gname").focus();
 	}else{
 		document.all.newgroup.style.display="none";
 	}
 }
 
+
+//ajax로 바꾸기
+function checkChk(){
+	$.ajax({
+		type:"POST",
+		url:"./.do", //controller로
+		async:true,
+		data:"",
+		success:function(a){
+			outputList(a);
+	}
+		
+});
+	
+function outputList(a){	
+	//그룹추가 버튼클릭시//그룹추가 버튼클릭시
+}
+
+}
+/* if($("input:checkbox[id='_chkg']").prop("checked",false)){
+			//체크false일때
+			
+}
+$("#_addG").click(function(){
+		alert('ok');
+		if($("input:checkbox[id='_chkg']").prop("checked",false)){
+			//체크false일때
+			
+		}else{
+			//체크true일때
+			alert(ok);
+			//기존 그룹 name값을 변경하고
+			$("#_selgroup").attr('name','');
+			alert($("#_selgroup").attr('name'));
+			
+			//input type=text의 name을 넘기기
+			$("#_gname").attr('name','fnd_groupname');
+			alert($("#_gname").attr('name'));
+		}
+}); */
 </script>
 
 </body>

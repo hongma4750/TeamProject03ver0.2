@@ -73,7 +73,8 @@ create table friend(
 	fnd_fndid varchar2(50),		-- 이웃 아이디
 	fnd_groupname varchar2(50), 	-- 그룹명
 	fnd_chk number not null, 		-- 이웃1 / 서로 이웃2 여부
-	fnd_foldate date not null --이웃,서로이웃 추가일
+	fnd_foldate date not null,  --이웃,서로이웃 추가일
+	fnd_newAlert number default 0 not null --새글알림 on0 / off1
 );
 create sequence seq_friend 
 start with 1 increment by 1; 
@@ -136,7 +137,7 @@ select* from friend
 --insert into FOLLOWING values (seq_following.NEXTVAL, 'bom', 'summer', '20160912' );
 
 insert into friend
-values(seq_friend.NEXTVAL, 'bom', 'summer', '친구들', 1,sysdate); 
+values(seq_friend.NEXTVAL, 'bom', 'summer', '친구들', 1,sysdate,0); 
 
 insert into fsetting values(seq_fsetting.NEXTVAL, 'bom', 0);
 
@@ -145,9 +146,9 @@ insert into fgroup values(seq_fgroup.NEXTVAL, '친구들', 'bom',0);
 --summer<->aaa 서로이웃
 
 insert into friend
-values(seq_friend.NEXTVAL, 'summer', 'aaa', 'sgroup', 2,sysdate); 
+values(seq_friend.NEXTVAL, 'summer', 'aaa', 'sgroup', 2,sysdate,0); 
 insert into friend
-values(seq_friend.NEXTVAL, 'aaa', 'summer', 'agroup', 2,sysdate);
+values(seq_friend.NEXTVAL, 'aaa', 'summer', 'agroup', 2,sysdate,0);
 
 insert into fsetting values(seq_fsetting.NEXTVAL, 'aaa', 0);
 insert into fsetting values(seq_fsetting.NEXTVAL, 'summer', 0);
@@ -159,7 +160,7 @@ insert into fgroup values(seq_fgroup.NEXTVAL, 'adorable', 'bom',0);
 --insert into FOLLOWING values (seq_following.NEXTVAL, 'summer', 'c', '20160914' );
 
 insert into friend
-values(seq_friend.NEXTVAL, 'summer', 'c', 'myg', 1,sysdate); 
+values(seq_friend.NEXTVAL, 'summer', 'c', 'myg', 1,sysdate,0); 
 
 insert into fsetting values(seq_fsetting.NEXTVAL, 'c', 0);
 

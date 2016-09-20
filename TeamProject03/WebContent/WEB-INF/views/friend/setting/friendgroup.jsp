@@ -38,6 +38,8 @@
 정렬된 이웃 명 
 <br><br>
 
+
+<!-- 그룹이없습니다. -->
 <table>
 <col width="30px"/><col width="100px"/><col width="100px"/><col width="100px"/>
 <col width="100px"/>
@@ -62,7 +64,14 @@
     <button type = "button" onclick="">그룹추가</button>
 </div>
 
+
+
+<br><br>
+
+
+
 <script>
+//두번째탭보여주기
 $(function () {
     $('#myTab li:eq(1) a').tab('show')
 });

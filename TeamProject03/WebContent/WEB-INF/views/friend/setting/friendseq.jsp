@@ -17,26 +17,62 @@
 <c:if test="${empty flist }">
 이웃읎음
 </c:if>
-<c:forEach items="${flist }" var="fl">
-<table>
-  <tr>
+
+<!-- 이웃이 있으면 -->
+<c:if test="${not empty flist }">
+
+<table class="table table-striped" style="align: center; width:40%;">
+<col width="300px"/>
+
+
+  <tr class="success">
     <th>이웃그룹</th>
-    <th>이웃목록<select><option>직접순서설정</option><option selected="selected">새글순(자동)</option><option>가나다순(자동)</option><option>등록일순(자동)</option></select></th>
   </tr>
+  
+  <c:forEach items="glist" var="gl">
   <tr>
-    <td>그룹 목록</td>
-    <td><button style="color:orange;" class="glyphicon glyphicon-heart"></button>홍마|훌륭한 판단의 표본</td>
-  </tr>
-  <tr>
-    <td>그룹 목록</td>
-    <td><button style="color:orange;" class="glyphicon glyphicon-heart"></button>옥수수|옥수수의 잡동블로그</td>
-  </tr>
-  <tr>
-    <td>그룹 목록</td>
-    <td><button style="color:gray;" class="glyphicon glyphicon-heart"></button>민블로|민음사 블로그</td>
-  </tr>
+   
+    <td>${gl.fg_groupname }</td>
+  </tr>  
+  </c:forEach>
 </table>
-</c:forEach>
+
+
+<table class="table table-striped" style="align: center; width:60%;">
+<col width="300px"/>
+
+
+  <tr class="success">
+    <th>이웃목록
+       <select>
+          <option>직접순서설정</option>
+          <option selected="selected">새글순(자동)</option>
+          <option>가나다순(자동)</option>
+          <option>등록일순(자동)</option>
+       </select>
+    </th>
+  </tr>
+  
+  <c:forEach items="${flist }" var="fl">
+  <tr>  
+    <td>
+        <c:if test="${fl.fnd_chk==1 }">
+        <button style="color:gray;" class="glyphicon glyphicon-heart"></button>
+        </c:if>
+        <c:if test="${fl.fnd_chk==2 }">
+        <button style="color:orange;" class="glyphicon glyphicon-heart"></button>
+        </c:if>
+        ${fl.fnd_fndid }|블로그명
+    </td>
+  </tr>
+  </c:forEach>
+  
+</table>
+
+</c:if>
+
+<br><br>
+
 
 <script>
 $(function () {

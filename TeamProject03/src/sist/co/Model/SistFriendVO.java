@@ -20,7 +20,8 @@ create table friend(
 	fnd_fndid varchar2(50),		-- 이웃 아이디
 	fnd_groupname varchar2(50), 	-- 그룹명
 	fnd_chk number not null, 		-- 이웃1 / 서로 이웃2 여부
-	fnd_foldate date not null --이웃,서로이웃 추가일
+	fnd_foldate date not null, --이웃,서로이웃 추가일
+	fnd_newAlert number default 0 not null --새글알림 on0 / off1
 );
 create sequence seq_friend 
 start with 1 increment by 1; 
@@ -43,6 +44,7 @@ public class SistFriendVO {
 	private String fnd_groupname;//그룹명
 	private int fnd_chk;	     //이웃 / 서로 이웃 여부
 	private Timestamp fnd_foldate;//이웃,서로이웃 추가일
+	private int fnd_newAlert;    //새글알림
 	
 	public SistFriendVO() {
 	}
@@ -95,12 +97,19 @@ public class SistFriendVO {
 		this.fnd_foldate = fnd_foldate;
 	}
 
+	public int getFnd_newAlert() {
+		return fnd_newAlert;
+	}
+
+	public void setFnd_newAlert(int fnd_newAlert) {
+		this.fnd_newAlert = fnd_newAlert;
+	}
+
 	@Override
 	public String toString() {
 		return "SistFriendVO [fnd_seq=" + fnd_seq + ", fnd_myid=" + fnd_myid + ", fnd_fndid=" + fnd_fndid
-				+ ", fnd_groupname=" + fnd_groupname + ", fnd_chk=" + fnd_chk + ", fnd_foldate=" + fnd_foldate + "]";
+				+ ", fnd_groupname=" + fnd_groupname + ", fnd_chk=" + fnd_chk + ", fnd_foldate=" + fnd_foldate
+				+ ", fnd_newAlert=" + fnd_newAlert + "]";
 	}
-	
-
 
 }

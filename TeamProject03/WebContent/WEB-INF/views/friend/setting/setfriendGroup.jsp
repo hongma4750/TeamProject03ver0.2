@@ -18,11 +18,11 @@
 <!-- 부트스트랩 링크 -->
 
 
-
 <!-- 이웃, 그룹 관리 창 -->
 
 <h3><strong>열린이웃,그룹관리</strong></h3>
 <hr>
+
 서로이웃 신청받기 
 <input type ="radio" id="chkY" name="dblfollow" value="Y" checked="checked"/><label for="chkY">사용</label>&nbsp;&nbsp;
 <input type ="radio" id="chkN" name="dblfollow" value="N"><label for="chkN">사용하지 않음</label>
@@ -37,7 +37,7 @@
      width:300px; height:100px; display: none;">
   <h5>서로이웃 신청을 받을 수 있습니다.<button type="button" id="" onclick="btnClose();" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>&nbsp;&nbsp;</button></h5>
   <br>
-  <div align="center"><input type="submit" value="확인" onclick="location.href='setfriendGroup.do'"></div>
+  <div align="center"><input type="submit" value="확인" onclick="location.href='openfriend.do'"></div>
 </div>
 <!-- 서로이웃 받기 사용 시 div -->
 
@@ -82,8 +82,8 @@
 			<div role="tab_con" class="tab_con" id="seqtab">
 				<!-- 이웃순서 탭 클릭시_include -->
 				<jsp:include page="friendseq.do" flush="true" />
-			</div> --%>
-		</div>
+			</div>
+		</div> --%>
 		
 		
 		
@@ -92,6 +92,9 @@
 </div>
 </div>
 
+
+
+<br><br>
 
 
 
