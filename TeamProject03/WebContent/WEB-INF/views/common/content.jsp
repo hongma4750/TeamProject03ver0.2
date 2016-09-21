@@ -19,65 +19,118 @@
 <!-- 부트스트랩 링크 -->
 
 
+
+<!-- 로그인시 -->
+<c:if test="${login.m_id ne null}" >
+<div id="con">
+<div role="tabpanel">
+
 <ul class="nav nav-tabs" role="tablist" id="myTab">
-  <!-- 로그인시 -->
-  <li role="presentation" class="active" ><a href="fnewslist.do" id="friendnews" >이웃소식보기</a></li>
-  <li role="presentation"><a href="topiclist.do" id="topic">주제별 글보기</a></li>
-  <!-- 로그인시 -->
-  
-  <!-- 비로그인시 -->
-  <!-- <li role="presentation"><a href="#" id="friendnews" >이웃소식보기</a></li>
-  <li role="presentation" class="active" ><a href="topiclist.do" id="topic">주제별 글보기</a></li>
-  <br><div id="right_side_set" align="right"><a href="#none" >열린이웃추가</a>&nbsp;&nbsp;<a href="setfriendGroup.do">이웃관리</a>&nbsp;&nbsp;<a href="#none">관심주제설정</a></div> -->
-  <!-- 비로그인시 -->  
+  <li rel="ftottab" role="presentation" class="active"><a href="fnewslist.do" id="friendnews">이웃소식보기</a></li>
+  <li rel="ttottab" role="presentation"><a href="#topiclist" id="topic" aria-controls="presentation" role="tab" data-toggle="tab">주제별 글보기</a></li>
+  <br><div id="right_side_set" align="right"><a href="openfriend.do">이웃관리</a>&nbsp;&nbsp;<a href="#none">관심주제설정</a></div>
 </ul>
 
+  
+   
+  <%-- <div id="others">
+    <div role="tab_con" class="tab_con" id="ftottab">
+		<!-- 이웃소식 탭 클릭시_include -->
+		<jsp:include page="../friend/news/fnewslist.jsp" flush="true" />
+	</div>
+	<div role="tab_con" class="tab_con" id="ttottab">
+		<!-- 주제별포스트 탭 클릭시_include -->
+		<jsp:include page="../topic/topiclist.jsp" flush="true" />
+	</div>
+  </div> --%>
+  
+</div>
+</div>
+</c:if>
+<!-- 로그인시 -->
+  
+<!-- 비로그인시 -->
+<c:if test="${login.m_id eq null}" >
+<div id="con">
+<div role="tabpanel">
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li rel="ttottab"><a href="#" id="friendnews">이웃소식보기</a></li>
+  <li rel="ttottab" role="presentation" class="active"><a href="#" id="topic" aria-controls="home" role="tab" data-toggle="tab">주제별 글보기</a></li>
+  
+</ul>
+<%-- 
+  <div id="others">
+	<div role="tab_con" class="tab_con" id="ttottab">
+		<!-- 주제별포스트 탭 클릭시_include -->
+		<jsp:include page="../topic/topiclist.jsp" flush="true" />
+	</div>
+  </div> --%>
+
+</div>
+</div>
+</c:if>
+<!-- 비로그인시 -->  
+
+
 <!-- 비로그인시 로그인 안내창 -->
-<%-- <c:if test="${login.id eq null}" >
-<div id="sign_in" style="position:absolute; top:40px; z-index:2; 
-     background-color: #fff; border:1px solid #000; 
-     width:300px; display: none;">
+<c:if test="${login.m_id eq null}" >
+<div id="sign_in" style="position:absolute; top:40px; z-index:3; 
+     background-color: #fff; border:1px solid #000;width:300px; display: none;">
   <h5>로그인 후 사용가능합니다.<button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>&nbsp;&nbsp;</button></h5>
   <p>
   <span>우측 로그인 영역</span>
      에서 로그인 후 사용해 주세요.
   </p>
 </div>
-</c:if> --%>
+</c:if>
 
-</body>
-</html>
+
 
 <script>
-  $(function () {
+$(function () {
     $('#myTab a:last').tab('show')
-  })
-  
-  //이웃소식보기 탭 클릭
-  $('#friendnews').click(function(){
-	  //alert('이웃소식');
-	 
-	  //비로그인시 로그인 안내 div태그
-	  document.all.sign_in.style.display = "inherit";
-  });
-  
-  //주제별 글보기 탭 클릭
-  $('#topic').click(function(){
-	//alert('topic');
+});
+
+//탭클릭에 따른 내용 변경
+$(function (){
+	$(".tab_con").hide();
+	$(".tab_con:last").show();
 	
-  });
+	$("#con ul.nav-tabs li").click(function(){
+		$("#con ul.nav-tabs li").removeClass("active").css("color","red");
+		$(this).addClass("active").css("color","yellow");
+		$("#others .tab_con").hide();
+		var actTab=$(this).attr("rel");
+		$("#"+actTab).show();
+	});
+});
   
-  $('#btnClose').click(function(){
-	  document.all.sign_in.style.display = "none";
-  });
+//이웃소식보기 탭 클릭
+$('#friendnews').click(function(){
+	//alert('이웃소식');
+	 
+	//비로그인시 로그인 안내 div태그
+	if("${login.m_id eq null}"){
+	    document.all.sign_in.style.display = "block";
+	}
+});
+
+//로그인시 이웃소식보기 옆 설정 링크
+function right_side_set(){
+	document.all.right_side_set.style.display = "block";
+}
+  
+//주제별 글보기 탭 클릭
+$('#topic').click(function(){
+    //alert('topic');
+    location.href="topiclist.do";
+	//document.all.right_side_set.style.display = "none";
+	
+});
+  
+$('#btnClose').click(function(){
+	document.all.sign_in.style.display = "none";
+});
   
   
-</script>
-
-
-
-<script>
-  $(function () {
-    $('#myTab a:last').tab('show')
-  })
 </script>

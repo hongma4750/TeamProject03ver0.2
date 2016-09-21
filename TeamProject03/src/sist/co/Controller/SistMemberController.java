@@ -27,8 +27,9 @@ public class SistMemberController {
 	SistMemberService sistMemberService;
 
 	@RequestMapping(value="index.do",method=RequestMethod.GET)
-	public String index(Model model){
+	public String index(SistMemberVO memdto, Model model){
 		logger.info("환영합니다. index.do 실행중");
+		
 		return "index.tiles";
 	}
 	
@@ -39,18 +40,20 @@ public class SistMemberController {
 	}
 	
 	@RequestMapping(value="loginAF.do",method=RequestMethod.POST)
-	public String loginAF(SistMemberVO vo, Model model) throws Exception{
+	public String loginAF(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
 		logger.info("loginAF.do 실행중");
 		
 		
 		SistMemberVO memvo = sistMemberService.login(vo);
 		
 		if(memvo == null){
-			
+			//로그인안해쓰
+			return "index.tiles";	
 		}else{
-			model.addAttribute("login",memvo);
+			request.getSession().setAttribute("login", memvo);
+			//로그인해쓰
+			return "redirect:/index.do";
 		}
-		return "index.tiles";
 	}
 	
 	@RequestMapping(value="regi.do",method=RequestMethod.GET)

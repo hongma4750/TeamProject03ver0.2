@@ -92,6 +92,10 @@
 </div>
 <!-- 페이징 -->
 
+
+<br><br>
+
+
 <script>
 //이미 이웃,서로이웃일 경우 추가버튼 비활성화
 $("input[type='submit']").attr("disabled", true);//비활성화

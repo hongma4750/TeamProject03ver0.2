@@ -1,8 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-    
+<!DOCTYPE html>
+ 
+<!-- tag들 필요하면 Ctrl+c  /   Ctrl+v -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:requestEncoding value ="utf-8"/> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<fmt:requestEncoding value="utf-8"/>
+<!-- tag들 필요하면 Ctrl+c  /   Ctrl+v --> 
 
 <!-- 부트스트랩 링크 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,50 +17,75 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- 부트스트랩 링크 -->
 
+
 <!-- 서로이웃 맺기 -->
-<form style="background-color: #fff;">
+
+<h3><strong>서로이웃 맺기</strong></h3>
+<hr>
+
+<div id="con">
+<div role="tabpanel">
+
 <ul class="nav nav-tabs" role="tablist" id="myTab">
-  <li role="presentation" class="active" ><a href="#" id="friendtab">받은신청</a></li>
-  <li role="presentation"><a href="#" id="grouptab">보낸신청</a></li>
-  <li role="presentation"><a href="#" id="seqtab">안내메시지</a></li>
+  <li rel="tab1" role="presentation" class="active" ><a href="#receive" id="friendtab" aria-controls="presentation" role="tab" data-toggle="tab">받은신청</a></li>
+  <li rel="tab2" role="presentation"><a href="#send" id="grouptab">보낸신청</a></li>
+  <li rel="tab3" role="presentation"><a href="#message" id="seqtab">안내메시지</a></li>
   <br><br>
 
-        <!-- 받은신청 탭_내용 include -->
-		<%-- <jsp:include page="f_receive.jsp" flush="false">
-			<jsp:param name="param" value="value1" />
-		</jsp:include> --%>
-		
-		<!-- 받은신청 탭_내용 include -->
-		<jsp:include page="f_send.jsp" flush="false">
-			<jsp:param name="param" value="value1" />
-		</jsp:include>
-		
-		
-	</ul>
 
-</form>
+				
+				<%-- <div id="others">
+				    <!-- 받은신청 탭_내용 include -->
+					<div role="tab_con" class="tab_con" id="tab1">
+						<jsp:include page="../friend/setting/f_receive.jsp" flush="true" />
+					</div>
+
+					<!-- 보낸신청 탭_내용 include -->
+					<div role="tab_con" class="tab_con" id="tab2">
+						<jsp:include page="../friend/setting/f_send.jsp" flush="true" />
+					</div>
+
+					<!-- 안내메시지 탭_내용 include -->
+					<div role="tab_con" class="tab_con" id="tab3">
+		            <jsp:include page="../friend/setting/f_send.jsp" flush="true"/>
+		            </div>
+
+				</div> --%>
+
+</ul>
+
+
 <br><br>
 
-<!-- 페이징 -->
-<div align="center">
-<nav aria-label="Page navigation">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-</div>
-<!-- 페이징 -->
+
+
+<script>
+//첫번째 탭 먼저보여주기
+$(function () {
+    $('#myTab a:first').tab('show')
+});
+
+//탭클릭에 따른 내용 변경
+$(function (){
+	$(".tab_con").hide();
+	$(".tab_con:last").show();
+	
+	$("#con ul.nav-tabs li").click(function(){
+		$("#con ul.nav-tabs li").removeClass("active").css("color","red");
+		$(this).addClass("active").css("color","yellow");
+		$("#others .tab_con").hide();
+		var actTab=$(this).attr("rel");
+		$("#"+actTab).show();
+	});
+});
+
+$("#friendtab").click(function(){
+	location.href="f_receive.do";
+});
+$("#grouptab").click(function(){
+	location.href="f_send.do";
+});
+$("#seqtab").click(function(){
+	location.href="#";
+});
+</script>

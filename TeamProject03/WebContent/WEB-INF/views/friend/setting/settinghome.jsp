@@ -13,6 +13,6 @@
 
 
 <h4>열린이웃</h4>
-<a href="setfriendGroup.do" >이웃,그룹 관리</a><br>
+<a href="openfriend.do" >이웃,그룹 관리</a><br>
 <a href="setfollower.do" >나를 추가한 이웃</a><br>
-<a href="setdblfollow.do" >서로이웃 맺기</a><br>
+<a href="f_receive.do" >서로이웃 맺기</a><br>
