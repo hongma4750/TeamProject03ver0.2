@@ -77,11 +77,18 @@ public class SistFriendImpl implements SistFriendService {
 		return sistFriendDAO.addFriend(friend);
 	}
 
-	//서로이웃팔로잉
+	//서로이웃팔로잉추가
 	@Override
 	@Transactional
 	public boolean addDblFollowing(SistDblFollowingVO dblfol) throws Exception {
 		return sistFriendDAO.addDblFollowing(dblfol);
+	}
+
+	//내가받은 서로이웃신청 조회
+	@Override
+	@Transactional
+	public List<SistDblFollowingVO> getReceiveDblFols(String myid) throws Exception {
+		return sistFriendDAO.getReceiveDblFols(myid);
 	}
 
 

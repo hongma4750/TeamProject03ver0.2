@@ -283,6 +283,17 @@
   	<definition name="setfollower.tiles" extends="setTab.tiles">
   	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfollower.jsp"/>
   	</definition>
+  	
+  	<!-- 서로이웃신청 수락 팝업 -->
+  	<definition name="acceptDblfol.tiles" template="/WEB-INF/views/friend/popup/acceptDblfol.jsp">
+  	</definition>
+  	<!-- 서로이웃신청 수락Sucs 팝업 -->
+  	<definition name="acceptSucs.tiles" template="/WEB-INF/views/friend/popup/acceptAF.jsp">
+  	</definition>
+  	
+  	<!-- 서로이웃신청 거절 팝업 -->
+  	<definition name="noDblfol.tiles" template="/WEB-INF/views/friend/popup/noDblfol.jsp">
+  	</definition>
   
   	<!-- 이웃관리메뉴와 탭 -->
 <!-- 이웃 -->

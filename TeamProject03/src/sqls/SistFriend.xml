@@ -43,6 +43,12 @@
     </insert>
     
     <insert id="addDblFollowing" parameterType="sist.co.Model.SistDblFollowingVO">
-    INSERT INTO DBLFOLLOWING VALUES (SEQ_DBLFOLLOWING.NEXTVAL, #{df_send}, #{df_receive},#{fnd_groupname},SYSDATE,0,'')
+    INSERT INTO DBLFOLLOWING VALUES (SEQ_DBLFOLLOWING.NEXTVAL, #{df_send}, #{df_receive},#{fnd_groupname},#{df_msg},SYSDATE,0,'')
     </insert>
+    
+    <select id="getReceiveDblFols" parameterType="java.lang.String" 
+    resultType="sist.co.Model.SistDblFollowingVO">
+    SELECT * FROM DBLFOLLOWING WHERE DF_RECEIVE=#{df_receive}
+    </select>
+    
   </mapper>

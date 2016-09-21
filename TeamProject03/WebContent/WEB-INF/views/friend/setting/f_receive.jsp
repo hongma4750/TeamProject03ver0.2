@@ -20,6 +20,8 @@
 		<button type="button">거절</button>
 
 <br><br>
+
+<form method="post">
 		<table border="1" style="align: center">
 			<col width="30px" />
 			<col width="400px" />
@@ -34,11 +36,31 @@
 				<th>신청일</th>
 				<th>관리</th>
 			</tr>
-
+			
+          <!-- 받은 서로이웃 신청이 없으면 -->
+            <c:if test="${empty Rfolist }">
 			<tr>
 				<td colspan="5" align="center"><br><br><br><h4>새로 들어온 이웃신청이 없습니다</h4><br><br><br></td>
 			</tr>
+			</c:if>
+			
+		  <!-- 받은 서로이웃 신청이 있으면 -->
+			<c:if test="${not empty Rfolist }">
+			
+			<c:forEach items="${Rfolist }" var="Rfl">
+			<tr>
+				<td><input type="checkbox" id="_chk"></td>
+				<td>${Rfl.df_send }</td>
+				<td>${Rfl.df_msg }</td>
+				<td>${Rfl.df_date }</td>
+				<td><button class="btn btn-default btn-xs" onclick="popupOpen(1);">수락</button><button class="btn btn-default btn-xs" onclick="popupOpen(2);">거절</button></td>
+			</tr>
+			</c:forEach>
+			
+			</c:if>
+			
 		</table>
+		</form>
 
 		<div>
 			<input type="checkbox">&nbsp;전체선택&nbsp;
@@ -76,5 +98,21 @@
 
 
 <script>
-//
+//서로이웃 신청 수락/거절 팝업 pop!
+function popupOpen(chk){
+	var chk;
+	/* var popUrl1="acceptDblfol.do";//수락
+	var popUrl2="noDblfol.do";//거절 */
+	var popOption = "width=370, height=400, resizable=no, scrollbars=no, status=no";    //팝업창 옵션(optoin)
+	
+	//수락버튼 클릭시
+	if (chk==1){
+		
+		window.open("acceptDblfol.do?blogId=${Rfl.df_send}","",popOption);
+	}
+	//거절버튼 클릭시
+	if (chk==2){
+		window.open("noDblfol.do?blogId=${Rfl.df_send}","",popOption);
+	}
+}
 </script>

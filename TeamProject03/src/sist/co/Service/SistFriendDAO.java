@@ -71,10 +71,17 @@ public class SistFriendDAO {
 			return true;
 		}
 		
-		//서로이웃팔로잉
+		//서로이웃팔로잉추가
 		public boolean addDblFollowing(SistDblFollowingVO dblfol) throws Exception{
 			sqlsession.insert(ns+"addDblFollowing", dblfol);
 			return true;
+		}
+		
+		//내가 받은 서로이웃팔로잉
+		public List<SistDblFollowingVO> getReceiveDblFols(String myid) throws Exception{
+			List<SistDblFollowingVO> dblfols = new ArrayList<SistDblFollowingVO>();
+			dblfols = sqlsession.selectList(ns+"getReceiveDblFols", myid);
+			return dblfols;
 		}
 	
 

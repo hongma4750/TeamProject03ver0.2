@@ -21,15 +21,15 @@
 <!-- 이웃이 있으면 -->
 <c:if test="${not empty flist }">
 
-<table class="table table-striped" style="align: center; width:40%;">
+<table class="table table-striped" style="align: center; width:40%;float:left;">
 <col width="300px"/>
 
 
   <tr class="success">
     <th>이웃그룹</th>
   </tr>
-  
-  <c:forEach items="glist" var="gl">
+ 
+  <c:forEach items="${glist }" var="gl">
   <tr>
    
     <td>${gl.fg_groupname }</td>
@@ -38,7 +38,7 @@
 </table>
 
 
-<table class="table table-striped" style="align: center; width:60%;">
+<table class="table table-striped" style="align: center; width:60%;float:left;">
 <col width="300px"/>
 
 

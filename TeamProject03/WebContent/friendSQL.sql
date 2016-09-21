@@ -42,6 +42,7 @@ create table dblfollowing(
 	df_send varchar2(50) not null, 	-- 신청한 사람
 	df_receive varchar2(50) not null, 	-- 신청 받은 사람
 	fnd_groupname varchar2(50),      -- 그룹명
+	df_msg varchar2(500), --서로이웃신청메시지
 	df_date date not null, 		-- 신청일
 	df_accept number default 0, 		-- 수락1 / 거절2 / 미확인0 여부
 	df_acceptdate date 		-- 수락일 (수락전빈문자열)

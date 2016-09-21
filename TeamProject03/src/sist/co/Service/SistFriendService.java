@@ -30,6 +30,9 @@ public interface SistFriendService {
 	//이웃추가
 	public boolean addFriend(SistFriendVO friend) throws Exception;
 
-	//팔로잉
+	//서로이웃팔로잉추가
 	public boolean addDblFollowing(SistDblFollowingVO dblfol) throws Exception;
+	
+	//내가받은 서로이웃신청 조회
+	public List<SistDblFollowingVO> getReceiveDblFols(String myid) throws Exception;
 }

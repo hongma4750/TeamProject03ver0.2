@@ -52,6 +52,11 @@
 &nbsp;&nbsp;<input id="_chkg" name="chkg" type="checkbox" checked=""/> <input type="text" id="_gname" name="" data-msg="그룹명을" value="새 그룹"/>
 <select name="openChk"><option selected="selected">공개</option><option>비공개</option></select>
 </div>
+<br>
+신청 메시지를 입력해주세요.
+<textarea rows="5" placeholder="우리 서로이웃해요~"
+cols="40" name="df_msg" id="_dblmsg">
+</textarea>
 </div>
 
 </form>

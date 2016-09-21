@@ -227,13 +227,6 @@ public class SistFriendController {
 		}
 		
 		
-		//메뉴1_이웃,그룹 관리
-		/*@RequestMapping(value="setfriendGroup.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String setfriendGroup(HttpServletRequest request, Model model) throws Exception{
-			logger.info("환영합니다. setfriendGroup.do 실행중");
-			return "setfriendGroup.tiles";
-		}*/
-		
 		//탭1_열린이웃(메뉴1)
 		@RequestMapping(value="openfriend.do",method={RequestMethod.GET,RequestMethod.POST})
 		public String openfriend(HttpServletRequest request, String myid, Model model) throws Exception{
@@ -286,22 +279,30 @@ public class SistFriendController {
 			return "friendseq.tiles";
 		}
 
+		
 		//메뉴2_나를 추가한 이웃
 		@RequestMapping(value="setfollower.do",method={RequestMethod.GET,RequestMethod.POST})
 		public String setfollower(Model model){
 			logger.info("환영합니다. setfollower.do 실행중");
 			return "setfollower.tiles";
 		}
-		/*//메뉴3_서로이웃맺기	
-		@RequestMapping(value="setdblfollow.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String setdblfollow(Model model){
-			logger.info("환영합니다. setdblfollow.do 실행중");
-			return "setdblfollow.tiles";
-		}*/
+		
+		
 		//탭1_받은신청(메뉴3)
 		@RequestMapping(value="f_receive.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String f_receive(Model model){
+		public String f_receive(HttpServletRequest request, Model model) throws Exception{
+			
 			logger.info("환영합니다. f_receive.do 실행중");
+			
+			//'로그인 한 사람' 정보 취득
+			String id = ((SistMemberVO)request.getSession().getAttribute("login")).getM_id();
+			logger.info(id + "?? ");
+			
+			//받은 이웃신청 목록
+			List<SistDblFollowingVO> Rfolist = sistFriendService.getReceiveDblFols(id);
+			model.addAttribute("Rfolist", Rfolist);
+			System.out.println(Rfolist.toString());
+			
 			return "f_receive.tiles";
 		}
 		//탭2_보낸신청(메뉴3)
@@ -313,6 +314,25 @@ public class SistFriendController {
 		//탭3_안내메시지(메뉴3)
 		
 		
+		//서로이웃신청 수락
+		@RequestMapping (value="acceptDblfol.do",method={RequestMethod.GET,RequestMethod.POST})
+		public String acceptDblfol(Model model){
+			logger.info("환영합니다. acceptDblfol.do 실행중");
+			return "acceptDblfol.tiles";
+		}
+		//서로이웃신청 수락Sucs
+		@RequestMapping (value="acceptSucs.do",method={RequestMethod.GET,RequestMethod.POST})
+		public String acceptSucs(Model model){
+			logger.info("환영합니다. acceptSucs.do 실행중");
+			return "acceptSucs.tiles";
+		}
+		
+		//서로이웃신청 거절
+		@RequestMapping (value="noDblfol.do",method={RequestMethod.GET,RequestMethod.POST})
+		public String noDblfol(Model model){
+			logger.info("환영합니다. noDblfol.do 실행중");
+			return "noDblfol.tiles";
+		}
 		
 		//관리기능_서로이웃받기 여부
 		@RequestMapping (value="dblfollowchk.do",method={RequestMethod.GET,RequestMethod.POST})
