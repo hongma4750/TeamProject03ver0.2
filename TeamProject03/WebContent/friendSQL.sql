@@ -138,11 +138,11 @@ select* from friend
 --insert into FOLLOWING values (seq_following.NEXTVAL, 'bom', 'summer', '20160912' );
 
 insert into friend
-values(seq_friend.NEXTVAL, 'bom', 'summer', '친구들', 1,sysdate,0); 
+values(seq_friend.NEXTVAL, 'aa1212', 'summer', '친구들', 1,sysdate,0); 
 
 insert into fsetting values(seq_fsetting.NEXTVAL, 'bom', 0);
 
-insert into fgroup values(seq_fgroup.NEXTVAL, '친구들', 'bom',0);
+insert into fgroup values(seq_fgroup.NEXTVAL, '친구들', 'aa1212',0);
 
 --summer<->aaa 서로이웃
 

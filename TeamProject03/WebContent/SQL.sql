@@ -2,7 +2,7 @@ DROP TABLE member
 CASCADE CONSTRAINT;
 
 create table member(
-	m_id varchar2(50),			-- 아이디
+	m_id varchar2(50) primary key,			-- 아이디
 	m_pw varchar2(2000),			-- 비밀번호
 	m_name varchar2(50),
 	m_gender varchar2(2),
