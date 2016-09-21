@@ -64,6 +64,7 @@
 <div style="height:100%; ">
     
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">     
+    <br><br>
     		<div>
                 비밀번호 찾기
        		 </div>
@@ -83,8 +84,10 @@
 				  </label>
 				  
 				  <div id="usePhone">
-				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" style="width:30%;">
-				  	<input type="text" class="form-control" name="m_phone" placeholder="휴대전화" style="width:30%;">
+				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" 
+				  	style="width:30%;" id="p_m_id" value="${m_id }" readonly>
+				  	<input type="text" class="form-control" name="m_phone" 
+				  	placeholder="휴대전화" style="width:30%;" id="p_m_phone" onkeydown="return showKeyCode(event)">
 				  </div>
 				</div>
 				
@@ -95,15 +98,17 @@
 				    본인 확인 이메일로 인증
 				  </label>
 				  
-				  <div id="useEmail">
-				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" style="width:30%;">
+				  <div id="useEmail" style="display:none;">
+				  	<input type="text" class="form-control" name="m_id" placeholder="아이디" 
+				  	style="width:30%;" id="e_m_id" value="${m_id }" readonly>
 				  	<div id="row">
-				  	<input type="text" class="form-control" name="m_email" placeholder="이메일" style="width:30%; float:left; display:inline-block;">
+				  	<input type="text" class="form-control" name="m_email" placeholder="이메일" 
+				  	style="width:30%; float:left; display:inline-block;" id="e_m_email">
 				  	&nbsp;&nbsp;
-				  	<input type="button" class="" value="인증번호받기" style="height:35px;">
+				  	<input type="button" class="" value="인증번호받기" style="height:35px;" onclick="return checkEmail()">
 				  	</div>
 				  	<br>
-				  	<input type="text" name="emailChk" placeholder="인증번호" disabled style="width:30%">
+				  	<input type="text" name="emailChk" placeholder="인증번호" disabled style="width:30%" id="e_m_emailChk">
 				  </div>
 				  
 				</div>
@@ -114,9 +119,155 @@
         </div>
         
         <div style="text-align:center;">
-			<input type="button" value="다음" onclick="location.href='find_pw_ok.do?menu=pw'">
+			<input type="button" value="다음" onclick="return find_id() ">
 		</div>
 		
     </div>
     
 </div>
+
+
+<script>
+
+	var my_confirmNum = "0";
+	
+	$("#optionsRadios1").click(function(){
+		$("#usePhone").show();
+		$("#useEmail").hide();
+		
+		
+		$("#e_m_email").val("");
+	})
+	
+	$("#optionsRadios2").click(function(){
+		
+		$("#usePhone").hide();
+		$("#useEmail").show();
+		
+		
+		$("#p_m_phone").val("");
+		
+	})
+	
+	function find_id(){
+		radio_temp = document.getElementById("optionsRadios1").checked;
+		
+		if(radio_temp){
+			//휴대전화 사용시
+			if($("#p_m_id").val().length==0){
+				alert("아이디를 입력해주세요");
+				return false;
+			}else if($("#p_m_phone").val().length == 0){
+				alert("휴대전화를 입력해주세요");
+				return false;
+			}
+			
+			//$("#idUsePhone").submit();
+			go_db(0);
+		}else{
+			//이메일 사용시
+			//인증번호 확인
+
+			if($("#e_m_emailChk").val() == my_confirmNum){
+				location.href="find_pw_ok.do?menu=pw";
+			}else{
+				alert("인증번호를 다시 확인해 주세요");
+			}
+		}
+	}
+	
+	function checkEmail(){
+		if($("#e_m_id").val().length == 0){
+			alert("아이디를 입력해주세요");
+			return false;
+		}else if($("#e_m_email").val().length==0){
+			alert("이메일을 입력해주세요");
+			return false;
+		}
+		
+		go_db(1);
+	}
+	
+	function showKeyCode(event) {
+		event = event || window.event;
+		var keyID = (event.which) ? event.which : event.keyCode;
+		if( ( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+		{
+			return;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function go_db(a){
+		
+		if(a=="0"){
+			var m_id = $("#p_m_id").val();
+			var m_phone = $("#p_m_phone").val();
+			
+			 $.ajax({
+				type:"GET",
+				url:"pwUsePhone.do",
+				data:"m_id="+m_id+"&m_phone="+m_phone,
+				success:function(msg){
+					outputList(msg);
+				}
+				
+			});
+		}else{
+			//이메일 사용시
+			
+			var m_id = $("#e_m_id").val();
+			var m_email = $("#e_m_email").val();
+			
+			
+			
+			for(var j =0;j<5;j++){
+				my_confirmNum += Math.floor(Math.random() * 10);
+			}
+			
+			alert(my_confirmNum);
+			
+			$.ajax({
+				type:"GET",
+				url:"pwUseEmail.do",
+				data:"m_id="+m_id+"&m_email="+m_email+"&my_confirmNum="+my_confirmNum,
+				success:function(msg){
+					noEmail(msg);
+				}
+				
+			});
+			
+			
+		}
+		
+	}
+	
+	function outputList(msg){
+		
+		if(msg.message == "Suc"){
+			location.href="find_pw_ok.do?menu=pw";
+		}else{
+			alert("일치하는 회원이 없습니다.");
+			$("#e_m_name").val("");
+			$("#e_m_phone").val("");
+		}
+	}
+	
+	function noEmail(msg){
+		
+		if(msg.message == "Suc"){
+			alert("인증번호를 입력해주세요");
+			$("#e_m_emailChk").attr("disabled",false);
+		}else{
+			alert("일치하는 회원이 없습니다.");
+			$("#e_m_id").val("");
+			$("#e_m_email").val("");
+		}
+	}
+	
+	
+	
+</script>

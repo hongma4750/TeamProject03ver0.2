@@ -19,6 +19,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- 부트스트랩 링크 -->
+<script src="js/regi.js"></script>
+
+<!-- 암호화 -->
+<script type="text/javascript" src="js/rsa/jsbn.js"></script>
+<script type="text/javascript" src="js/rsa/rsa.js"></script>
+<script type="text/javascript" src="js/rsa/prng4.js"></script>
+<script type="text/javascript" src="js/rsa/rng.js"></script>
+
+<!-- 암호화 -->
+
 
 <style>
     body {
@@ -72,20 +82,28 @@
         </div>
         
        <form id="login-form" action="regiAF.do" method="post">
+       <input type="hidden" id="rsaPublicKeyModulus" value="${publicKeyModulus}" />
+       <input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent }" />
+       <input type="hidden" id="rsaChangePw" name="m_pw">
             
         <div class="panel panel-success">
         
             <div class="panel-body">
                     <div>
-                        <input type="text" class="form-control" name="m_id" placeholder="아이디" autofocus>
+                        <input type="text" class="form-control" name="m_id" placeholder="아이디" id="m_id" >
+                        <div id = "chekedId" style="display:none;">
+                        </div>
+                        <input type="hidden" id="m_id_checked">
                     </div>
                    
                     <div>
-                        <input type="password" class="form-control" name="m_pw" placeholder="비밀번호">
+                        <input type="password" class="form-control" placeholder="비밀번호" id="m_pw">
+                        <div id="checkPw" style="display:none;"></div>
                     </div>
                     
                     <div>
-                        <input type="password" class="form-control" placeholder="비밀번호 확인">
+                        <input type="password" class="form-control" placeholder="비밀번호 확인" id="m_pwChecked">
+                        <div id="checkPwed" style="display:none;"></div>
                     </div>
             </div>
             
@@ -95,18 +113,19 @@
             <div class="panel-body">
                 
                     <div>
-                        <input type="text" class="form-control" name="m_name" placeholder="이름">
+                        <input type="text" class="form-control" name="m_name" placeholder="이름" id="m_name">
+                        <div id="checkName"></div>
                     </div>
                     
 
                         <div class="btn-group" data-toggle="buttons" style="width:100%;">
 
-						  <label class="btn btn-primary" id="genderChk" style="width:50%;">
-						    <input type="radio" name="m_gender" id="option1" autocomplete="off" value="m"> 남자
+						  <label class="btn btn-primary" id="genderChk01" style="width:50%;">
+						    <input type="radio" name="m_gender" id="option1"  value="m"> 남자
 						  </label>
 
-						  <label class="btn btn-primary" id="genderChk" style="width:50%; ">
-						    <input type="radio" name="m_gender" id="option2" autocomplete="off" value="w"> 여자
+						  <label class="btn btn-primary" id="genderChk02" style="width:50%; ">
+						    <input type="radio" name="m_gender" id="option2"  value="w"> 여자
 						  </label>
  							 
 						</div>	
@@ -119,12 +138,13 @@
 							<div class="col-md-10">
 								<div class="col-md-4">
 									<div>
-				                        <input type="text" class="form-control" name="b_year" placeholder="년(4자)">
+				                        <input type="text" class="form-control" name="b_year" 
+				                        placeholder="년(4자)" id="b_year" maxlength="4" onkeydown="return showKeyCode(event)" >
 				                    </div>
 								</div>
 								<div class="col-md-4">
-									<select class="form-control" name="b_month">
-									  <option selected>월</option>
+									<select class="form-control" name="b_month" id="b_month">
+									  <option selected value="월">월</option>
 									  <option value="01">1</option>
 									  <option value="02">2</option>
 									  <option value="03">3</option>
@@ -141,9 +161,12 @@
 								</div>
 								<div class="col-md-4">
 									<div>
-				                        <input type="text" class="form-control" name="b_day" placeholder="일">
+				                        <input type="text" class="form-control" name="b_day" 
+				                        placeholder="일" id="b_day" maxlength="2" onkeydown="return showKeyCode(event)">
 				                    </div>
 								</div>	
+								
+								<div id="checkBirth"></div>
 						</div><!-- class="col-md-10" -->
 						
             		</div><!-- id="row" -->
@@ -156,17 +179,21 @@
             <div class="panel panel-success">
             <div class="panel-body">
                     <div>
-                        <input type="email" class="form-control" name="m_email" placeholder="이메일">
+                        <input type="email" class="form-control" name="m_email" placeholder="이메일" id="m_email">
+                        <div id="checkEmail"></div>
                     </div>
                    
                     <div>
-                        <input type="text" class="form-control" name="m_phone" placeholder="휴대전화">
+                        <input type="text" class="form-control" name="m_phone" placeholder="휴대전화" 
+                        id="m_phone" onkeydown="return showKeyCode(event)" maxlength="11">
+                        <div id="checkPhone"></div>
                     </div>   
             </div>    <!-- class="panel-body" -->
         </div><!-- class="panel panel-success" -->
 
     		<div>
-                <button type="submit" class="form-control btn btn-primary" id="regiBtn" style="height:50px;">가입하기</button>
+                <button type="submit" class="form-control btn btn-primary" 
+                id="regiBtn" style="height:50px;" onclick="return go_submit()">가입하기</button>
             </div>
             
            </form>
@@ -174,4 +201,24 @@
         </div>
         
     </div>
+    
 
+
+
+<script>
+function showKeyCode(event) {
+	event = event || window.event;
+	var keyID = (event.which) ? event.which : event.keyCode;
+	if( ( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+	{
+		return;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+
+</script>

@@ -18,7 +18,7 @@
 	    <put-attribute name="login_box" value="/WEB-INF/views/common/login_box.jsp"/>
 	    <put-attribute name="noticeArea" value="/WEB-INF/views/common/noticeArea.jsp"/>
 	    <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
-	    <put-attribute name="main" value="/WEB-INF/views/topic/topiclist.jsp"/>
+	    <put-attribute name="main" value="/WEB-INF/views/friend/news/fnewslist.jsp"/>
   	</definition>
   	
   	<definition name="login.tiles" template="/WEB-INF/views/member/login.jsp">
@@ -62,6 +62,9 @@
   	</definition>
   	
   	<definition name="myInfo.tiles" template="/WEB-INF/views/member/myInfo.jsp">
+  	</definition>
+  	
+  	<definition name="myPw.tiles" template="/WEB-INF/views/member/myPw.jsp">
   	</definition>
   	
   	<definition name="userInfo.tiles" template="/WEB-INF/views/member/userInfo.jsp"></definition>

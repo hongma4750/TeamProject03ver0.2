@@ -63,7 +63,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header" >
-      <a class="navbar-brand" href="index.do"><p style="color:black; font-style: solid ;font-weight: 30px; font-size: 30px;">꽃밭에 홍미니</p></a>
+      <a class="navbar-brand" href="#"><p style="color:black; font-style: solid ;font-weight: 30px; font-size: 30px;">꽃밭에 홍미니</p></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -91,14 +91,22 @@
       
       <ul class="nav navbar-nav navbar-right">
       <c:if test="${login.m_id ne null }">
+
 	      	<li><a href="blogInfo.do">블로그 정보</a></li>
 	        
       			<li>
                   	<a href="#" id="userInfo" >
-                  		<img src="image/12.jpg" alt="..." class="img-circle" style="width:30px; height:30px;">
+                  		<img src="${login.m_photo }" alt="..." class="img-circle" style="width:30px; height:30px;">
                   		<span>김홍민 님</span>
                   	</a>
                   </li>
+                  
+                  <c:if test="${myMessageCount != 0 }">
+                  	<div class="row" style="height:10%; width:100%; text-align:center;
+                  	 z-index:20; position:absolute; left:495px;" >
+		            	<span class="badge " id="messageCount">${myMessageCount }</span>
+		            </div>
+                  </c:if>
                
                   <li>
                   	<a href="#" id="notice">
@@ -121,6 +129,9 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+
+
+<!-- 정보 -->
 <div id="mymyInfo" style="position:absolute; top:69px; z-index:2; right:0px; 
      background-color: #fff; border:1px solid #000; padding:0; margin:0; 
      width: 316px; height: 172px; display: none;" >
@@ -132,8 +143,8 @@
      	<div style="height:100%; width:30%; float:left; display:inline-block; border-color:#4C4C4C; ">
      		
      		<div class="panel panel-success" style="width:100%;height:100%;">
-            <div class="panel-body"">
-            	<img src="image/12.jpg" style="width:70px; height:80px;" class="img-circle">
+            <div class="panel-body">
+            	<c:if test="${login.m_id ne null }"><img src="${login.m_photo }" style="width:70px; height:80px;" class="img-circle"></c:if>
             </div>
             
             <div class="row" style="height:10%; width:100%; text-align:center; z-index:10; top:85px; right:140px;position:absolute;" >
@@ -142,6 +153,7 @@
             </div>
      	
      	</div>
+     	
      	
      	<div style="height:100%; width:70%; float:left; display:inline-block;">
 			<div class="row" style="padding:auto; margin:auto; width:100%; height:25px;">
@@ -170,15 +182,17 @@
      		<button class="form-control btn btn-primary" style="width:100%; height:100%">내블로그</button>
      	</div>
      </div>
-     
+     <!-- 정보 -->
      
 </div>
 </div>
+
+
 
 
 <div id="myNotice" style="position:absolute; top:69px; z-index:2; right:0px; 
      background-color: #fff; border:1px solid #000; padding:0; margin:0; 
-     width:297px;; height: 172px; display: none;">
+     width:297px; height: 172px; display: none;">
 	
 	
 	<div style="width:100%; height:80%; overflow-y:scroll;">
@@ -199,47 +213,28 @@
 		</div>
 		
 		
+		<!-- 메세지 -->
 		<div style="width:100%; height:80%; ">
 		
-			<div class="list-group" style="margin:auto; padding:auto;">
-			  <a href="#" class="list-group-item ">
-			  	<span class="photo"><img alt="avatar" src="assets/img/ui-zac.jpg" style="width:35px;height:40px;"></span>
-			  	<span class="subject">
-			    <span class="from">Zac Snider</span>
-	             </span>
-	             <span class="message">
-	                 Hi mate, how is everything?
-	             </span>
-			  </a>
-			</div>
+			<c:forEach items="${newMyMessageList }" var="myMessage">
 			
-			<div class="list-group" style="margin:auto; padding:auto;">
-			  <a href="#" class="list-group-item ">
-			  	<span class="photo"><img alt="avatar" src="image/12.jpg" style="width:35px;height:40px;"></span>
-			  	<span class="subject">
-			    <span class="from">Zac Snider</span>
-	             </span>
-	             <span class="message">
-	                 Hi mate, how is everything?
-	             </span>
-			  </a>
-			</div>
-			
-			<div class="list-group" style="margin:auto; padding:auto;">
-			  <a href="#" class="list-group-item ">
-			  	<span class="photo"><img alt="avatar" src="assets/img/ui-zac.jpg" style="width:35px;height:40px;"></span>
-			  	<span class="subject">
-			    <span class="from">Zac Snider</span>
-	             </span>
-	             <span class="message">
-	                 Hi mate, how is everything?
-	             </span>
-			  </a>
-			</div>
+				<div class="list-group" style="margin:auto; padding:auto;">
+				  <a href="#" class="list-group-item ">
+				  	<span class="photo" style="maring:auto; padding:auto;">
+				  		<img alt="avatar" src="${myMessage.m_photo }" style="width:35px;height:40px;">
+				  	</span>
+				  	
+				  	<span class="subject">
+					    <span class="from">${myMessage.m_name } </span>
+		             </span>
+		             <span class="message">${myMessage.message_content }</span>
+				  </a>
+				</div>
+				
+			</c:forEach>
 
-		
-			
 		</div>
+		
 	</div>
 	
 	
@@ -249,13 +244,13 @@
 		</div>
 	</div>
 </div>
-
+<!-- 메세지 -->
 
 
 <script>
 $('#userInfo').click(function(){
     //비로그인시 로그인 안내 div태그
-    document.all.sign_in.style.display = "inherit";
+    document.all.mymyInfo.style.display = "inherit";
  });
  
  $("#notice").click(function(){
@@ -265,6 +260,11 @@ $('#userInfo').click(function(){
  
  /* 팝업 사라지는 자바 스크립트*/
  $(document).ready(function(){
+	 var myMessageCount = '${myMessageCount}';
+		var m_id = '${login.m_id}';
+		var checkNewMessage = false;
+		var checkNewMessageFiveCount = 0;
+		
 	 $(document).mousedown(function(e){
 	 $('#mymyInfo , #myNotice').each(function(){
 	         if( $(this).css('display') == 'block' )
@@ -287,7 +287,57 @@ $('#userInfo').click(function(){
 	         }
 	     });
 	 }); 
-	 })
+	 
+	 
+	 
+	 $(function() {
+		    timer = setInterval( function () {
+		    	
+		    	if(m_id == ""){
+		    		
+		    		return;
+		    	}else{
+		    		$.ajax ({
+				    	type:"GET",
+				   		url:"checkNewMessage.do",
+				   		data:"m_id="+m_id,
+				       	cache : false,
+				       	success : function (checkMyNewMessage) {
+				       		
+				       		
+				       		if(checkMyNewMessage != myMessageCount){
+				       			//기존 메세지 카운수랑 새로 체크해본 결과가 다르다
+				       			myMessageCount = checkMyNewMessage;
+				       			$("#messageCount").text(myMessageCount);
+				       			checkNewMessage = true;;
+				       		}
+				       		
+				       		
+				       		if(checkNewMessage){
+				       			if(checkNewMessageFiveCount < 5){
+				       				if($("#messageCount").css("display") == "none"){
+				       					$("#messageCount").show();
+				       				}else{
+				       					$("#messageCount").hide();
+				       				}
+				       				
+				       				checkNewMessageFiveCount += 1;
+				       			}else{
+				       				$("#messageCount").show();
+				       				checkNewMessage = false;
+				       				checkNewMessageFiveCount = 0;
+				       			}
+				       		}
+				       	}
+				       });
+		    	}
+		    	
+		       
+		    }, 1000);	//5초
+		  });
+ 
+ 
+	 });
  
  /* 팝업 사라지는 자바 스크립트*/
  

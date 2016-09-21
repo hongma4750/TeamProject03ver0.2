@@ -71,6 +71,7 @@
 <div style="height:100%; ">
     
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">     
+    <br><br>
     		<div>
                 아이디 찾기
        		 </div>
@@ -82,7 +83,9 @@
                 
                 <div class="panel-heading">
 		                <div class="panel-title" style="text-align:center; font-size:80px;">
-		                	사용자 아이디
+		                	${find_user_id.m_id }
+		                	<c:remove var="find_user_id" scope="session" />
+		                	
 		                </div>
 		        </div>
       
@@ -95,7 +98,7 @@
              
         </div>	
         <div class="col-md-6" style="text-align:center;">
-        	<input type="button" style="height:50px;width:30%;" value="비밀번호 찾기"/>
+        	<input type="button" style="height:50px;width:40%;" value="비밀번호 찾기"/>
         </div>
     </div>
     
