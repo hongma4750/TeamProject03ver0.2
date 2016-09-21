@@ -28,7 +28,9 @@
 
 <h5><b>&nbsp;&nbsp;서로이웃 맺기</b></h5>
 <hr/>
-
+<script>
+alert('${login.m_id }');
+</script>
 <form action="acceptSucs.do?bid=<%=blogId %>" method="post" id="_myform" name="myform">
 	<input type="hidden" name="fnd_fndid" value="<%=blogId%>"/>
 	<input type="hidden" name="fnd_myid" value="${login.m_id }"/>
