@@ -119,6 +119,7 @@ for(var i = 0; i < $("#end_time option").size(); i++ ){
 	}
 
 });
+
 </script>
 
 <div id="section_cen">
