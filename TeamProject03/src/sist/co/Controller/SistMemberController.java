@@ -42,11 +42,11 @@ public class SistMemberController {
 	@RequestMapping(value="loginAF.do",method=RequestMethod.POST)
 	public String loginAF(HttpServletRequest request, SistMemberVO vo, Model model) throws Exception{
 		logger.info("loginAF.do 실행중");
-		
+	
 		
 		SistMemberVO memvo = sistMemberService.login(vo);
 		
-		if(memvo == null){
+/*		if(memvo == null){
 			//로그인안해쓰
 			return "index.tiles";	
 		}else{
@@ -54,11 +54,21 @@ public class SistMemberController {
 			//로그인해쓰
 			return "redirect:/index.do";
 		}
+
+		return "index.tiles";*/
+		
+		if(memvo != null && !memvo.getM_id().equals("")){
+			request.getSession().setAttribute("login",memvo);
+			return "redirect:/index.do";	
+		}else{
+			System.out.println("아이디 읍써");
+			return "index.tiles";
+		}
 	}
 	
 	@RequestMapping(value="regi.do",method=RequestMethod.GET)
 	public String regi(Model model){
-		logger.info("regi.do 실행중");
+		logger.info("regi.do �떎�뻾以�");
 		return "regi.tiles";
 	}
 	

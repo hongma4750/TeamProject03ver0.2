@@ -96,7 +96,7 @@
       			<li>
                   	<a href="#" id="userInfo" >
                   		<img src="image/12.jpg" alt="..." class="img-circle" style="width:30px; height:30px;">
-                  		<span>김홍민 님</span>
+                  		<span>${login.m_id} 님</span>
                   	</a>
                   </li>
                
