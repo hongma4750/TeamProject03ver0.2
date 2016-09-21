@@ -123,7 +123,6 @@ $(document).one("ready",function(){
 								
 							</td>
 						</tr>
-						
 					</table>
 					
 					<div class="row" style="margin:auto; padding:auto; text-align:center;">
