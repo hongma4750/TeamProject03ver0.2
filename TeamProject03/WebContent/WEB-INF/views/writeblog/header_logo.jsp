@@ -27,7 +27,14 @@
 <div class="wheader">
   <div class="navbar-header">
   	<a class="navbar-brand" href="index.do">꽃밭에 홍미니</a> | 
-    <a class="navbar-brand" href="blog.do">ssun블로그</a>
+    <c:choose>
+		<c:when test="${login.m_id ne null }">
+			<a class="navbar-brand" href="blog.do">${login.m_id }님의 블로그임</a>
+		</c:when>
+		<c:otherwise>
+			<a class="navbar-brand" href="blog.do">아이디 안들어왔으</a>
+		</c:otherwise>
+	</c:choose>
   </div>
 
 	<!-- 상단 이동 메뉴  - 로그인,블로그홈-->

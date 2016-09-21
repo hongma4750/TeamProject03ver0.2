@@ -23,6 +23,17 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/blog.css"/>
 <!-- css  -->
 
+<script type="text/javascript">
+/* 처음 실행시 로그인 한 사람이 공감 눌렀으면 채워진 하트 띄워주고. 아니면 빈 하트를 띄워준다 */
+$(document).one("ready",function(){
+	var sym = ${sym};
+		if(sym == 1){ //좋아요 있다.
+			$(".himg").html("<i class='fa fa-heart' aria-hidden='true' style='color:red; font-size:11px;'></i>");
+		}else{
+			$(".himg").html("<i class='fa fa-heart-o' aria-hidden='true' style='color:red; font-size:11px;'></i>");
+		}
+});
+</script>
 
 
 <div class="con">
@@ -98,7 +109,9 @@
 											<a href="#"><small>이동</small></a>
 											<a href="#"><small>삭제</small></a>
 										</span>
-										<input type="button" id="list_manageBtn" value="글관리 열기">
+										<c:if test="${blogdto.m_id eq login.m_id }">
+											<input type="button" id="list_manageBtn" value="글관리 열기">
+										</c:if>
 										<select>
 											<option>5줄 보기</option>
 											<option>10줄 보기</option>
@@ -145,35 +158,92 @@
 
 
 <!-- 상세페이지 -->
-	<div class="Bdetailcon">
-		<p><strong style="color:#20A524; font-size:15px;">2016년 00월 00일 오후 00시 00분에 저장한 글 입니다.</strong> &nbsp;&nbsp;&nbsp;&nbsp;| study </p>
+<div class="Bdetailcon">
+	<form name="bfrmform" id="bfrmform" action="" method="post">
+		<p><strong style="color:#20A524; font-size:15px;">${blogdto.bbs_title }</strong> &nbsp;&nbsp;&nbsp;&nbsp;| study </p>
 		<p class="view2">
-			2016.09.06.&nbsp;&nbsp;&nbsp;15:21&nbsp;&nbsp;&nbsp;
-			<a href="bbsupdate.do">수정</a> | 
-			<a href="bbsdel.do">삭제</a>
+			${blogdto.bbs_date }&nbsp;&nbsp;&nbsp;
+			<c:if test="${blogdto.m_id eq login.m_id }">
+				<a href="#none" class="_btnupdate">수정</a> | 
+				<a href="#none" class="_btndel">삭제</a>
+			</c:if>
 		</p>
 		
 		
 		 <hr>
 	<br><br><br>
 
-		블로그형 상세페에지<br><br>
-		
-		
-
 
 			<div class="foot_content">
+				<div class="f_cont">
+					${blogdto.bbs_content }
+				</div>
+				<br><br>
 				<div class="write_reple">
-					<a href="#none" class="reple_show">댓글쓰기</a>
+						<c:if test="${blogdto.bbs_comchk eq 1 }">
+							<a href="#none" class="reple_show">댓글쓰기</a>
+						</c:if>
+						<input type="hidden" name="log_id" class="log_id" value="${login.m_id }"/>
+						<input type="hidden" name="bbs_seq" class="bbs_seq" value="${blogdto.bbs_seq }"/>
+						<c:if test="${blogdto.bbs_likechk eq 1 }">
+							<a href="#none" class="sym">공감</a>
+							<form method="post">
+								<a href="javascript:likeajax();" class="sym_pic">
+								<!-- 여기에 하트 들어올것임 -->
+								<span class="himg"></span>
+									<span class="lcount" >${likecount }</span>
+								</a>
+							</form>
+						</c:if>
 				</div>
 				<div class="f_right">
-					<a href="bbsupdate.do">수정</a>
-					<span>&nbsp;|&nbsp;</span>
-					<a href="bbsdel.do">삭제</a>
-					<span>&nbsp;|&nbsp;</span>
-					<a href="#none">설정</a>
+					<c:if test="${blogdto.m_id eq login.m_id }">
+						<a href="#none" class="_btnupdate">수정</a>
+						<span>&nbsp;|&nbsp;</span>
+						<a href="#none" class="_btndel">삭제</a>
+						<span>&nbsp;|&nbsp;</span>
+						<a href="#none">설정</a>
+					</c:if>
 				</div>	
 			</div>
+			
+			
+			<!-- 공감한 사람 리스트 -->
+			<!-- 공감 수 0이면  -->
+			<c:if test="${empty peoplelist }">
+				<div class="foot_sym" style="display:none;">
+					<h6>이 포스트에 공감한  사람이 없습니다.</h6>
+				</div>	
+			</c:if>
+			
+			
+			<!-- 공감 수가 1이상이면 -->
+			<c:if test="${not empty peoplelist }">		
+				<div class="foot_sym" style="display:none;">
+					<h6>이 포스트에 공감한 블로거</h6>
+					<table>
+					<colgroup>
+						<col>
+						<col width="160">
+					</colgroup>
+					<tbody>
+					<c:forEach items="${peoplelist }" var="people" varStatus="peoplevar">
+						<tr>
+						<th>
+							<a href="#none">${people.m_id }</a>
+							<span class="sym_likedate"><small>${people.like_date }</small></span>
+							<span>&nbsp;&nbsp;</span>
+							<span style="color:green;"><small>x</small></span>
+						</th>
+						<td class="sym_name_right">
+							<small><a href="#none">${people.m_name }</a>
+						</td>
+						</tr>
+					</c:forEach>
+					</tbody>
+					</table>
+				</div>
+			</c:if>
 
 		<!-- 여기 댓글 클래스명 나중에 seq로 줘서 구분하기 -->
 			<div class="foot_reple" style="display:none;">
@@ -260,7 +330,8 @@
 					
 				</table>
 			</div>
-		</div>
+		</form>
+</div>
 	
 	<div class="B_list">
 		<p style="color: #20A524;">'전체'</p>&nbsp;&nbsp;<p>카테고리의 다른글 </p>
@@ -354,6 +425,76 @@
 	})
 	
 	
+
+	//공감 창 열기
+	var check_sym = 0;
+	$(".sym").click(function(){
+		if(check_sym==0){
+			check_sym = 1;
+			$(".foot_sym").show();
+		}else if(check_sym==1 && check_reList==1){
+			check_reList = 0;
+			$(".foot_reple").hide();
+		}
+		else{
+			check_sym = 0;
+			$(".foot_sym").hide();
+			
+		}
+		
+	})
 	
+$("._btnupdate").click(function(){
+	alert("수정하러간다");
+	$("#bfrmform").attr({"target":"_self","action":"bbsupdate.do"}).submit();
+});
+	
+$("._btndel").click(function(){
+	alert("진짜 삭제할거임");
+	$("#bfrmform").attr({"target":"_self","action":"bbsdel.do"}).submit();
+});
+
+
+/*blog_like/////////////////*/
+function likeajax(){
+
+	var url = "<%=application.getContextPath() %>/bbs_like.do"; //컨트롤러 호출
+	var url2 = "<%=application.getContextPath() %>/bbs_heart.do";
+	var likedata = ""; //post방식으로 처리해줄 값들
+	
+	likedata = "m_id=" +$(".log_id").val();
+	likedata += "&bbs_seq=" + $(".bbs_seq").val();
+ 	
+	//like add or del
+	$.ajax({
+		type: "POST",
+		url: url,
+		async:true,
+		data: likedata,
+		success: function(msg) { //성공 시 호출 할 함수
+			$(".lcount").text(msg);
+		}
+		
+	});
+ 	
+	//get heart
+	$.ajax({
+		type: "POST",
+		url: url2,
+		async:true,
+		data: likedata,
+		success: function(msg2) { //성공 시 호출 할 함수
+			if(msg2==1){ //좋아요 있으면 꽉 찬 하트
+				$(".himg").html("<i class='fa fa-heart-o' aria-hidden='true' style='color:red; font-size:11px;'></i>");
+			}else{
+				$(".himg").html("<i class='fa fa-heart' aria-hidden='true' style='color:red; font-size:11px;'></i>");
+			} 
+ 			
+		}
+		
+	});
+ 	
+ 	
+};
 
 </script>

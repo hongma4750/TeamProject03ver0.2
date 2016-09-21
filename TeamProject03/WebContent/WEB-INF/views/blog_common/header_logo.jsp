@@ -33,6 +33,14 @@
 
 <!-- 블로그 제목 -->
 <div class="head_logo">
-    <a class="navbar-brand" href="blog.do">ssunssun님의 블로그임</a>
+	<c:choose>
+		<c:when test="${login.m_id ne null }">
+			<a class="navbar-brand" href="blog.do">${login.m_id }님의 블로그임</a>
+		</c:when>
+		<c:otherwise>
+			<a class="navbar-brand" href="blog.do">아이디 안들어왔으</a>
+		</c:otherwise>
+	</c:choose>
+    
 </div>
 

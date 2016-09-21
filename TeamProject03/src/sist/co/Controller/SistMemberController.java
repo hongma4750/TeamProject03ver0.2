@@ -28,40 +28,47 @@ public class SistMemberController {
 
 	@RequestMapping(value="index.do",method=RequestMethod.GET)
 	public String index(Model model){
-		logger.info("환영합니다. index.do 실행중");
+		logger.info("�솚�쁺�빀�땲�떎. index.do �떎�뻾以�");
 		return "index.tiles";
 	}
 	
 	@RequestMapping(value="login.do",method=RequestMethod.GET)
 	public String login(Model model){
-		logger.info("현재 login.do 실행중");
+		logger.info("�쁽�옱 login.do �떎�뻾以�");
 		return "login.tiles";
 	}
 	
 	@RequestMapping(value="loginAF.do",method=RequestMethod.POST)
-	public String loginAF(SistMemberVO vo, Model model) throws Exception{
-		logger.info("loginAF.do 실행중");
-		
+	public String loginAF(HttpServletRequest request,SistMemberVO vo, Model model) throws Exception{
+		logger.info("loginAF.do �떎�뻾以�");
 		
 		SistMemberVO memvo = sistMemberService.login(vo);
 		
-		if(memvo == null){
+/*		if(memvo == null){
 			
 		}else{
 			model.addAttribute("login",memvo);
 		}
-		return "index.tiles";
+		return "index.tiles";*/
+		
+		if(memvo != null && !memvo.getM_id().equals("")){
+			request.getSession().setAttribute("login",memvo);
+			return "redirect:/index.do";	
+		}else{
+			System.out.println("아이디 읍써");
+			return "index.tiles";
+		}
 	}
 	
 	@RequestMapping(value="regi.do",method=RequestMethod.GET)
 	public String regi(Model model){
-		logger.info("regi.do 실행중");
+		logger.info("regi.do �떎�뻾以�");
 		return "regi.tiles";
 	}
 	
 	@RequestMapping(value="regiAF.do",method=RequestMethod.POST)
 	public String regiAF(HttpServletRequest request,SistMemberVO vo, Model model) throws Exception{
-		logger.info("regiAF.do 실행중");
+		logger.info("regiAF.do �떎�뻾以�");
 
 		String b_year = request.getParameter("b_year");
 		String b_month = request.getParameter("b_month");
@@ -82,7 +89,7 @@ public class SistMemberController {
 	
 	@RequestMapping(value="logout.do",method=RequestMethod.GET)
 	public String logout(HttpServletRequest request, Model model){
-		logger.info("logout.do 실행중 ");
+		logger.info("logout.do �떎�뻾以� ");
 		
 		request.getSession().invalidate();
 		
@@ -91,7 +98,7 @@ public class SistMemberController {
 	
 	@RequestMapping(value="idfind.do",method=RequestMethod.GET)
 	public String idfind(HttpServletRequest request, Model model){
-		logger.info("idfind.do 실행중");
+		logger.info("idfind.do �떎�뻾以�");
 		
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
@@ -100,7 +107,7 @@ public class SistMemberController {
 	
 	@RequestMapping(value="find_id_ok.do", method=RequestMethod.GET)
 	public String find_id_ok(HttpServletRequest request, Model model){
-		logger.info("find_id_ok.do 실행중");
+		logger.info("find_id_ok.do �떎�뻾以�");
 		
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
@@ -110,7 +117,7 @@ public class SistMemberController {
 	
 	@RequestMapping(value="pwfind.do", method=RequestMethod.GET)
 	public String pwfind(HttpServletRequest request, Model model){
-		logger.info("pwfind.do 실행중");
+		logger.info("pwfind.do �떎�뻾以�");
 		
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
@@ -119,7 +126,7 @@ public class SistMemberController {
 	
 	@RequestMapping(value="find_pw_se.do", method=RequestMethod.GET)
 	public String find_pw_se(HttpServletRequest request, Model model){
-		logger.info("find_pw_se.do 실행중");
+		logger.info("find_pw_se.do �떎�뻾以�");
 		
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
@@ -128,7 +135,7 @@ public class SistMemberController {
 	
 	@RequestMapping(value="find_pw_ok.do", method=RequestMethod.GET)
 	public String find_pw_ok(HttpServletRequest request, Model model){
-		logger.info("find_pw_ok.do 실행중");
+		logger.info("find_pw_ok.do �떎�뻾以�");
 		
 		String menu = request.getParameter("menu");
 		model.addAttribute("menu",menu);
@@ -138,35 +145,35 @@ public class SistMemberController {
 
 	@RequestMapping(value="myPage.do", method=RequestMethod.GET)
 	public String myPage(Model model){
-		logger.info("myPage.do 실행중");
+		logger.info("myPage.do �떎�뻾以�");
 		
 		return "myPage.tiles";
 	}
 	
 	@RequestMapping(value="myProfile.do", method=RequestMethod.GET)
 	public String myProfile(Model model){
-		logger.info("myProfile.do 실행중");
+		logger.info("myProfile.do �떎�뻾以�");
 		
 		return "myProfile.tiles";
 	}
 	
 	@RequestMapping(value="myInfo.do", method=RequestMethod.GET)
 	public String myInfo(Model model){
-		logger.info("myInfo.do 실행중");
+		logger.info("myInfo.do �떎�뻾以�");
 		
 		return "myInfo.tiles";
 	}
 	
 	@RequestMapping(value="userInfo.do",method=RequestMethod.GET)
 	public String userInfo(Model model){
-		logger.info("userInfo.do 실행중");
+		logger.info("userInfo.do �떎�뻾以�");
 		
 		return "userInfo.tiles";
 	}
 	
 	@RequestMapping(value="blogInfo.do",method=RequestMethod.GET)
 	public String blogInfo(Model model){
-		logger.info("blogInfo.do 실행중");
+		logger.info("blogInfo.do �떎�뻾以�");
 		
 		return "blogInfo.tiles";
 	}

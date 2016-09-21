@@ -119,7 +119,7 @@
 	    <put-attribute name="header_logo2" value="/WEB-INF/views/writeblog/header_logo.jsp"/>
 	    <put-attribute name="content2" value="/WEB-INF/views/writeblog/bbswrite.jsp"/>
   	</definition>
-	
+  	
 
 	<!-- 글 수정 -->
 	<definition name="bbsupdate.tiles" extends="bbswrite.tiles">
@@ -129,9 +129,12 @@
 	<!-- 투표 팝업 페이지 -->
 	<definition name="poll_pop.tiles" template="/WEB-INF/views/pop/poll_pop.jsp">
 	</definition> 
-	
-	
-	<!-- calendar -->
+
+
+
+
+
+	<!-- calendar /////////////////////////////////////-->
 	<definition name="calendar.tiles"  template="/WEB-INF/views/callayouts-tiles.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
 	    <put-attribute name="header_logo" value="/WEB-INF/views/common/header_logo.jsp"/>
