@@ -18,7 +18,7 @@
 	    <put-attribute name="login_box" value="/WEB-INF/views/common/login_box.jsp"/>
 	    <put-attribute name="noticeArea" value="/WEB-INF/views/common/noticeArea.jsp"/>
 	    <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
-	    <put-attribute name="main" value="/WEB-INF/views/friend/news/fnewslist.jsp"/>
+	    <put-attribute name="main" value="/WEB-INF/views/topic/topiclist.jsp"/>
   	</definition>
   	
   	<definition name="login.tiles" template="/WEB-INF/views/member/login.jsp">
@@ -185,7 +185,7 @@
 	</definition>
 	
 
-	<!-- 이웃 -->
+<!-- 이웃 -->
   	<!-- 이웃소식_메인 -->
   	<!-- 메뉴_전체 -->
   	<definition name="fnewslist.tiles" extends="index.tiles">
@@ -216,47 +216,101 @@
   	</definition>
   	
   	
-  	<!-- 관리홈_메인 -->
-  	<definition name="settingmain.tiles" template="/WEB-INF/views/layouts-tiles_settinghome.jsp">
-	    <put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
-	    <put-attribute name="header_logo" value="/WEB-INF/views/common/header_logo.jsp"/>
-	    <put-attribute name="header_nav" value="/WEB-INF/views/common/header_nav.jsp"/>
-	    <put-attribute name="blogArea" value="/WEB-INF/views/common/blogArea.jsp"/>
-	    <put-attribute name="main" value="/WEB-INF/views/friend/setting/settinghome.jsp"/>
-	    <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
-  	</definition>
-  	
-  	<!-- 관리홈 -->
-  	<definition name="settinghome.tiles" extends="settingmain.tiles">
-  	    <put-attribute name="main" value="/WEB-INF/views/friend/setting/settinghome.jsp"/>
-  	</definition>
-  	
-  	<!-- 관리메뉴_이웃,그룹관리 -->
-  	<definition name="setfriendGroup.tiles" extends="settingmain.tiles">
-  	    <put-attribute name="main" value="/WEB-INF/views/friend/setting/setfriendGroup.jsp"/>
-  	</definition>
-  	<!-- 관리메뉴_나를추가한 이웃 -->
-  	<definition name="setfollower.tiles" extends="settingmain.tiles">
-  	    <put-attribute name="main" value="/WEB-INF/views/friend/setting/setfollower.jsp"/>
-  	</definition>
-  	<!-- 관리메뉴_서로이웃 맺기-->
-  	<definition name="setdblfollow.tiles" extends="settingmain.tiles">
-  	    <put-attribute name="main" value="/WEB-INF/views/friend/setting/setdblfollow.jsp"/>
-  	</definition>
-  	<!-- 이웃 -->
-  	
-  	<!-- 주제별 글보기 -->
+  	<!-- 주제별포스트_메인 -->
   	<!-- 메뉴_전체 -->
   	<definition name="topiclist.tiles" extends="index.tiles">
   	  <put-attribute name="main" value="/WEB-INF/views/topic/topiclist.jsp"/>
   	</definition>
   	
-  	<!-- 로그인박스 -->
-  	<!-- 내블로그 -->
-  	<definition name="blog2.tiles" extends="settingmain.tiles">
-  	    <put-attribute name="main" value="/WEB-INF/views/friend/blog/blog.jsp"/>
+  	
+  	<!-- 관리홈_메인 -->
+  	<definition name="settingmain.tiles" template="/WEB-INF/views/setlayouts-tiles.jsp">
+	    <put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
+	    <put-attribute name="header_logo" value="/WEB-INF/views/common/header_logo.jsp"/>
+	    <put-attribute name="header_nav" value="/WEB-INF/views/common/header_nav.jsp"/>
+	    <put-attribute name="blogArea" value="/WEB-INF/views/common/blogArea.jsp"/>
+	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/settinghome.jsp"/>
+	    <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
   	</definition>
-  	<!-- 로그인박스 -->
-
+  	<definition name="settinghome.tiles" extends="settingmain.tiles">
+  	  <put-attribute name="content" value="/WEB-INF/views/friend/setting/settinghome.jsp"/>
+  	</definition>
+  	<!-- 관리홈_메인 -->
+  	
+  	
+  	<!-- 이웃관리메뉴(1,3)와 탭 -->
+  	<definition name="setTabCon.tiles" template="/WEB-INF/views/setConlayouts-tiles.jsp">
+	    <put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
+	    <put-attribute name="header_logo" value="/WEB-INF/views/common/header_logo.jsp"/>
+	    <put-attribute name="header_nav" value="/WEB-INF/views/common/header_nav.jsp"/>
+	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfriendGroup.jsp"/>
+	    <put-attribute name="main" value="/WEB-INF/views/friend/setting/openfriend.jsp"/>
+	    <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
+  	</definition>
+  	
+  	<!-- 메뉴1_이웃,그룹관리 -->
+  	<!-- <definition name="setfriendGroup.tiles" extends="setTabCon.tiles">
+  	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfriendGroup.jsp"/>
+  	</definition> -->
+  	  <!-- _탭1_열린이웃 -->
+  	  <definition name="openfriend.tiles" extends="setTabCon.tiles">
+  	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfriendGroup.jsp"/>
+  	      <put-attribute name="main" value="/WEB-INF/views/friend/setting/openfriend.jsp"/>
+  	  </definition>
+  	  <!-- _탭2_이웃그룹 -->
+  	  <definition name="friendgroup.tiles" extends="setTabCon.tiles">
+  	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfriendGroup.jsp"/>
+  	      <put-attribute name="main" value="/WEB-INF/views/friend/setting/friendgroup.jsp"/>
+  	  </definition>
+  	  <!-- _탭3_이웃순서 -->
+  	  <definition name="friendseq.tiles" extends="setTabCon.tiles">
+  	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfriendGroup.jsp"/>
+  	      <put-attribute name="main" value="/WEB-INF/views/friend/setting/friendseq.jsp"/>
+  	  </definition>
+  	  
+  	  <!-- 메뉴3_서로이웃 맺기-->
+  	  <!-- <definition name="setdblfollow.tiles" extends="setTabCon.tiles">
+  	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setdblfollow.jsp"/>
+  	  </definition> -->
+  	
+      <!-- _탭1_받은신청 -->
+  	  <definition name="f_receive.tiles" extends="setTabCon.tiles">
+  	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setdblfollow.jsp"/>
+  	      <put-attribute name="main" value="/WEB-INF/views/friend/setting/f_receive.jsp"/>
+  	  </definition>
+  	  <!-- _탭2_보낸신청 -->
+  	  <definition name="f_send.tiles" extends="setTabCon.tiles">
+  	      <put-attribute name="content" value="/WEB-INF/views/friend/setting/setdblfollow.jsp"/>
+  	      <put-attribute name="main" value="/WEB-INF/views/friend/setting/f_send.jsp"/>
+  	  </definition>
+  	  <!-- _탭3_안내메시지 -->
+  	
+  	
+  	<!-- 이웃관리메뉴(2)와 탭 -->
+  	<definition name="setTab.tiles" template="/WEB-INF/views/setTablayouts-tiles.jsp">
+	    <put-attribute name="header" value="/WEB-INF/views/common/header.jsp"/>
+	    <put-attribute name="header_logo" value="/WEB-INF/views/common/header_logo.jsp"/>
+	    <put-attribute name="header_nav" value="/WEB-INF/views/common/header_nav.jsp"/>
+	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfollower.jsp"/>
+	    <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"/>
+  	</definition>
+  	<!-- 메뉴2_나를추가한 이웃 -->
+  	<definition name="setfollower.tiles" extends="setTab.tiles">
+  	    <put-attribute name="content" value="/WEB-INF/views/friend/setting/setfollower.jsp"/>
+  	</definition>
+  	
+  	<!-- 서로이웃신청 수락 팝업 -->
+  	<definition name="acceptDblfol.tiles" template="/WEB-INF/views/friend/popup/acceptDblfol.jsp">
+  	</definition>
+  	<!-- 서로이웃신청 수락Sucs 팝업 -->
+  	<definition name="acceptSucs.tiles" template="/WEB-INF/views/friend/popup/acceptAF.jsp">
+  	</definition>
+  	
+  	<!-- 서로이웃신청 거절 팝업 -->
+  	<definition name="noDblfol.tiles" template="/WEB-INF/views/friend/popup/noDblfol.jsp">
+  	</definition>
+  
+  	<!-- 이웃관리메뉴와 탭 -->
+<!-- 이웃 -->
 
 </tiles-definitions>

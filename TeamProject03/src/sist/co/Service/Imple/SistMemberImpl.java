@@ -47,8 +47,5 @@ public class SistMemberImpl implements SistMemberService{
 		
 	}
 
-
-	
-	
 	
 }
