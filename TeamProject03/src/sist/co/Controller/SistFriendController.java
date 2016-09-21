@@ -316,14 +316,29 @@ public class SistFriendController {
 		
 		//서로이웃신청 수락
 		@RequestMapping (value="acceptDblfol.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String acceptDblfol(Model model){
+		public String acceptDblfol(HttpServletRequest request, Model model)throws Exception{
 			logger.info("환영합니다. acceptDblfol.do 실행중");
+			
+			//'로그인 한 사람' 정보 취득
+			String id = ((SistMemberVO)request.getSession().getAttribute("login")).getM_id();
+			logger.info(id + "?? ");
+			
+			//그룹조회
+			List<SistFgroupVO> glist = new ArrayList<SistFgroupVO>();
+			glist = sistFriendService.getGroups(id);
+			model.addAttribute("glist", glist);
+			
 			return "acceptDblfol.tiles";
 		}
 		//서로이웃신청 수락Sucs
 		@RequestMapping (value="acceptSucs.do",method={RequestMethod.GET,RequestMethod.POST})
-		public String acceptSucs(Model model){
+		public String acceptSucs(HttpServletRequest request, SistFgroupVO group,SistFriendVO friend, String myid, Model model)throws Exception{
 			logger.info("환영합니다. acceptSucs.do 실행중");
+			
+			//서로이웃추가
+			System.out.println(friend.toString());
+			sistFriendService.addFriend(friend);
+			
 			return "acceptSucs.tiles";
 		}
 		

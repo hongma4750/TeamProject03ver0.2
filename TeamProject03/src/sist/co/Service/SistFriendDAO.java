@@ -20,7 +20,7 @@ public class SistFriendDAO {
 	
 	private String ns = "SistFriend.";
 	
-	//나의 이웃한명
+	    //나의 이웃한명
 		public SistFriendVO getFriend(String myid) throws Exception{
 			SistFriendVO f = new SistFriendVO();
 			f = sqlsession.selectOne(ns+"getFriend", myid);

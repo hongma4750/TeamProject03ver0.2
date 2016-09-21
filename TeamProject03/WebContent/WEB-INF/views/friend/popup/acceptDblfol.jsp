@@ -17,6 +17,7 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- 부트스트랩 링크 -->
 
+
 <title>이웃맺기 승낙</title>
 </head>
 <body>
@@ -28,7 +29,11 @@
 <h5><b>&nbsp;&nbsp;서로이웃 맺기</b></h5>
 <hr/>
 
-	<form action="" method="post" id="_myform" name="myform">
+<form action="acceptSucs.do?bid=<%=blogId %>" method="post" id="_myform" name="myform">
+	<input type="hidden" name="fnd_fndid" value="<%=blogId%>"/>
+	<input type="hidden" name="fnd_myid" value="${login.m_id }"/>
+    <input type="hidden" name="fnd_chk" value="2"/>
+	
 
 		<div style="margin: 20px;">
 			<span style="color: #2eaa08;"><b><%=blogId%></b></span> 님의 서로이웃 신청을
@@ -54,7 +59,7 @@
 			</div>
 
 		</div>
-	</form>
+</form>
 
 
 	<hr />
@@ -77,7 +82,7 @@ function popupClose(){
 
 //서로이웃승낙팝업으로 이동
 function popupNext(){
-	location.href="acceptSucs.do?blogId=<%=blogId %>";
+	location.href="acceptSucs.do?bid=<%=blogId %>";
 }
 
 //그룹추가 버튼클릭시 그룹생성 영역 생김

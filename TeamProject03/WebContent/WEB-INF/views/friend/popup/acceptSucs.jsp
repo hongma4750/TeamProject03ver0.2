@@ -23,15 +23,15 @@
 
 <!-- 서로이웃맺기 -->
 
-<%String sblogid=request.getParameter("blogid"); %>
+<%String blogId=request.getParameter("bid"); %>
 
 <h5><b>&nbsp;&nbsp;서로이웃 맺기</b></h5>
 
 <hr/>
 
-<b><%=sblogid%></b> 님과 서로이웃이 맺어졌습니다.<br>
+<b><%=blogId%></b> 님과 서로이웃이 맺어졌습니다.<br>
 
-	<hr />
+	<hr/>
 	<br>
 
 

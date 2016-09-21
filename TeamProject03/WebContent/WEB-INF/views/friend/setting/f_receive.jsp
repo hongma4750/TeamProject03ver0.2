@@ -13,6 +13,7 @@
 <!-- 부트스트랩 링크 -->
 
 
+
 <!-- 이곳은 받은신청 탭_내용 -->
 
 
@@ -21,7 +22,8 @@
 
 <br><br>
 
-<form method="post">
+<c:forEach items="${Rfolist }" var="Rfl">
+ <form action="acceptDblfol.do?blogId=${Rfl.df_send }" target="acceptPop" method="post">
 		<table border="1" style="align: center">
 			<col width="30px" />
 			<col width="400px" />
@@ -47,7 +49,7 @@
 		  <!-- 받은 서로이웃 신청이 있으면 -->
 			<c:if test="${not empty Rfolist }">
 			
-			<c:forEach items="${Rfolist }" var="Rfl">
+			
 			<tr>
 				<td><input type="checkbox" id="_chk"></td>
 				<td>${Rfl.df_send }</td>
@@ -55,17 +57,19 @@
 				<td>${Rfl.df_date }</td>
 				<td><button class="btn btn-default btn-xs" onclick="popupOpen(1);">수락</button><button class="btn btn-default btn-xs" onclick="popupOpen(2);">거절</button></td>
 			</tr>
-			</c:forEach>
+			
 			
 			</c:if>
 			
 		</table>
 		</form>
+</c:forEach>
+
 
 		<div>
 			<input type="checkbox">&nbsp;전체선택&nbsp;
-			<button type="button">수락</button>
-			<button type="button">거절</button>
+			<button type="button" class="btn btn-default btn-xs">수락</button>
+			<button type="button" class="btn btn-default btn-xs">거절</button>
 		</div>
 <br><br>		
 		
@@ -107,12 +111,11 @@ function popupOpen(chk){
 	
 	//수락버튼 클릭시
 	if (chk==1){
-		
-		window.open("acceptDblfol.do?blogId=${Rfl.df_send}","",popOption);
+		window.open("acceptDblfol.do","acceptPop",popOption);
 	}
 	//거절버튼 클릭시
 	if (chk==2){
-		window.open("noDblfol.do?blogId=${Rfl.df_send}","",popOption);
+		window.open("noDblfol.do","",popOption);
 	}
 }
 </script>
