@@ -27,7 +27,6 @@
 <!-- css  -->
 
 
-
 <div class="con">
 		<div id="total_list">
 			<div class="total_view">
