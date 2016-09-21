@@ -1,12 +1,14 @@
 package sist.co.Service.Imple;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import sist.co.Model.SistMemberVO;
+import sist.co.Model.SistMessage;
 import sist.co.Service.SistMemberDAO;
 import sist.co.Service.SistMemberService;
 
@@ -105,6 +107,31 @@ public class SistMemberImpl implements SistMemberService{
 		
 		return (int) sistMemberDAO.checkPw(vo);
 	}
+
+	@Override
+	public int countMyMessage(SistMessage sm) throws Exception {
+		return (int) sistMemberDAO.countMyMessage(sm);
+	}
+
+	@Override
+	public List selectNewMessage(SistMessage sm) throws Exception {
+		// TODO Auto-generated method stub
+		return sistMemberDAO.selectNewMessage(sm);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List selectAllMessage(SistMessage sm) throws Exception {
+		return sistMemberDAO.selectAllMessage(sm);
+	}
+
+	
 
 
 	

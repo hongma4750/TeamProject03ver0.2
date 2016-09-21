@@ -67,7 +67,6 @@ function showallcust(){
 	$.ajax({
 		type:"POST",
 		url:"getId.do",
-		
 		data:"m_id="+m_id,
 		success:function(msg){
 			outputList(msg);

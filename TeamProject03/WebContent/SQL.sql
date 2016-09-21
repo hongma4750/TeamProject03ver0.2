@@ -28,3 +28,58 @@ update member set m_action = 1 where m_id = 'aa1212';
 SELECT M_ID,M_NAME, M_GENDER, M_BIRTHDAY, M_EMAIL, M_PHONE, M_ACTION, M_LOGCHK, M_LOGDATE, M_FAILDATE, M_AUTH
 	 	FROM MEMBER 
 	 	WHERE M_ID = 'a' AND M_PW = 'a'
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+--message
+
+DROP TABLE message
+CASCADE CONSTRAINT;
+
+create table message(
+	message_seq number primary key,
+	message_sender varchar2(50) not null,
+	message_receiver varchar2(50) not null,
+	message_content varchar2(2000) not null,
+	message_date date not null,
+	message_read number(1),
+	message_del number(1),
+	m_name varchar2(50),
+	m_photo VARCHAR2(1000)
+);
+
+DROP SEQUENCE SEQ_MESSAGE;
+CREATE SEQUENCE SEQ_MESSAGE
+START WITH 1 INCREMENT BY 1;
+
+insert into message 
+values
+(seq_message.nextval,'lovely4750','aa1212','안녕하세요1',sysdate,0,0,
+(select m_name from MEMBER where m_id = 'lovely4750'),
+(select m_photo from MEMBER where m_id = 'lovely4750'));
+
+
+insert into message 
+values
+(seq_message.nextval,'lovely4750','aa1212','안녕하세요2',sysdate,0,0,
+(select m_name from MEMBER where m_id = 'lovely4750'),
+(select m_photo from MEMBER where m_id = 'lovely4750'));
+
+insert into message 
+values
+(seq_message.nextval,'lovely4750','aa1212','안녕하세요3',sysdate,0,0,
+(select m_name from MEMBER where m_id = 'lovely4750'),
+(select m_photo from MEMBER where m_id = 'lovely4750'));
+
+insert into message 
+values
+(seq_message.nextval,'lovely4750','aa1212','안녕하세요4',sysdate,0,0,
+(select m_name from MEMBER where m_id = 'lovely4750'),
+(select m_photo from MEMBER where m_id = 'lovely4750'));
+
+
+select * from message where message_receiver = 'aa1212' and message_read != 1;
+

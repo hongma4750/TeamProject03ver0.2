@@ -9,6 +9,8 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.crypto.Cipher;
 import javax.servlet.ServletException;
@@ -36,6 +38,7 @@ import nl.captcha.text.producer.DefaultTextProducer;*/
 import sist.co.Model.FUpUtil;
 import sist.co.Model.SendEmail;
 import sist.co.Model.SistMemberVO;
+import sist.co.Model.SistMessage;
 import sist.co.Model.YesMember;
 import sist.co.Service.SistMemberService;
 
@@ -118,7 +121,24 @@ public class SistMemberController {
 				return "redirect:login.do";
 			}else{
 				request.getSession().setAttribute("login", memvo);
-				return "index.tiles";
+				
+				//DAO 작업!!!그리고 등록!!!!
+				
+				//SistMessage 선언
+				SistMessage sm = new SistMessage();
+				sm.setMessage_receiver(vo.getM_id());		//sistmember 인스턴스의 id를 sistmessage receiver로 등록한다.
+				
+				//메세지 숫자 계산
+				int myMessageCount = sistMemberService.countMyMessage(sm);	//receiver == 로그인 아이디 and read != 1(읽지않음) and del != 1 (삭제x)
+				
+				//메세지 리스트
+				List<SistMessage> newMyMessageList = sistMemberService.selectNewMessage(sm);
+				
+				//세션에 등록		--> 이후 매초마다 새로운걸로 갱신해야됨
+				request.getSession().setAttribute("myMessageCount", myMessageCount);
+				request.getSession().setAttribute("newMyMessageList", newMyMessageList);
+				
+				return "redirect:index.do";
 			}
 		}else{
 			no_login="등록되지 않은 아이디 입니다.";
@@ -631,6 +651,24 @@ public class SistMemberController {
         return "index.tiles";
 		
 	}
+	
+	@RequestMapping(value="checkNewMessage.do", method=RequestMethod.GET)
+	@ResponseBody
+	public int checkNewMessage(HttpServletRequest request, SistMemberVO vo , Model model) throws Exception{
+		logger.info("checkNewMessage.do 이동중");
+		
+		SistMessage sm = new SistMessage();
+		sm.setMessage_receiver(request.getParameter("m_id"));
+		
+		System.out.println("id = "+vo.getM_id());
+		
+		int checkMyNewMessage = sistMemberService.countMyMessage(sm);
+		
+		System.out.println("newMessage count : "+checkMyNewMessage);
+		return checkMyNewMessage;
+
+	}
+	
 
 	
 	
@@ -643,10 +681,6 @@ public class SistMemberController {
 	public String two(String msg){
 		return msg.length()>2? msg:"0"+msg;
 	}
-	
-	
-	
-	
 	
 	@RequestMapping(value="getId.do", method=RequestMethod.POST)
 	@ResponseBody

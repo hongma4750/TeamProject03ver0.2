@@ -1,12 +1,15 @@
 package sist.co.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import sist.co.Model.SistMemberVO;
+import sist.co.Model.SistMessage;
 
 @Repository
 public class SistMemberDAO {
@@ -81,6 +84,22 @@ public class SistMemberDAO {
 	
 	public int checkPw(SistMemberVO vo) throws Exception{
 		return (int) sqlSession.selectOne(ns+"checkPw",vo);
+	}
+	
+	public int countMyMessage(SistMessage sm ) throws Exception{
+		return (int) sqlSession.selectOne(ns+"countMyMessage",sm);			
+	}
+	
+	public List selectNewMessage(SistMessage sm) throws Exception{
+		List<SistMessage> myNewMessage = new ArrayList<SistMessage>();
+		myNewMessage = sqlSession.selectList(ns+"selectNewMessage",sm);
+		return myNewMessage;
+	}
+	
+	
+	
+	public List selectAllMessage(SistMessage sm) throws Exception{
+		return sqlSession.selectList(ns+"selectAllMessage",sm);
 	}
 	
 }

@@ -91,6 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
       <c:if test="${login.m_id ne null }">
+
 	      	<li><a href="blogInfo.do">블로그 정보</a></li>
 	        
       			<li>
@@ -99,6 +100,13 @@
                   		<span>김홍민 님</span>
                   	</a>
                   </li>
+                  
+                  <c:if test="${myMessageCount != 0 }">
+                  	<div class="row" style="height:10%; width:100%; text-align:center;
+                  	 z-index:20; position:absolute; left:495px;" >
+		            	<span class="badge " id="messageCount">${myMessageCount }</span>
+		            </div>
+                  </c:if>
                
                   <li>
                   	<a href="#" id="notice">
@@ -180,6 +188,8 @@
 </div>
 
 
+
+
 <div id="myNotice" style="position:absolute; top:69px; z-index:2; right:0px; 
      background-color: #fff; border:1px solid #000; padding:0; margin:0; 
      width:297px; height: 172px; display: none;">
@@ -203,47 +213,28 @@
 		</div>
 		
 		
+		<!-- 메세지 -->
 		<div style="width:100%; height:80%; ">
 		
-			<div class="list-group" style="margin:auto; padding:auto;">
-			  <a href="#" class="list-group-item ">
-			  	<span class="photo"><img alt="avatar" src="assets/img/ui-zac.jpg" style="width:35px;height:40px;"></span>
-			  	<span class="subject">
-			    <span class="from">Zac Snider</span>
-	             </span>
-	             <span class="message">
-	                 Hi mate, how is everything?
-	             </span>
-			  </a>
-			</div>
+			<c:forEach items="${newMyMessageList }" var="myMessage">
 			
-			<div class="list-group" style="margin:auto; padding:auto;">
-			  <a href="#" class="list-group-item ">
-			  	<span class="photo"><img alt="avatar" src="image/12.jpg" style="width:35px;height:40px;"></span>
-			  	<span class="subject">
-			    <span class="from">Zac Snider</span>
-	             </span>
-	             <span class="message">
-	                 Hi mate, how is everything?
-	             </span>
-			  </a>
-			</div>
-			
-			<div class="list-group" style="margin:auto; padding:auto;">
-			  <a href="#" class="list-group-item ">
-			  	<span class="photo"><img alt="avatar" src="assets/img/ui-zac.jpg" style="width:35px;height:40px;"></span>
-			  	<span class="subject">
-			    <span class="from">Zac Snider</span>
-	             </span>
-	             <span class="message">
-	                 Hi mate, how is everything?
-	             </span>
-			  </a>
-			</div>
+				<div class="list-group" style="margin:auto; padding:auto;">
+				  <a href="#" class="list-group-item ">
+				  	<span class="photo" style="maring:auto; padding:auto;">
+				  		<img alt="avatar" src="${myMessage.m_photo }" style="width:35px;height:40px;">
+				  	</span>
+				  	
+				  	<span class="subject">
+					    <span class="from">${myMessage.m_name } </span>
+		             </span>
+		             <span class="message">${myMessage.message_content }</span>
+				  </a>
+				</div>
+				
+			</c:forEach>
 
-		
-			
 		</div>
+		
 	</div>
 	
 	
@@ -253,7 +244,7 @@
 		</div>
 	</div>
 </div>
-
+<!-- 메세지 -->
 
 
 <script>
@@ -269,6 +260,11 @@ $('#userInfo').click(function(){
  
  /* 팝업 사라지는 자바 스크립트*/
  $(document).ready(function(){
+	 var myMessageCount = '${myMessageCount}';
+		var m_id = '${login.m_id}';
+		var checkNewMessage = false;
+		var checkNewMessageFiveCount = 0;
+		
 	 $(document).mousedown(function(e){
 	 $('#mymyInfo , #myNotice').each(function(){
 	         if( $(this).css('display') == 'block' )
@@ -291,7 +287,57 @@ $('#userInfo').click(function(){
 	         }
 	     });
 	 }); 
-	 })
+	 
+	 
+	 
+	 $(function() {
+		    timer = setInterval( function () {
+		    	
+		    	if(m_id == ""){
+		    		
+		    		return;
+		    	}else{
+		    		$.ajax ({
+				    	type:"GET",
+				   		url:"checkNewMessage.do",
+				   		data:"m_id="+m_id,
+				       	cache : false,
+				       	success : function (checkMyNewMessage) {
+				       		
+				       		
+				       		if(checkMyNewMessage != myMessageCount){
+				       			//기존 메세지 카운수랑 새로 체크해본 결과가 다르다
+				       			myMessageCount = checkMyNewMessage;
+				       			$("#messageCount").text(myMessageCount);
+				       			checkNewMessage = true;;
+				       		}
+				       		
+				       		
+				       		if(checkNewMessage){
+				       			if(checkNewMessageFiveCount < 5){
+				       				if($("#messageCount").css("display") == "none"){
+				       					$("#messageCount").show();
+				       				}else{
+				       					$("#messageCount").hide();
+				       				}
+				       				
+				       				checkNewMessageFiveCount += 1;
+				       			}else{
+				       				$("#messageCount").show();
+				       				checkNewMessage = false;
+				       				checkNewMessageFiveCount = 0;
+				       			}
+				       		}
+				       	}
+				       });
+		    	}
+		    	
+		       
+		    }, 1000);	//5초
+		  });
+ 
+ 
+	 });
  
  /* 팝업 사라지는 자바 스크립트*/
  

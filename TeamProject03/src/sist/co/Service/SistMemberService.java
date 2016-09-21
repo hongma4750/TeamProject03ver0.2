@@ -1,8 +1,10 @@
 package sist.co.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import sist.co.Model.SistMemberVO;
+import sist.co.Model.SistMessage;
 
 public interface SistMemberService {
 	 
@@ -39,4 +41,16 @@ public interface SistMemberService {
 	void changePW(SistMemberVO vo) throws Exception;
 	
 	int checkPw(SistMemberVO vo) throws Exception;
+	
+	int countMyMessage(SistMessage sm ) throws Exception;
+	
+	List selectNewMessage(SistMessage sm) throws Exception;
+	
+	
+	
+	
+	
+	
+	
+	List selectAllMessage(SistMessage sm) throws Exception;
 }

@@ -76,6 +76,18 @@
   		SELECT NVL(COUNT(*), 0) FROM MEMBER WHERE M_ID = #{m_id} AND M_PW=#{m_pw}
   	</select>
   	
+  	<select id="countMyMessage" parameterType="sist.co.Model.SistMessage" 	resultType="java.lang.Integer">
+  		SELECT NVL(COUNT(*), 0) FROM MESSAGE WHERE MESSAGE_RECEIVER = #{message_receiver} AND MESSAGE_READ != 1 AND MESSAGE_DEL != 1
+  	</select>
+  	
+  	<select id="selectNewMessage" parameterType="sist.co.Model.SistMessage" resultType="sist.co.Model.SistMessage">
+  		SELECT * FROM MESSAGE WHERE MESSAGE_RECEIVER = #{message_receiver} AND MESSAGE_READ != 1 AND MESSAGE_DEL != 1
+  	</select>
+  	
+  	
+  	<select id="selectAllMessage" parameterType="sist.co.Model.SistMessage" resultType="sist.co.Model.SistMessage">
+  		SELECT * FROM MESSAGE WHERE MESSAGE_RECEIVER = #{message_receiver} AND MESSAGE_DEL != 1
+  	</select>
   	
   	
   	
