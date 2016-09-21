@@ -15,4 +15,6 @@ public interface SistMemberService {
 	int getID(SistMemberVO vo);
 	
 	void createTable(HashMap map);
+	
+	
 }
