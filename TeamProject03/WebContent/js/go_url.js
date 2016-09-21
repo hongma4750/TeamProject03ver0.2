@@ -31,9 +31,38 @@ function url_schwrite(){
 	return false;
 }
 
+/* 퀵뷰 만들기 */
+/*function url_sch_quick_view(){
+	self.location.href="sch_quick_view.do";
+	return false;
+}*/
+function url_schwriteAf(){
+	self.location.href="schwriteAf.do";
+	return false;
+}
+
+
 /* 캘린더 설정 */
 function url_setting(){
 	self.location.href="setting.do";
+	return false;
+}
+
+/* 기본 설정 */
+function url_default_setting(){
+	self.location.href="default_setting.do";
+	return false;
+}
+
+/* 일정 설정 */
+function url_sch_setting(){
+	self.location.href="sch_setting.do";
+	return false;
+}
+
+/* 알람 설정*/
+function url_alarm_setting(){
+	self.location.href="alarm_setting.do";
 	return false;
 }
 

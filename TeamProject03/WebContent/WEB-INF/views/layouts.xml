@@ -149,9 +149,24 @@
 		<put-attribute name="section_cen" value="/WEB-INF/views/calendar/sch/schwrite.jsp"/>
 	</definition>
 	
+	<!-- 일정, 약속 상세(수정)  -->
+	<definition name="sch_update.tiles" extends="calendar.tiles">
+		<put-attribute name="section_cen" value="/WEB-INF/views/calendar/sch/schdetail.jsp"/>
+	</definition>
+	
 	<!-- 캘린더 설정 -->
 	<definition name="setting.tiles" extends="calendar.tiles">
 		<put-attribute name="section_cen" value="/WEB-INF/views/calendar/setting/setting.jsp"/>
+	</definition>
+	
+	<!-- 기본 설정 -->
+	<definition name="default_setting.tiles" extends="calendar.tiles">
+		<put-attribute name="section_cen" value="/WEB-INF/views/calendar/setting/default_setting.jsp"/>
+	</definition>
+	
+	<!-- 일정 설정 -->
+	<definition name="sch_setting.tiles" extends="calendar.tiles">
+		<put-attribute name="section_cen" value="/WEB-INF/views/calendar/setting/sch_setting.jsp"/>
 	</definition>
 	
 	<!-- 캘린더 만들기 -->

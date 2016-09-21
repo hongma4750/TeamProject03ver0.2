@@ -38,20 +38,27 @@ public class SistMemberController {
 		return "login.tiles";
 	}
 	
-	@RequestMapping(value="loginAF.do",method=RequestMethod.POST)
-	public String loginAF(SistMemberVO vo, Model model) throws Exception{
-		logger.info("loginAF.do 실행중");
-		
-		
-		SistMemberVO memvo = sistMemberService.login(vo);
-		
-		if(memvo == null){
-			
-		}else{
-			model.addAttribute("login",memvo);
-		}
-		return "index.tiles";
-	}
+	   @RequestMapping(value="loginAF.do",method=RequestMethod.POST)
+	   public String loginAF(HttpServletRequest request,SistMemberVO vo, Model model) throws Exception{
+	      logger.info("loginAF.do 실행중");
+	      
+	      SistMemberVO memvo = sistMemberService.login(vo);
+	      
+	/*      if(memvo == null){
+	         
+	      }else{
+	         model.addAttribute("login",memvo);
+	      }
+	      return "index.tiles";*/
+	      
+	      if(memvo != null && !memvo.getM_id().equals("")){
+	         request.getSession().setAttribute("login",memvo);
+	         return "redirect:/index.do";   
+	      }else{
+	         System.out.println("아이디 읍써");
+	         return "index.tiles";
+	      }
+	   }
 	
 	@RequestMapping(value="regi.do",method=RequestMethod.GET)
 	public String regi(Model model){

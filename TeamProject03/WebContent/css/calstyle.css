@@ -164,32 +164,49 @@ button {
 	    cursor: pointer;
 	    position: relative;
 	}
+	/* 미니 캘린더 */
+	.mini_cal{
+		height: 157px;
+	}
+	
 	/* 내 캘린더 토글*/
 	.cal_tit{
-		width: 218px;
+		padding-left: 18px;
+		width: 240px;
 		height: 26px;
 		float: left;
 	}
 	
+	/* 캘린더 만들기 */
+	.cal_make{
+		padding-left: 18px;
+		display:inline-block;
+		left: 200px;
+	}
 	
 	/* 캘린더 설정 */
 	.cal_set{
-		float: right;
+	
+		
 	}
 	
 	/* 캘린더 리스트 */
 	.category_list{
-		
+		width: 236px;
 	}
 	
 	/* 중요 일정 보기 */
 	#important_view{
-		
+		display: block;
+		height: 29px;
 	}
+	
+	
 	
 	/* 오래된 일정 정리하기 */
 	#old_clean{
-		
+		display: block;
+		height: 29px;
 	}
 	.tit {
 	    top: 8px;
@@ -264,6 +281,16 @@ button {
 	.selectbox-source{
 	    border: 1px solid #cbcbcb;
 	}
+	
+	.time_selectbox-source{
+		border: 1px solid #cbcbcb;
+	}
+	
+	.time_selectbox-source-disabled{
+		border-color: #e3e3e3;
+    	background-color: #f7f7f7;
+	}
+	
 	
 	.selectbox13{
 	    display: inline;
@@ -567,10 +594,14 @@ button {
 	.all_view{
 		width: 250px;
 		height: 56px;
+		padding-left: 18px;
+		padding-top: 20px;
+		vertical-align:middle;
 	    border-bottom: 1px solid #f0f0f0;
 	}
 	.view_btn{
-		
+	    width: 9px;
+	    height: 9px;
 		background: url(https://ssl.pstatic.net/static/calendar/2016/sp_left.png) no-repeat 0 0;
 	}
 	
@@ -595,3 +626,50 @@ button {
 		color: #333;
 	    font-size: 13px;
 	}
+
+	
+	/* 캘린더 모양 */
+	.caltable{
+	border-collapse: collapse; 
+	}
+	
+	.sunday{
+		color:red;
+		text-align: left;
+		vertical-align: top;
+	}
+	.satday{
+		color:blue;
+		text-align: left;
+		vertical-align: top;
+	}
+	.otherday{
+		color:black;
+		text-align: left;
+		vertical-align: top;
+	}
+	.days2{
+		font-size:20px;
+		color:#4d6bb3;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.days3{
+		font-size:20px;
+		color:#4d6bb3;
+		text-align: center;
+		vertical-align: middle;
+		background-color: #4d6bb3;
+		color:#ffffff;
+		line-height: 1.7em;
+		font-weight: normal;
+	}
+	.innerTable{
+		border: 0px;
+	}
+	
+	.box_border{
+		width: 100%;
+			left: 124px;
+	}
+	

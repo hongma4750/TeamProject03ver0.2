@@ -40,6 +40,11 @@
 	})
 });
 
+
+
+
+
+
 $(function() {
 	var chk = 0;
 	$(".pluse").click(function(){
@@ -92,39 +97,42 @@ $(function() {
 		</a>
 	</div>
 	
+	
 	<!-- 내 캘린더 목록보기, 캘린더 생성, 캘린더 설정 -->
 	<div class="mycal">
 			
 		<span class="cal_tit">
 			<button class="view_btn">
-			
 			</button>
+			<span>
         	내 캘린더
-		</span>
-		
-		<!-- 캘린더 설정 버튼 -->
-		<span class="cal_set">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#" onclick="url_setting()">			
-				<i class="fa fa-cog" aria-hidden="true"></i>	 
-				<span class="">설정</span>
-			</a>
-		</span>
-		<!-- 캘린더 설정 버튼 끝 -->
+        	</span>        	
+        	
+        	<!-- 캘린더 만들기 시작 -->
+        	<span>
+				<div class="cal_make">
+					<a href="#" class="pluse"><i class="fa fa-plus" aria-hidden="true"></i></a>
+				</div>
+			</span>
+			<!-- 캘린더 만들기 끝 -->
 			
-								
-		<!-- 캘린더 만들기 시작 -->
-		<div id="cal_make">
-		<a href="#" class="pluse"><i class="fa fa-plus" aria-hidden="true"></i></a>
+			<!-- 캘린더 설정 버튼 -->
+			<span class="cal_set">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" onclick="url_setting()">			
+					<i class="fa fa-cog" aria-hidden="true"></i>	 
+					<span class="blind">설정</span>
+				</a>
+			</span>
+			<!-- 캘린더 설정 버튼 끝 -->
+			
+		</span>
+		<!-- end of cal_tit -->
+		
 		</div>
-		<!-- 캘린더 만들기 끝 -->
+	<!-- end of mycal -->
+	<div>				
 		
-		
-		
-		<div>
-		
-			
-		
-		
+
 		
 		<!-- 생성된 캘린더 리스트 시작 -->
 		<div id="category_list">
@@ -140,7 +148,6 @@ $(function() {
 		
 		
 	</div>
-	<!-- end of mycal -->
 
 	<!-- 중요 일정 보기 시작 -->
 	<div id="important_view">
@@ -156,15 +163,15 @@ $(function() {
 		</a>		
 	</div>
 	
-</div>	
+
 			
-</div>
+
 		
 		<div id="make_open_menu" class="calendar_menu " style="top: -50px; left: 212px; z-index: 32001; display: none; position: relative;">
 		    <div class="calendar_menu_layer">
 		        <ul class="action_list">
-		            <li class="_private"><a href="#" onclick="return false;">내 캘린더 만들기</a></li>
-		            <li class="_share"><a href="#" onclick="return false;">공유 캘린더 만들기</a></li>
+		            <li class="_private"><a href="#" onclick="url_makecalendar()">내 캘린더 만들기</a></li>
+		            <li class="_share"><a href="#" onclick="url_make_share_calendar()">공유 캘린더 만들기</a></li>
 		  
 		        </ul>
 		    </div>
