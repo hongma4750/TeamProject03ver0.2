@@ -18,7 +18,80 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- 부트스트랩 링크 -->
 
+
+<!-- date picker -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+<!-- 달력 쓰기에 필요함 -->
+<%@page import="sist.co.help.myCal"%>
+<%@page import="java.util.Calendar"%>
+
+<%!
+public String two (String msg){
+	return msg.trim().length() < 2 ? "0"+msg : msg.trim(); 
+}
+%>
+
+<%
+myCal mycal = (myCal)request.getAttribute("mycal");
+
+String year = "" + mycal.getYear();
+String month = "" + mycal.getMonth();
+String day = "" + mycal.getDay();
+
+Calendar cal = Calendar.getInstance();
+
+int tyear = cal.get(Calendar.YEAR);
+int tmonth = cal.get(Calendar.MONTH) + 1;
+int tday = cal.get(Calendar.DATE);
+int thour = cal.get(Calendar.HOUR_OF_DAY);	//24시간
+int tmin = cal.get(Calendar.MINUTE);
+%>
+
+
+<script>
+$.datepicker.setDefaults({
+	dateFormat: 'yy-mm-dd',
+	prevText: '이전 달',
+	nextText: '다음 달',
+	monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	monthNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+    showMonthAfterYear: true,
+    yearSuffix: '년'
+});
+
+/* date picker */
+$(function(){
+	$("#datepicker1, #datepicker2").datepicker();
+});
+
+/* 종일 클릭 시*/
+$(function(){
+	 $(".allday_chk").click(function(){
+		
+	if($(".allday_chk").is(":checked")){
+		$(".time_selectbox-source").attr("disabled", true);
+		$(".time_selectbox-source").attr("class", "time_selectbox-source-disabled");
+		}else{
+			$(".time_selectbox-source-disabled").attr("disabled", false);
+			$(".time_selectbox-source-disabled").attr("class", "time_selectbox-source");
+		}
+	});
+	
+});
+
+
+</script>
+
+
 <div id="section_cen">
+<form action="schwriteAf.do" method="post">
+	
+	<!-- 헤더 시작 -->
 	<div class="sch_header">
 	<table>
 		<tr>
@@ -30,32 +103,36 @@
 		</tr>
 		<tr>
 			<td colspan="2" height="47px">
-			<button type="button" class="save_btn" >
-
-				<strong>저장</strong>
-			</button>
+				<button type="submit" class="save_btn" >
+					<strong>저장</strong>
+				</button>
 			</td>
 		</tr>
 	</table>
 	</div>
+	<!-- 헤더 끝 -->
 	
+	
+	<!-- 바디 시작 -->
 	<div class="sch_body">
-	<!-- 제목 시작 -->
+	
 	<table width="90%">
-	
-
-	
+	<!-- 제목 시작 -->
 	<tr class="sch_tr title">
+	
+	
+	
 		<td colspan="9">
+			<input type="hidden" name='sch_id' value="${login.m_id }">
 			<span class="tit">제목</span>
 			
 			<div style="display: inline-block;">
-				<input type="text" class="input_txt" id="title">
+				<input type="text" class="input_txt" name="sch_title">
 			</div>
 			
 			<div class="important_chk" style="display: inline;">
 				<span>
-					<input type="checkbox" id="important_chk"style="display: inline-block;">
+					<input type="checkbox" name="sch_star" id="important_chk" value="1" style="display: inline-block;">
 					<label for="important_chk">중요</label>
 				</span> 
 			</div>
@@ -69,7 +146,7 @@
 		<td>
 			<div class="sch_tr place">
 				<span class="tit">장소</span>
-					<input type="text" value="" class="input_txt">
+					<input type="text" name="sch_location" class="input_txt">
 			</div>
 		</td>
 	</tr>
@@ -86,12 +163,16 @@
             	<option value="1">음력</option>
         	</select>
         	
-        	<input type="text" id="start_date" class="date_input" value="">
-		
+      
+        	<input type="text" id="datepicker1" class="date_input" name="sch_stardate" value="<%=tyear%>.<%=two(month+"")%>.<%=two(tday+"")%>">
+			<input type="hidden" name="syear" value="<%=tyear %>">
+			<input type="hidden" name="smonth" value="<%=month %>">
+			<input type="hidden" name="sday" value="<%=tday %>">
+			
 			<div class="selectbox13" data-lang-am="오전" data-lang-pm="오후" data-alert="형식에 맞게 입력해주세요
 			예) 1230, 3:10, 오후 2시">
         
-    			<select class="selectbox-source">
+    			<select id="start_time" name='sch_starttime' class="time_selectbox-source"  >
 					<option value="오전 12:00">오전 12:00</option>
 					<option value="오전 12:30">오전 12:30</option>
 					<option value="오전 01:00">오전 01:00</option>
@@ -146,11 +227,16 @@
     		<span class="bar">  -  </span>
     		
     		
-    		<input type="text" id="start_date" class="date_input" value="">
+    		<input type="text" id="datepicker2" class="date_input" name="sch_enddate" value="<%=tyear%>.<%=two(month+"")%>.<%=two(tday+"")%>">
+			<input type="hidden" name="eyear" value="<%=tyear %>">
+			<input type="hidden" name="emonth" value="<%=month %>">
+			<input type="hidden" name="eday" value="<%=tday %>">
+			
+			
 			
 		<div class="selectbox13" data-lang-am="오전" data-lang-pm="오후" data-alert="형식에 맞게 입력해주세요
 			예) 1230, 3:10, 오후 2시">
-	        <select class="selectbox-source">
+	        <select id="end_time" name='sch_endtime' class="time_selectbox-source">
 				<option value="오전 12:00">오전 12:00</option>
 				<option value="오전 12:30">오전 12:30</option>
 				<option value="오전 01:00">오전 01:00</option>
@@ -203,7 +289,7 @@
 		</div>
 		
 		<span>
-			<input type="checkbox" id="allday_chk"style="display: inline-block;">
+			<input type="checkbox" name="sch_allday" class="allday_chk" style="display: inline-block;" value="1">	<!-- 종일이면 1 -->
 			<label for="important_chk">종일</label>
 		</span>
 		
@@ -219,9 +305,25 @@
     	<td colspan="9">
     		<span class="tit">참석자</span>
 			<input type="text" class="input_txt" autocomplete="off" data-default="이름 또는 이메일주소, 아이디를 입력하세요.">
+			<a class="_btn_add on" href="#"><em>추가</em></a>
+			<span class="address_btn">
+				<button type="button" class="_btn_contact_list">
+						<strong>이웃 목록</strong>
+				</button>
+			</span>
 		</td>
 	</tr>
 	<!-- 참석자 끝 -->
+    
+    <!-- 참석자 목록 시작 -->
+    <tr id="invitee_list"> 
+    	<td colspan="9">
+    		<span class="blind">참석자</span>
+			<input type="text" class="input_txt" autocomplete="off" data-default="이름 또는 이메일주소, 아이디를 입력하세요.">
+		</td>
+		
+    </tr>
+    <!-- 참석자 목록 끝 -->
     
     
     <!-- 공개여부 시작 -->
@@ -230,8 +332,8 @@
     		<span class="tit">공개</span>
 				<div class="cont" style="display: inline-block;">
 					<p class="ck_state">
-						<input type="radio" id="public_default" name="set_public_mode" value="public_default" checked=""><label for="public_default">기본</label>
-						<input type="radio" id="public_private" name="set_public_mode" value="public_private"><label for="public_private">비공개</label>
+						<input type="radio" id="public_default" name="set_public_mode" value="public_default" checked="" name="sch_public"><label for="public_default">기본</label>
+						<input type="radio" id="public_private" name="set_public_mode" value="public_private" name="sch_public"> <label for="public_private">비공개</label>
 						<a href="#" class="_public_help link_help pos_help">?</a>		
 					</p>
 				</div>
@@ -249,7 +351,10 @@
 				<div class="select_thumb">
 					<ul class="sticker_section">
 						<li class="_sticker " key="501">
-							<button type="button" class="ico_stic501" alt="" title="">
+						
+						<!--  -->
+						<input type="hidden" name="sch_sticker" value="없음">
+							<button type="button" class="ico_stic501" alt="" title="" >
 								<strong>없음</strong>
 							</button>
 						</li>
@@ -898,7 +1003,7 @@
     <tr class="sch_tr comment">
     	<td colspan="9">
     		<span class="tit" style="display: inline;">설명</span>
-				<textarea class="txt_ara" style="height:95px; width:785px; overflow-y:hidden; display: inline;" holder-message="일정에 필요한 설명을 남기세요.">일정에 필요한 설명을 남기세요.</textarea>
+				<textarea class="txt_ara" name="sch_content" style="height:95px; width:785px; overflow-y:hidden; display: inline;" holder-message="일정에 필요한 설명을 남기세요.">일정에 필요한 설명을 남기세요.</textarea>
     	</td>
     </tr>
     <!-- 설명 끝 -->
@@ -909,7 +1014,7 @@
     	<td colspan="9">
 			<span class="tit" style="display: inline;">문서</span>
 				<form style="display: inline;" action="" method="post" enctype="multipart/form-data" target="ifr_upload" id="uploadFileAction" name="uploadFileAction">
-					<input type="file" id="uploadFile" name="uploadFile" class="_input_doc_file input_doc_file">
+					<input type="file" id="uploadFile" name="sch_docname" class="_input_doc_file input_doc_file">
 				</form>
     	</td>
     </tr>
@@ -920,8 +1025,8 @@
     <tr class="sch_tr alarm">
     	<td colspan="9">
     	<span class="tit">알림</span>	
-    		<div class="selectbox13">
-        		<select class="selectbox-source"><option value="direct">직접 입력</option>
+    		<div class="selectbox13" >
+        		<select class="selectbox-source" name="sch_alarm">
 					<option value="0M">정시</option>
 					<option value="5M">5분 전</option>
 					<option value="10M">10분 전</option>
@@ -944,7 +1049,8 @@
     
     <tr>
     	<td colspan="9">
-    		<button type="button" class="save_btn" >
+    	
+    		<button type="submit" class="save_btn" >
 				<em></em>
 				<strong>저장</strong>
 			</button>
@@ -958,4 +1064,6 @@
 	</table>
 	
 	</div>
+	
+</form>
 </div>

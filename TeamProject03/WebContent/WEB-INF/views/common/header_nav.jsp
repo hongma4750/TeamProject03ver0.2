@@ -74,7 +74,11 @@
       	
       		<li><a href="#">Link</a></li>
         	<li><a href="#">Link</a></li>
+        	
+        	<c:if test="${login.m_id ne null}">
+        	
         	<li role="presentation"><a href="#settings" onclick="url_calendar()" aria-controls="settings" role="tab" data-toggle="tab">cal</a></li>
+        	</c:if>
       </ul>
 
     </div><!-- /.navbar-collapse -->

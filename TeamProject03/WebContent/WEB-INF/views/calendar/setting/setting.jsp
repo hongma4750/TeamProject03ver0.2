@@ -82,13 +82,13 @@ $('#setting li:eq(2) a').tab('show') // Select third tab (0-indexed)
 	  <!-- Tab panes -->
 	  	<div id="others">
 		  	<div role="tab_con" class="tab_con" id="default_set">
-	        	<jsp:include page="default_setting.jsp" flush="true" />
+	        	<jsp:include page="default_setting.do" flush="true" />
 			</div>
 		    <div role="tab_con" class="tab_con" id="sch_set">
-	        	<jsp:include page="sch_setting.jsp" flush="true" />
+	        	<jsp:include page="sch_setting.do" flush="true" />
 			</div>
 			<div role="tab_con" class="tab_con" id="alarm_set">
-	        	<jsp:include page="alarm_setting.jsp" flush="true" />
+	        	<jsp:include page="alarm_setting.do" flush="true" />
 			</div>
 		</div>
 	 </div>
